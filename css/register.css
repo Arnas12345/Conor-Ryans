@@ -1,0 +1,62 @@
+body {
+    background-color: rgb(191, 191, 191);
+}
+
+.side {
+    background-color: rgb(82, 82, 82);
+    height: 100%;
+    width: 40%;
+    float: left;
+}
+
+.container_logo {
+    padding-top: 10%;
+    text-align: center;
+}
+
+.loop_logo {
+    width:50%; 
+    height: auto;
+}
+
+.newHere {
+    font-family: verdana;
+    padding-top: 10%;
+    size: 20%;
+}
+
+.signUp {
+    width: 28%;
+    height: 7%;
+    text-align: center;
+    margin-bottom: 5%;
+    background-color: rgb(191, 191, 191);
+}
+
+.container {
+    width: 60%;
+    height: 100%;
+}
+
+.login {
+    text-align: center;
+    padding-top: 15%;
+}
+
+.input {
+    width: 50%;
+    height: 5%;
+    margin: 1%;
+    background-color: rgb(82, 82, 82);
+}
+
+.submitButton {
+    width: 10%;
+    height: 6%;
+    background-color: rgb(82, 82, 82);
+    color: white;
+}
+
+::placeholder {
+    color: white;
+}
