@@ -1,8 +1,9 @@
 <?php
     session_start();
 
-    if (!$_SESSION["loggedin"]) {
-        header( "Location: login.php" );
+    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == 1) {
+    } else {
+    header( "Location: login.html" );
     }
 ?>
 
@@ -42,7 +43,7 @@
                 <option value="skill">Skill</option>
                 <option value="previousHistory">Previous History</option>
             </select>
-            <input type="text" name="name" placeholder="Search for User">
+            <input type="text" name="value" placeholder="Search for User">
             <input type="submit" value="Search">
         </form>
         <h1>Welcome <?php echo $_SESSION['username']; ?> </h1>

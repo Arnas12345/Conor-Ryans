@@ -14,6 +14,11 @@ body {
     text-align: center;
 }
 
+.loop_logo {
+    width: 50%; 
+    height: auto;
+}
+
 .newHere {
     font-family: verdana;
     padding-top: 10%;

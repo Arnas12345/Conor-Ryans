@@ -11,17 +11,18 @@
             if ($conn -> connect_error) {
                 die("Connection failed:" .$conn -> connect_error);
             }
+            
+            if ($_POST["selectVal"] == "name") {
+                $name = $_POST["value"];
 
-            $name = $_POST["name"];
-
-            $sql = "select * from Users where username LIKE \"{$name}%\";";
-            $result = $conn -> query($sql);
-            while($row = $result->fetch_assoc())
-            {
-                print "<a href='profile.php?link={$row['userID']}'>{$row['email']}</a><br>";
+                $sql = "select * from Users where username LIKE \"{$name}%\";";
+                $result = $conn -> query($sql);
+                while($row = $result->fetch_assoc())
+                {
+                    print "<a href='profile.php?link={$row['userID']}'>{$row['email']}</a><br>";
+                }
+                $conn->close();
             }
-            $conn->close();
-
         ?>
     </body>
 </html>

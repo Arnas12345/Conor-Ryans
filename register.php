@@ -35,11 +35,10 @@
             } 
             else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
+                header( "Location: index.php" );
             }
 
             $conn->close();
-
-            header( "Location: home.php" );
         ?>
     </body>
 </html>
