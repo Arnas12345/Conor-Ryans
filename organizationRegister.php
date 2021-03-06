@@ -10,22 +10,22 @@
                 die("Connection failed:" .$conn -> connect_error);
             }
 
-            $username = $_POST['name'];
-            $email = $_POST['email'];
+            $companyName = $_POST['name'];
+            $companyEmail = $_POST['email'];
             $hashedPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-            $sql = "INSERT INTO Users (username, email, password)
-            VALUES ('{$username}', '{$email}', '{$hashedPass}')";
+            $sql = "INSERT INTO Companies (companyName, email, password)
+            VALUES ('{$companyName}', '{$companyEmail}', '{$hashedPass}')";
 
             if ($conn->query($sql) === TRUE) {
                 
-                $sql = "select * from Users where email=\"{$email}\";";
+                $sql = "select * from Companies where email=\"{$companyEmail}\";";
                 $result = $conn -> query($sql);
                 $row = $result->fetch_assoc();
-                $userID = $row["userID"];
+                $companyID = $row["companyID"];
 
-                $_SESSION['user'] = $userID;
-                $_SESSION['username'] = $username;
+                $_SESSION['user'] = $companyID;
+                $_SESSION['username'] = $companyName;
                 $_SESSION['loggedin'] = true;
                 header( "Location: home.php" );
 

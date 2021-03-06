@@ -44,9 +44,9 @@
                 die("Connection failed:" .$conn -> connect_error);
             }
 
-            $name = $_GET["link"];
+            $userID = $_GET["userID"];
 
-            $sql = "select * from Users where userID=\"{$name}\";";
+            $sql = "select * from Users where userID=\"{$userID}\";";
             $result = $conn -> query($sql);
             $row = $result->fetch_assoc();
             echo "User Name :" . $row['username'] . "<br>";

@@ -42,6 +42,7 @@
                 <option value="name">Name</option>
                 <option value="skill">Skill</option>
                 <option value="previousHistory">Previous History</option>
+                <option value="currentlyEmployed">Currently Employed</option>
             </select>
             <input type="text" name="value" placeholder="Search for User">
             <input type="submit" value="Search">
