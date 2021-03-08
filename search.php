@@ -17,28 +17,9 @@
         </script>
     </head>
     <body>
-        <div class="container_logo" style="text-align: center;">
-            <img src="images/Loop_logo.png" alt="logo here" height="20%" weight="20%"></img>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm" >
-                    <a class="header"><b>HomeFeed1</b></a>
-                </div>
-                <div class="col-sm" >
-                    <a class="header"><b>HomeFeed2</b></a>
-                </div>
-                <div class="col-sm">
-                    <a class="header"><b>HomeFeed3</b></a>
-                </div>
-                <div class="col-sm">
-                    <a class="header"><b>HomeFeed4</b></a>
-                </div>
-                <div class="col-sm">
-                    <a class="header" href="logout.php"><b>Log Out</b></a>
-                </div>
-            </div>
-        </div>
+        <?php
+            include("headerTemplate.html");
+        ?>
         <h1 class="page-header">Search Page</h1>
         <hr>
         <form class="search" method="post" action="search.php">
