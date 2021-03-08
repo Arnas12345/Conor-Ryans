@@ -1,10 +1,10 @@
 <?php
     session_start();
 
-    if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == 1) {
-    } else {
-    header( "Location: login.html" );
-    }
+    if (!(isset($_SESSION["loggedin"])) || $_SESSION["loggedin"] == false) {
+        header( "Location: login.html" );
+    } 
+
 ?>
 
 <html>
