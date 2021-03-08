@@ -140,37 +140,28 @@
 
                 if ($_POST["selectVal"] == "previousHistory") {
                     $previousHistory = $_POST["value"];
-                    $previousHistorySQL = "select * from Companies where companyName LIKE \"{$previousHistory}%\";";
-                    $previousHistoryResult = $conn -> query($previousHistorySQL);
-                    $previousHistoryRow = $previousHistoryResult->fetch_assoc();
-                    if($previousHistoryRow) {
-                        $jobHistorySQL = "select * from Jobhistory where companyID = \"{$previousHistoryRow['companyID']}%\";";
-                        $jobHistoryResult = $conn -> query($jobHistorySQL);
-                        while($jobHistoryRow = $jobHistoryResult->fetch_assoc()) 
-                        {
-                            $usersSql = "select * from Users where companyID =\"{$jobHistoryRow["userID"]}%\";";
-                            $usersResult = $conn -> query($usersSql);
-                            while($usersRow = $usersResult->fetch_assoc())
-                            {
-                                if ($_SESSION['user'] != $usersRow['userID'])
-                                {
-                                    print "<a href='profile.php?userID={$usersRow['userID']}'>{$usersRow['email']}</a>";
-                                    $connectionsSQL = "select * from Connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$usersRow['userID']}%\";";
-                                    $result2 = $conn -> query($connectionsSQL);
-                                    $connectionsRow = $result2->fetch_assoc();
-                                    if($connectionsRow) {
-                                        print "<img src='images/Loop_logo.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$usersRow['userID']})'></img><br>";
-                                    } else {
-                                        print "<img src='images/connection.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$usersRow['userID']})'></img><br>";
-                                    }
+                    $SQL = "select a.userID, a.email
+                            from users a
+                            INNER JOIN jobhistory b
+                            ON a.userID = b.userID
+                            INNER JOIN companies c
+                            On b.companyID = c.companyID
+                            WHERE a.userID != {$_SESSION['user']} AND c.companyName LIKE \"{$previousHistory}%\";";
+                    $previousHistoryResult = $conn -> query($SQL);
+                    if(mysqli_num_rows($previousHistoryResult) != 0) {
+                            while($previousHistoryRow = $previousHistoryResult->fetch_assoc()) {
+                                print "<a href='profile.php?userID={$previousHistoryRow['userID']}'>{$previousHistoryRow['email']}</a>";
+                                $connectionsSQL = "select * from Connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$previousHistoryRow['userID']}%\";";
+                                $result2 = $conn -> query($connectionsSQL);
+                                $connectionsRow = $result2->fetch_assoc();
+                                if($connectionsRow) {
+                                    print "<img src='images/Loop_logo.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$previousHistoryRow['userID']})'></img><br>";
                                 } else {
-                                    print "<h1>No Users found.</h1>";
+                                    print "<img src='images/connection.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$previousHistoryRow['userID']})'></img><br>";
                                 }
                             }
-                        }
-                    }
-                    else {
-                        print "<h1>No Users found with the previous job history at \"{$previousHistory}\".</h1>";
+                    } else {
+                        print "<h1>No Users found with the skill \"{$previousHistory}\".</h1>";
                     }
                     $conn->close();
                 }
