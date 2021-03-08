@@ -20,10 +20,10 @@
             $sqlPass = $row["password"];
 
             function emailMatches ($inputEmail, $DBEmail) {
-                return strcasecmp($inputEmail, $DBEmail);
+                return strcasecmp($inputEmail, $DBEmail) == 0;
             }
 
-            if(emailMatches($email, $sqlEmail) == 0) {
+            if(emailMatches($email, $sqlEmail)) {
                 
                 $_SESSION['user'] = $userID;
                 $_SESSION['username'] = $row['username'];
