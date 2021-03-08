@@ -20,19 +20,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm" >
-                    <a class="header">HomeFeed1</a>
+                    <a class="header"><b>HomeFeed1</b></a>
                 </div>
                 <div class="col-sm" >
-                    <a class="header">HomeFeed2</a>
+                    <a class="header"><b>HomeFeed2</b></a>
                 </div>
                 <div class="col-sm">
-                    <a class="header">HomeFeed3</a>
+                    <a class="header"><b>HomeFeed3</b></a>
                 </div>
                 <div class="col-sm">
-                    <a class="header">HomeFeed4</a>
+                    <a class="header"><b>HomeFeed4</b></a>
                 </div>
                 <div class="col-sm">
-                    <a class="header" href="logout.php">Log Out</a>
+                    <a class="header" href="logout.php"><b>Log Out</b></a>
                 </div>
             </div>
         </div>

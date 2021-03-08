@@ -1,39 +1,43 @@
 <html>
     <head>
-        <title>Loop : Profile</title>
+        <title>Loop : User Profie</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/index.css?v=<?php echo time() ?>">
+        <link rel="stylesheet" type="text/css" href="css/home.css?v=<?php echo time() ?>">
     </head>
-
     <body>
-        <div style="display: flex;">
-            <div class="container_logo" style="flex: 25%; text-align: center;">
-                <img src="images/Loop_logo.png" alt="logo here" height="100" weight="100">
-            </div>
-            
-            <div class="container" style="flex: 75%">
-                <div class="row" style="padding-top: 25px;">
-                    <div class="col-3" >
-                        <a class="header">HomeFeed</a>
-                    </div>
-                    <div class="col-3" >
-                        <a class="header">HomeFeed</a>
-                    </div>
-                    <div class="col-3">
-                        <a class="header">HomeFeed</a>
-                    </div>
-                    <div class="col-3">
-                        <a class="header">HomeFeed</a>
-                    </div>
-                
+        <div class="container_logo" style="text-align: center;">
+            <img src="images/Loop_logo.png" alt="logo here" height="20%" weight="20%"></img>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <a class="header"><b>HomeFeed1</b></a>
+                </div>
+                <div class="col-sm" >
+                    <a class="header"><b>HomeFeed2</b></a>
+                </div>
+                <div class="col-sm">
+                    <a class="header"><b>HomeFeed3</b></a>
+                </div>
+                <div class="col-sm">
+                    <a class="header"><b>HomeFeed4</b></a>
+                </div>
+                <div class="col-sm">
+                    <a class="header" href="logout.php"><b>Log Out</b></a>
                 </div>
             </div>
         </div>
+        <hr>
         <form method="post" action="search.php">
-            <input type="text" name="name" placeholder="Search for student">
+            <select name="selectVal">
+                <option value="name">Name</option>
+                <option value="skill">Skill</option>
+                <option value="previousHistory">Previous History</option>
+                <option value="currentlyEmployed">Currently Employed</option>
+            </select>
+            <input type="text" name="value" placeholder="Search for User">
             <input type="submit" value="Search">
         </form>
-
         <?php
 
             session_start();
