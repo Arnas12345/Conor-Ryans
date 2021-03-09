@@ -42,7 +42,7 @@
 
                     if ($_POST["selectVal"] == "name") {
                         $name = $_POST["value"];
-                        print "<h1 class='page-header'>Search by {$_POST['selectVal']} for {$name}</h1>";
+                        printSearchFor($_POST["selectVal"], $name);
                         $sql = "select * from Users where username LIKE \"{$name}%\" AND userID != \"{$_SESSION['user']}%\";";
                         $result = $conn -> query($sql);
                         if($result -> fetch_assoc()) {
@@ -68,7 +68,7 @@
 
                     if ($_POST["selectVal"] == "skill") {
                         $skill = $_POST["value"];
-                        print "<h1 class='page-header'>Search by {$_POST['selectVal']} for {$skill}</h1>";
+                        printSearchFor($_POST["selectVal"], $skill);
                         $SQL = "select a.userID, a.email
                                 from users a
                                 INNER JOIN userSkills b
@@ -99,7 +99,7 @@
 
                     if ($_POST["selectVal"] == "currentlyEmployed") {
                         $currentlyEmployed = $_POST["value"];
-                        print "<h1 class='page-header'>Search by {$_POST['selectVal']} for {$currentlyEmployed}</h1>";
+                        printSearchFor($_POST["selectVal"], $currentlyEmployed);
                         $SQL = "select a.userID, a.email
                                 from users a
                                 INNER JOIN companies b
@@ -128,7 +128,7 @@
 
                     if ($_POST["selectVal"] == "previousHistory") {
                         $previousHistory = $_POST["value"];
-                        print "<h1 class='page-header'>Search by {$_POST['selectVal']} for {$previousHistory}</h1>";
+                        printSearchFor($_POST["selectVal"], $previousHistory);
                         $SQL = "select a.userID, a.email
                                 from users a
                                 INNER JOIN jobhistory b
@@ -156,6 +156,10 @@
                         }
                         $conn->close();
                     }
+                }
+
+                function printSearchFor($searchVal, $searchTerm) {
+                    print "<h1 class='page-header'>Search by {$searchVal} for {$searchTerm}</h1>";
                 }
             ?>
         </div>
