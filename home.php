@@ -14,9 +14,7 @@
         <link rel="stylesheet" type="text/css" href="css/home.css?v=<?php echo time(); ?>">
     </head>
     <body>
-        <?php
-        include ("headerTemplate.html");
-        ?>
+        <?php include ("headerTemplate.html");?>
         <h1 class="page-header">Home Page</h1>
         <hr>
     </body>

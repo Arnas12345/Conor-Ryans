@@ -2,7 +2,7 @@
     <head>
         <title>Loop : Search</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/home.css?v=<?php echo time(); ?>">
+        <link rel="stylesheet" type="text/css" href="css/search.css?v=<?php echo time(); ?>">
         <script type="text/javascript">
             function makeConnection(variable) {
                 window.location.href= 'addConnection.php?id=' + variable;
@@ -17,9 +17,7 @@
         </script>
     </head>
     <body>
-        <?php
-            include("headerTemplate.html");
-        ?>
+        <?php include("headerTemplate.html"); ?>
         <h1 class="page-header">Search Page</h1>
         <hr>
         <form class="search" method="post" action="search.php">
@@ -43,21 +41,23 @@
 
                 if ($_POST["selectVal"] == "name") {
                     $name = $_POST["value"];
-
+                    print "<h1 class='page-header'>Search by {$_POST['selectVal']} for {$name}</h1>";
                     $sql = "select * from Users where username LIKE \"{$name}%\" AND userID != \"{$_SESSION['user']}%\";";
                     $result = $conn -> query($sql);
                     if($result -> fetch_assoc()) {
                         while($row = $result->fetch_assoc())
-                        {
-                            print "<a href='profile.php?userID={$row['userID']}'>{$row['email']}</a>";
+                        {   
+                            print "<div class='user'>";
+                            print "<a class='userDetails' href='profile.php?userID={$row['userID']}'><b>{$row['username']} - {$row['email']}</b></a>";
                             $connectionsSQL = "select * from Connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$row['userID']}%\";";
                             $result2 = $conn -> query($connectionsSQL);
                             $connectionsRow = $result2->fetch_assoc();
                             if($connectionsRow) {
-                                print "<img src='images/Loop_logo.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$row['userID']})'></img><br>";
+                                print "<img class='connectionImage' src='images/Loop_logo.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$row['userID']})'></img><br>";
                             } else {
-                                print "<img src='images/connection.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$row['userID']})'></img><br>";
+                                print "<img class='connectionImage' src='images/connection.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$row['userID']})'></img><br>";
                             }
+                            print "</div>";
                         }
                         $conn->close();
                     } else {

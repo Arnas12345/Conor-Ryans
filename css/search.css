@@ -41,6 +41,7 @@ a:active {
 
 .page-header {
     text-align: center;
+    color: rgb(82, 82, 82);
 }
 
 .page-box {
@@ -59,10 +60,23 @@ a:active {
 
 .select {
     border-style: none;
+    background-color: rgb(82, 82, 82);
+    border-radius: 4px;
+    height: 30px;
 }
 
 .input {
     border-style: none;
+    background-color: rgb(82, 82, 82);
+    border-radius: 4px;
+    height: 30px;
+}
+
+.submit {
+    border-style: none;
+    background-color: rgb(82, 82, 82);
+    border-radius: 4px;
+    height: 30px;
 }
 
 .logo {
@@ -71,4 +85,27 @@ a:active {
 
 .search_icon {
     cursor: pointer;
+}
+
+.input::placeholder {
+    color: black;
+}
+
+.user {
+    background-color: rgb(82, 82, 82);
+    padding-top: 2%;
+    width: 55%;
+    line-height: 50%;
+    margin-left: 22.5%;
+    border-radius: 8px;
+}
+
+.userDetails {
+    padding-bottom: 3%;
+    margin: 3%;
+    text-decoration: none;
+}
+
+.connectionImage {
+    padding-bottom: 3%;
 }

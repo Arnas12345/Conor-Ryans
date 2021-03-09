@@ -1,7 +1,6 @@
 <html>
     <body>
         <?php
-
             session_start();
 
             include ("serverConfig.php");
