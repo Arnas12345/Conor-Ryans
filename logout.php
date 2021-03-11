@@ -1,17 +1,10 @@
-<html>
-    <head>
-        <title>Logout</title>
-    </head>
 
-    <body>
-        <?php
-            
-            session_start();
-            session_unset();
-            session_destroy();
+<?php
+    
+    session_start();
+    session_unset();
+    session_destroy();
 
-            header( "Location: login.html" );
+    header( "Location: login.html" );
 
-        ?>
-    </body>
-</html>
+?>

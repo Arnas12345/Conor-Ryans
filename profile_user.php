@@ -7,129 +7,131 @@
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
     </head>
     <body>
-        <div class="container_logo" style="text-align: center;">
-            <img src="images/Loop_logo.png" alt="logo here" height="20%" weight="20%"></img>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm" >
-                    <a class="header">HomeFeed1</a>
-                </div>
-                <div class="col-sm" >
-                    <a class="header">HomeFeed2</a>
-                </div>
-                <div class="col-sm">
-                    <a class="header">HomeFeed3</a>
-                </div>
-                <div class="col-sm">
-                    <a class="header">HomeFeed4</a>
-                </div>
-                <div class="col-sm">
-                    <a class="header" href="logout.php">Log Out</a>
-                </div>
-            </div>
-        </div>
+        <?php include("headerTemplate.html"); ?>
+        <h1 class="page-header">My Profile</h1>
         <hr>
-        <form method="post" action="search.php">
-            <select name="selectVal">
-                <option value="name">Name</option>
-                <option value="skill">Skill</option>
-                <option value="previousHistory">Previous History</option>
-            </select>
-            <input type="text" name="name" placeholder="Search for User">
-            <input type="submit" value="Search">
-
-        </form>
         <div class = "profile-container" >
             <div class = "profileImage" >
-                <img src = "images/ellipse.png" alt = "there should be an image here" height="20%" weight="20%" >
+                <img src = "images/ellipse.png" alt = "profile image" height="20%" weight="20%" >
             </div>
         </div>
         <div class = "description-container">
             <div class = "description-heading">
-            <H1 style = "text-align: center;"> description</H1>
+                <H1 style = "text-align: center;">Description</H1>
             </div>
             <div class = "bio-description">
-            <h3>Bio:</h3>
-            <p1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut turpis ornare, blandit sem egestas, 
-                placerat mi. Aliquam lacus libero, auctor id orci ut, porttitor faucibus sapien. Morbi tincidunt massa libero, 
-                a commodo justo dapibus vitae. Cras pulvinar porta purus id gravida. Sed in suscipit nisl. Aenean ac orci dictum, 
-                vehicula lacus vitae, pulvinar urna. Suspendisse id aliquam velit. Nullam ac velit vestibulum, ultrices sapien molestie, 
-                bibendum ante. Donec libero odio, sagittis sed mauris at, condimentum aliquet erat.
-                Etiam molestie libero lectus, at consectetur sem dignissim sed. Proin congue fermentum erat, 
-                sit amet mattis tellus dictum nec. Cras efficitur ac libero ac suscipit. Sed elit augue, gravida ac mauris ac, 
-                ultrices iaculis libero. Sed porttitor laoreet dui at porttitor. Nam vitae nulla ut ipsum posuere pharetra. 
-                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed luctus nibh ac 
-                semper venenatis. Quisque dictum sit amet tortor a imperdiet. Proin a lectus sit amet justo rhoncus fermentum ac 
-                in nisl. Vivamus consectetur non augue vitae faucibus. Phasellus suscipit odio eu aliquet condimentum.
-            </p1>
+                <h3>Bio:</h3>
+                <?php
+                    session_start();
+                    include ("serverConfig.php");
+                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                    if ($conn -> connect_error) {
+                        die("Connection failed:" .$conn -> connect_error);
+                    }
+                        $sql = "select * from Users where userID =\"{$_SESSION['user']}%\";";
+                        $result = $conn -> query($sql);
+                        if($row = $result->fetch_assoc()) {
+                            print "<p class='userDetails'>{$row['description']}</p>";
+                            $conn->close();
+                        } else {
+                            print "<h1>No Bio found.</h1>";
+                        }
+                ?>
             </div>
             <div class = "skills-description">
-            <h3>Skills:</h3>
-            <p1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut turpis ornare, blandit sem egestas, 
-                placerat mi. Aliquam lacus libero, auctor id orci ut, porttitor faucibus sapien. Morbi tincidunt massa libero, 
-                a commodo justo dapibus vitae. Cras pulvinar porta purus id gravida. Sed in suscipit nisl. Aenean ac orci dictum, 
-                vehicula lacus vitae, pulvinar urna. Suspendisse id aliquam velit. Nullam ac velit vestibulum, ultrices sapien molestie, 
-                bibendum ante. Donec libero odio, sagittis sed mauris at, condimentum aliquet erat.
-                Etiam molestie libero lectus, at consectetur sem dignissim sed. Proin congue fermentum erat, 
-                sit amet mattis tellus dictum nec. Cras efficitur ac libero ac suscipit. Sed elit augue, gravida ac mauris ac, 
-                ultrices iaculis libero. Sed porttitor laoreet dui at porttitor. Nam vitae nulla ut ipsum posuere pharetra. 
-                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed luctus nibh ac 
-                semper venenatis. Quisque dictum sit amet tortor a imperdiet. Proin a lectus sit amet justo rhoncus fermentum ac 
-                in nisl. Vivamus consectetur non augue vitae faucibus. Phasellus suscipit odio eu aliquet condimentum.
-            </p1>
+                <h3>Skills:</h3>
+                <?php
+                    include ("serverConfig.php");
+                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                    if ($conn -> connect_error) {
+                        die("Connection failed:" .$conn -> connect_error);
+                    }
+                    $sql = "SELECT a.skillTitle
+                    FROM skills a
+                    INNER JOIN userskills b
+                    ON a.skillID = b.skillID
+                    WHERE b.userID = {$_SESSION['user']};";
+                    $result = $conn -> query($sql);
+                    if(mysqli_num_rows($result) != 0) {
+                        while($resultRow = $result->fetch_assoc()) {
+                            print "<p>{$resultRow['skillTitle']}</p>";
+                        }
+                    } else {
+                        print "<h1>No Skills Found.</h1>";
+                    }
+                ?>
             </div>
             
             <div class = "Qualifications-description">
-            <h3>Qualifications:</h3>
-            <p1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut turpis ornare, blandit sem egestas, 
-                placerat mi. Aliquam lacus libero, auctor id orci ut, porttitor faucibus sapien. Morbi tincidunt massa libero, 
-                a commodo justo dapibus vitae. Cras pulvinar porta purus id gravida. Sed in suscipit nisl. Aenean ac orci dictum, 
-                vehicula lacus vitae, pulvinar urna. Suspendisse id aliquam velit. Nullam ac velit vestibulum, ultrices sapien molestie, 
-                bibendum ante. Donec libero odio, sagittis sed mauris at, condimentum aliquet erat.
-                Etiam molestie libero lectus, at consectetur sem dignissim sed. Proin congue fermentum erat, 
-                sit amet mattis tellus dictum nec. Cras efficitur ac libero ac suscipit. Sed elit augue, gravida ac mauris ac, 
-                ultrices iaculis libero. Sed porttitor laoreet dui at porttitor. Nam vitae nulla ut ipsum posuere pharetra. 
-                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed luctus nibh ac 
-                semper venenatis. Quisque dictum sit amet tortor a imperdiet. Proin a lectus sit amet justo rhoncus fermentum ac 
-                in nisl. Vivamus consectetur non augue vitae faucibus. Phasellus suscipit odio eu aliquet condimentum.
-            </p1>
+                <h3>Employment History:</h3>
+                <?php
+                    include ("serverConfig.php");
+                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                    if ($conn -> connect_error) {
+                        die("Connection failed:" .$conn -> connect_error);
+                    }
+                    $sql = "SELECT a.companyName, b.FromDate, b.ToDate
+                    FROM companies a
+                    INNER JOIN jobhistory b
+                    ON a.companyID = b.companyID
+                    WHERE b.userID = {$_SESSION['user']};";
+                    $result = $conn -> query($sql);
+                    if(mysqli_num_rows($result) != 0) {
+                        while($resultRow = $result->fetch_assoc()) {
+                            print "<p>{$resultRow['companyName']}, {$resultRow['FromDate']} - {$resultRow['ToDate']}</p>";
+                        }
+                    } else {
+                        print "<h1>No Previous Job History Found.</h1>";
+                    }
+                ?>
             </div>
 
             <div class = "Certs-description">
-            <h3>Licenses and Certificates:</h3>
-            <p1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut turpis ornare, blandit sem egestas, 
-                placerat mi. Aliquam lacus libero, auctor id orci ut, porttitor faucibus sapien. Morbi tincidunt massa libero, 
-                a commodo justo dapibus vitae. Cras pulvinar porta purus id gravida. Sed in suscipit nisl. Aenean ac orci dictum, 
-                vehicula lacus vitae, pulvinar urna. Suspendisse id aliquam velit. Nullam ac velit vestibulum, ultrices sapien molestie, 
-                bibendum ante. Donec libero odio, sagittis sed mauris at, condimentum aliquet erat.
-                Etiam molestie libero lectus, at consectetur sem dignissim sed. Proin congue fermentum erat, 
-                sit amet mattis tellus dictum nec. Cras efficitur ac libero ac suscipit. Sed elit augue, gravida ac mauris ac, 
-                ultrices iaculis libero. Sed porttitor laoreet dui at porttitor. Nam vitae nulla ut ipsum posuere pharetra. 
-                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed luctus nibh ac 
-                semper venenatis. Quisque dictum sit amet tortor a imperdiet. Proin a lectus sit amet justo rhoncus fermentum ac 
-                in nisl. Vivamus consectetur non augue vitae faucibus. Phasellus suscipit odio eu aliquet condimentum.
-            </p1>
+            <h3>Qualifications:</h3>
+                <?php
+                    include ("serverConfig.php");
+                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                    if ($conn -> connect_error) {
+                        die("Connection failed:" .$conn -> connect_error);
+                    }
+                    $sql = "SELECT a.academicTitle, a.academicDescription, a.academicLevel, b.completionDate
+                    FROM accademicdegrees a
+                    INNER JOIN userqualificaion b
+                    ON a.academicID = b.academicID
+                    WHERE b.userID = {$_SESSION['user']};";
+                    $result = $conn -> query($sql);
+                    if(mysqli_num_rows($result) != 0) {
+                        while($resultRow = $result->fetch_assoc()) {
+                            print "<p>Graduated {$resultRow['academicDescription']}, {$resultRow['academicLevel']} at {$resultRow['academicTitle']} on {$resultRow['completionDate']}</p>";
+                        }
+                    } else {
+                        print "<h1>No Previous Job History Found.</h1>";
+                    }
+                ?>
             </div>
 
             <div class = "Qualifications-description">
-            <h3>Qualifications:</h3>
-            <p1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut turpis ornare, blandit sem egestas, 
-                placerat mi. Aliquam lacus libero, auctor id orci ut, porttitor faucibus sapien. Morbi tincidunt massa libero, 
-                a commodo justo dapibus vitae. Cras pulvinar porta purus id gravida. Sed in suscipit nisl. Aenean ac orci dictum, 
-                vehicula lacus vitae, pulvinar urna. Suspendisse id aliquam velit. Nullam ac velit vestibulum, ultrices sapien molestie, 
-                bibendum ante. Donec libero odio, sagittis sed mauris at, condimentum aliquet erat.
-                Etiam molestie libero lectus, at consectetur sem dignissim sed. Proin congue fermentum erat, 
-                sit amet mattis tellus dictum nec. Cras efficitur ac libero ac suscipit. Sed elit augue, gravida ac mauris ac, 
-                ultrices iaculis libero. Sed porttitor laoreet dui at porttitor. Nam vitae nulla ut ipsum posuere pharetra. 
-                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed luctus nibh ac 
-                semper venenatis. Quisque dictum sit amet tortor a imperdiet. Proin a lectus sit amet justo rhoncus fermentum ac 
-                in nisl. Vivamus consectetur non augue vitae faucibus. Phasellus suscipit odio eu aliquet condimentum.
-            </p1>
+                <h3>Current Employer:</h3>
+                <?php
+                    include ("serverConfig.php");
+                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                    if ($conn -> connect_error) {
+                        die("Connection failed:" .$conn -> connect_error);
+                    }
+                    $sql = "SELECT a.companyName
+                    FROM companies a
+                    INNER JOIN users b
+                    ON a.companyID = b.companyID
+                    WHERE b.userID = {$_SESSION['user']};";
+                    $result = $conn -> query($sql);
+                    if($row = $result->fetch_assoc()) {
+                        print "<p class='userDetails'>{$row['companyName']}</p>";
+                        $conn->close();
+                    } else {
+                        print "<h1>No Current Employer.</h1>";
+                    }
+                ?>
             </div>
-           
-            </div>
-
-       <!--<h1>Welcome <?php //echo $_SESSION['username']; ?> </h1>-->
+        </div>
     </body>
 </html>
