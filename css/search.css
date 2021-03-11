@@ -50,8 +50,8 @@ a:active {
     text-align: center;
     margin-left: 12.5%;
     margin-right: 12.5%;
-    height: 75%;
     bottom: 10px;
+    border-radius: 8px;
 }
 
 .search {
