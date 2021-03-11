@@ -1,0 +1,35 @@
+
+body{
+    background-color:white;
+}
+
+.profileImage{
+    text-align: center;
+}
+
+
+.profile-container{
+
+    background-color: aqua;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.description-container{
+
+    background-color: grey;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.description-heading{
+   text-decoration: underline;
+}
+
+.bio-description{
+  
+}
+
+.skills-description{
+ 
+}

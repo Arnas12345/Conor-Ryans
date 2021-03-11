@@ -1,0 +1,21 @@
+
+body{
+    background-color:white;
+}
+
+.profileImage{
+    text-align: center;
+}
+
+
+
+.connection-container{
+    background-color: grey;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.description-heading{
+   text-decoration: underline;
+}
+
