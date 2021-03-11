@@ -43,9 +43,9 @@
                     if ($_POST["selectVal"] == "name") {
                         $name = $_POST["value"];
                         printSearchFor($_POST["selectVal"], $name);
-                        $sql = "select * from Users where username LIKE \"{$name}%\" AND userID != \"{$_SESSION['user']}%\";";
+                        $sql = "select * from Users where username LIKE \"{$name}%\" AND userID !={$_SESSION['user']};";
                         $result = $conn -> query($sql);
-                        if($result -> fetch_assoc()) {
+                        if(mysqli_num_rows($result) != 0) {
                             while($row = $result->fetch_assoc())
                             {   
                                 print "<div class='user'>";

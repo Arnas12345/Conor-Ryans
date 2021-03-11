@@ -15,7 +15,37 @@
     </head>
     <body>
         <?php include ("headerTemplate.html");?>
-        <h1 class="page-header">Home Page</h1>
+        <h1 class="page-header">Job Feed</h1>
         <hr>
+        <div class="page-box">
+            <?php
+                include ("serverConfig.php");
+                $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                if ($conn -> connect_error) {
+                    die("Connection failed:" .$conn -> connect_error);
+                }
+
+                $sql = "select * from Vacancies;";
+                $result = $conn -> query($sql);
+                    while($row = $result->fetch_assoc())
+                    {   
+                        print "<div class='vacancy'>";
+                        print "<div class='container'>
+                                    <div class='row'>
+                                        <div class='col-4' >
+                                            <img class='job_logo' src='images/job-icon.jpg' alt='logo here'></img>
+                                        </div>
+                                        <div class='col-8' >
+                                        <p class='vacancyDetails'><b>{$row['vacancyTitle']} - {$row['vacancyDescription']}</b></p>
+                                        <p class='vacancyDetails'><b>{$row['vacancyTitle']} - {$row['vacancyDescription']}</b></p>
+                                        <p class='vacancyDetails'><b>{$row['vacancyTitle']} - {$row['vacancyDescription']}</b></p>
+                                        </div>
+                                    </div>
+                                </div>";
+                        print "</div>";
+                    }
+                    $conn->close();
+            ?>
+        </div>
     </body>
 </html>
