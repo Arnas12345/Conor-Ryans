@@ -13,6 +13,11 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/home.css?v=<?php echo time(); ?>">
     </head>
+    <script type="text/javascript">
+        function loopJob(vacancyID, companyID) {
+            window.location.href= 'loopJob.php?vacancyID=' + vacancyID +'&companyID=' + companyID;
+        }
+    </script>
     <body>
         <?php include ("headerTemplate.html");?>
         <h1 class="page-header">Job Feed</h1>
@@ -26,7 +31,7 @@
                     die("Connection failed:" .$conn -> connect_error);
                 }
 
-                $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName
+                $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
                 from Vacancies a
                 INNER JOIN companies b
                 ON a.companyID = b.companyID;";
@@ -47,6 +52,7 @@
                                         <p class='vacancyDetails'><b>Description: </b>{$row['vacancyDescription']}</p>
                                         <p class='vacancyDetails'><b>Role: </b>{$row['role']}</p>
                                         <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
+                                        <img src='images/Like_Loop.png' alt='logo here' height='20%' onClick='loopJob(${row['vacancyID']}, ${row['companyID']})'></img>
                                         </div>
                                     </div>
                                 </div>";

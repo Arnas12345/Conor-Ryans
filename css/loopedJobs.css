@@ -1,0 +1,81 @@
+body {
+    background-color: rgb(191, 191, 191);
+}
+
+.container_logo {
+    padding-top: 2%;
+    text-align: center;
+    padding-bottom: 1%;
+}
+
+.container {
+    text-align: center;
+}
+
+.header {
+    text-decoration: none;
+    font-family: verdana;
+    size: 20%;
+    color: black;
+}
+
+/* unvisited link */
+a:link {
+    color: black;
+}
+  
+/* visited link */
+a:visited {
+    color: black;
+}
+  
+/* mouse over link */
+a:hover {
+    color: black;
+}
+
+/* selected link */
+a:active {
+    color: black;
+}
+
+.page-header {
+    text-align: center;
+    color: rgb(82, 82, 82);
+    font-size:4vw;
+}
+
+.page-box {
+    width: 75%;
+    background-color: rgb(208, 206, 206);
+    text-align: center;
+    margin-left: 12.5%;
+    margin-right: 12.5%;
+    bottom: 10px;
+    border-radius: 8px;
+}
+
+.user {
+    background-color: rgb(191, 191, 191);
+    padding-top: 2%;
+    width: 55%;
+    height: 10%;
+    line-height: 50%;
+    margin-left: 22.5%;
+    border-radius: 8px;
+    margin-bottom: 2%;
+}
+
+.userDetails {
+    padding-bottom: 3%;
+    margin: 3%;
+    text-decoration: none;
+}
+
+.loopedJobs {
+    text-align: center;
+    border-spacing: 5px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
