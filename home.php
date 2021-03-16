@@ -18,6 +18,7 @@
         <h1 class="page-header">Job Feed</h1>
         <hr>
         <div class="page-box">
+            <h1 style="visibility: hidden">s</h1>
             <?php
                 include ("serverConfig.php");
                 $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
@@ -25,8 +26,13 @@
                     die("Connection failed:" .$conn -> connect_error);
                 }
 
-                $sql = "select * from Vacancies;";
+                $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName
+                from Vacancies a
+                INNER JOIN companies b
+                ON a.companyID = b.companyID;";
                 $result = $conn -> query($sql);
+                
+                if(mysqli_num_rows($result) != 0) {
                     while($row = $result->fetch_assoc())
                     {   
                         print "<div class='vacancy'>";
@@ -36,14 +42,19 @@
                                             <img class='job_logo' src='images/job-icon.jpg' alt='logo here'></img>
                                         </div>
                                         <div class='col-8' >
-                                        <p class='vacancyDetails'><b>{$row['vacancyTitle']} - {$row['vacancyDescription']}</b></p>
-                                        <p class='vacancyDetails'><b>{$row['vacancyTitle']} - {$row['vacancyDescription']}</b></p>
-                                        <p class='vacancyDetails'><b>{$row['vacancyTitle']} - {$row['vacancyDescription']}</b></p>
+                                        <p class='vacancyDetails'><b><u>{$row['companyName']}</u></b></p>
+                                        <p class='vacancyDetails'><b>Title: </b>{$row['vacancyTitle']}</p>
+                                        <p class='vacancyDetails'><b>Description: </b>{$row['vacancyDescription']}</p>
+                                        <p class='vacancyDetails'><b>Role: </b>{$row['role']}</p>
+                                        <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
                                         </div>
                                     </div>
                                 </div>";
                         print "</div>";
                     }
+                } else {
+                    print "<h1>No Vacanies Found.</h1>";
+                }
                     $conn->close();
             ?>
         </div>

@@ -7,10 +7,11 @@
     </head>
     <body>
         <?php include("headerTemplate.html"); ?>
-        <h1 class="page-header">MY Connections</h1>
+        <h1 class="page-header">My Connections</h1>
         <hr>
        
         <div class="page-box">
+            <h1 style="visibility: hidden">s</h1>
             <?php
                 session_start();
                 include ("serverConfig.php");
