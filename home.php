@@ -52,7 +52,7 @@
                                         <p class='vacancyDetails'><b>Description: </b>{$row['vacancyDescription']}</p>
                                         <p class='vacancyDetails'><b>Role: </b>{$row['role']}</p>
                                         <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
-                                        <img src='images/Like_Loop.png' alt='logo here' height='20%' onClick='loopJob(${row['vacancyID']}, ${row['companyID']})'></img>
+                                        <img class='img-fluid'src='images/loop_small.png' alt='logo here' height='20%' onClick='loopJob(${row['vacancyID']}, ${row['companyID']})'></img>
                                         </div>
                                     </div>
                                 </div>";
