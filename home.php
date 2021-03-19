@@ -17,6 +17,29 @@
         function loopJob(vacancyID, companyID) {
             window.location.href= 'loopJob.php?vacancyID=' + vacancyID +'&companyID=' + companyID;
         }
+
+        function unLoopJob(vacancyID, companyID) {
+            window.location.href= 'unLoopJob.php?vacancyID=' + vacancyID +'&companyID=' + companyID;
+                if (confirm("Are you sure you want to delete this looped job?") == true) {
+                    window.location.href= 'unLoopJob.php?vacancyID=' + vacancyID +'&companyID=' + companyID;
+                };
+        }
+
+        function showSkills() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+            
+            var span = document.getElementsByClassName("close")[0];
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
     </script>
     <body>
         <?php include ("headerTemplate.html");?>
@@ -40,6 +63,19 @@
                 if(mysqli_num_rows($result) != 0) {
                     while($row = $result->fetch_assoc())
                     {   
+                        $skillsNeeded = array();
+                        $skillsSql = "select a.skillTitle, a.skillDescription
+                        from skills a
+                        INNER JOIN skillsforvacancy b
+                        ON a.skillID = b.skillID
+                        INNER JOIN vacancies c
+                        ON b.vacancyID = c.vacancyID
+                        WHERE c.vacancyID=1";
+                        $skillsResult = $conn -> query($skillsSql);
+                        while($skillsRow = $skillsResult -> fetch_assoc()) {
+                            $skillsNeeded[] = $skillsRow['skillTitle'];
+                        }
+                        
                         print "<div class='vacancy'>";
                         print "<div class='container'>
                                     <div class='row'>
@@ -47,22 +83,50 @@
                                             <img class='job_logo' src='images/job-icon.jpg' alt='logo here'></img>
                                         </div>
                                         <div class='col-8' >
-                                        <p class='vacancyDetails'><b><u>{$row['companyName']}</u></b></p>
+                                        <a class='vacancyDetails' href='company.php?companyID={$row['companyID']}'><b><u>{$row['companyName']}</u></b></a>
                                         <p class='vacancyDetails'><b>Title: </b>{$row['vacancyTitle']}</p>
                                         <p class='vacancyDetails'><b>Description: </b>{$row['vacancyDescription']}</p>
                                         <p class='vacancyDetails'><b>Role: </b>{$row['role']}</p>
                                         <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
-                                        <img class='img-fluid'src='images/loop_small.png' alt='logo here' height='20%' onClick='loopJob(${row['vacancyID']}, ${row['companyID']})'></img>
-                                        </div>
-                                    </div>
-                                </div>";
-                        print "</div>";
+                                        <button onClick='showSkills()'>Show Skills</button>";
+                                        
+                                        $loopedJobSQL = "select * from looped where userID = {$_SESSION['user']} AND companyID = {$row['companyID']} AND vacancyID = {$row['vacancyID']};";
+                                        $loopedJobResult = $conn -> query($loopedJobSQL);
+                                        $loopedJobRow = $loopedJobResult->fetch_assoc();
+                                        if($loopedJobRow) {
+                                            print "<img class='img-fluid' src='images/job-icon.jpg' alt='logo here' style='height: 10%;' onClick='unLoopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
+                                        } else {
+                                            print "<img class='img-fluid' src='images/loop_small.png' alt='logo here' style='height: 10%;' onClick='loopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
+                                        }
+                                        
+                                        print "</div></div></div></div>";
                     }
                 } else {
                     print "<h1>No Vacanies Found.</h1>";
                 }
                     $conn->close();
             ?>
+        </div>
+
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <table id="skillsTable">
+                    <tr>
+                        <th>Skills Required</th>
+                    </tr>
+                    <?php 
+                        foreach ($skillsNeeded as $row) 
+                        { 
+                            echo '<tr>';
+                            echo '<td>' . $row . '</td>';
+                            echo '</tr>';
+                        }
+                    ?>
+                </table>
+            </div>
+
         </div>
     </body>
 </html>

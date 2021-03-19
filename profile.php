@@ -5,8 +5,22 @@
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time() ?>">
     </head>
     <body>
-        <?php include("headerTemplate.html"); ?>
-        <h1 class="page-header">User Profile</h1>
+        <?php 
+            include("headerTemplate.html"); 
+            session_start();
+            $userID = $_GET["userID"];
+            include ("serverConfig.php");
+            $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+            if ($conn -> connect_error) {
+                die("Connection failed:" .$conn -> connect_error);
+            }
+
+            $sql = "select * from Users where userID={$userID};";
+            $result = $conn -> query($sql);
+            $row = $result->fetch_assoc();
+            print "<h1 class='page-header'>{$row['username']}'s Profile</h1>";
+            $conn->close();
+        ?>
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >
@@ -20,22 +34,20 @@
             <div class = "bio-description">
                 <h3>Bio:</h3>
                 <?php
-                    session_start();
-
                     $userID = $_GET["userID"];
                     include ("serverConfig.php");
                     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
                     if ($conn -> connect_error) {
                         die("Connection failed:" .$conn -> connect_error);
                     }
-                        $sql = "select description from Users where userID={$userID};";
-                        $result = $conn -> query($sql);
-                        if($row = $result->fetch_assoc()) {
-                            print "<p class='userDetails'>{$row['description']}</p>";
-                            $conn->close();
-                        } else {
-                            print "<p>No Bio found.</p>";
-                        }
+                    $sql = "select description from Users where userID={$userID};";
+                    $result = $conn -> query($sql);
+                    if($row = $result->fetch_assoc()) {
+                        print "<p class='userDetails'>{$row['description']}</p>";
+                        $conn->close();
+                    } else {
+                        print "<p>No Bio found.</p>";
+                    }
                 ?>
             </div>
             <div class = "skills-description">
