@@ -23,6 +23,7 @@
         <form class="search" method="post" action="search.php">
             <select class="select" name="selectVal">
                 <option value="name">Name</option>
+                <option value="companyName">Company Name</option>
                 <option value="skill">Skill</option>
                 <option value="previousHistory">Previous History</option>
                 <option value="currentlyEmployed">Currently Employed</option>
@@ -63,6 +64,24 @@
                             $conn->close();
                         } else {
                             print "<h1>No Users found.</h1>";
+                        }
+                    }
+
+                    if ($_POST["selectVal"] == "companyName") {
+                        $companyName = $_POST["value"];
+                        printSearchFor($_POST["selectVal"], $companyName);
+                        $sql = "select * from Companies where companyName LIKE \"{$companyName}%\";";
+                        $result = $conn -> query($sql);
+                        if(mysqli_num_rows($result) != 0) {
+                            while($row = $result->fetch_assoc())
+                            {   
+                                print "<div class='user'>";
+                                print "<a class='userDetails' href='company.php?companyID={$row['companyID']}'><b>{$row['companyName']} - {$row['email']}</b></a>";
+                                print "</div>";
+                            }
+                            $conn->close();
+                        } else {
+                            print "<h1>No Company found.</h1>";
                         }
                     }
 

@@ -57,7 +57,8 @@
                 $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
                 from Vacancies a
                 INNER JOIN companies b
-                ON a.companyID = b.companyID;";
+                ON a.companyID = b.companyID
+                ORDER BY timeAdded DESC;";
                 $result = $conn -> query($sql);
                 
                 if(mysqli_num_rows($result) != 0) {
@@ -70,12 +71,12 @@
                         ON a.skillID = b.skillID
                         INNER JOIN vacancies c
                         ON b.vacancyID = c.vacancyID
-                        WHERE c.vacancyID=1";
+                        WHERE c.vacancyID= {$row['vacancyID']}";
                         $skillsResult = $conn -> query($skillsSql);
                         while($skillsRow = $skillsResult -> fetch_assoc()) {
                             $skillsNeeded[] = $skillsRow['skillTitle'];
                         }
-                        
+                        print_r($skillsNeeded);
                         print "<div class='vacancy'>";
                         print "<div class='container'>
                                     <div class='row'>
@@ -116,9 +117,9 @@
                     <tr>
                         <th>Skills Required</th>
                     </tr>
-                    <?php 
+                    <?php
                         foreach ($skillsNeeded as $row) 
-                        { 
+                        {   
                             echo '<tr>';
                             echo '<td>' . $row . '</td>';
                             echo '</tr>';
