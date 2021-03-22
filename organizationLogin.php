@@ -25,13 +25,13 @@
 
             if(emailMatches($companyEmail, $sqlEmail) == 0) {
                 
-                $_SESSION['user'] = $companyID;
-                $_SESSION['username'] = $row['companyName'];
+                $_SESSION['company'] = $companyID;
+                $_SESSION['companyName'] = $row['companyName'];
                 $_SESSION['loggedin'] = true;
-                header( "Location: home.php" );
+                header( "Location: organizationHome.php" );
             }
             else {
-                header( "Location: login.html" );
+                header( "Location: organizationLogin.html" );
             }
 
             $conn->close(); 

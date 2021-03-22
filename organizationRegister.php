@@ -24,10 +24,10 @@
                 $row = $result->fetch_assoc();
                 $companyID = $row["companyID"];
 
-                $_SESSION['user'] = $companyID;
-                $_SESSION['username'] = $companyName;
+                $_SESSION['company'] = $companyID;
+                $_SESSION['companyName'] = $companyName;
                 $_SESSION['loggedin'] = true;
-                header( "Location: home.php" );
+                header( "Location: organizationHome.php" );
 
             } 
             else {
