@@ -11,7 +11,12 @@
         <div class = "profile-container" >
             <div class = "profileImage" >
                 <img src = "images/ellipse.png" alt = "profile image" height="20%" weight="20%" >
+            <div class="editProfile">
+                <form action="editProfile.php">
+                    <input type="submit" value="Edit Profile" />
+                </form>
             </div>
+        </div>
         </div>
         <div class = "description-container">
             <div class = "description-heading">
@@ -32,6 +37,7 @@
                     $result = $conn -> query($sql);
                     if($row = $result->fetch_assoc()) {
                         print "<p class='userDetails'>{$row['description']}</p>";
+                        setcookie("description",$row['description'],time()+3600);
                         $conn->close();
                     } 
                     else {
@@ -91,8 +97,10 @@
                 $result = $conn -> query($sql);
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails'>{$row['companyName']}</p>";
+                    setcookie("currentEmployer",$row['companyName'],time()+3600);
                     $conn->close();
                 } else {
+                    setcookie("currentEmployer", "", time() - 3600);
                     print "<p>No Current Employer.</p>";
                 }
                 break;

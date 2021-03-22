@@ -25,8 +25,8 @@
                 };
         }
 
-        function showSkills() {
-            var modal = document.getElementById("myModal");
+        function showSkills(modalNumber) {
+            var modal = document.getElementById("myModal" + modalNumber);
             modal.style.display = "block";
             
             var span = document.getElementsByClassName("close")[0];
@@ -57,25 +57,27 @@
                 $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
                 from Vacancies a
                 INNER JOIN companies b
-                ON a.companyID = b.companyID;";
+                ON a.companyID = b.companyID
+                ORDER BY timeAdded DESC;";
                 $result = $conn -> query($sql);
                 
                 if(mysqli_num_rows($result) != 0) {
+                    $counter = 0;
                     while($row = $result->fetch_assoc())
                     {   
                         $skillsNeeded = array();
                         $skillsSql = "select a.skillTitle, a.skillDescription
-                            from skills a
-                            INNER JOIN skillsforvacancy b
-                            ON a.skillID = b.skillID
-                            INNER JOIN vacancies c
-                            ON b.vacancyID = c.vacancyID
-                            WHERE c.vacancyID=1";
+                        from skills a
+                        INNER JOIN skillsforvacancy b
+                        ON a.skillID = b.skillID
+                        INNER JOIN vacancies c
+                        ON b.vacancyID = c.vacancyID
+                        WHERE c.vacancyID= {$row['vacancyID']}";
                         $skillsResult = $conn -> query($skillsSql);
                         while($skillsRow = $skillsResult -> fetch_assoc()) {
                             $skillsNeeded[] = $skillsRow['skillTitle'];
                         }
-                        
+                        $counter++;
                         print "<div class='vacancy'>";
                         print "<div class='container'>
                                     <div class='row'>
@@ -88,7 +90,7 @@
                                         <p class='vacancyDetails'><b>Description: </b>{$row['vacancyDescription']}</p>
                                         <p class='vacancyDetails'><b>Role: </b>{$row['role']}</p>
                                         <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
-                                        <button onClick='showSkills()'>Show Skills</button>";
+                                        <button onClick='showSkills({$counter})'>Show Skills</button>";
                                         
                                         $loopedJobSQL = "select * from looped where userID = {$_SESSION['user']} AND companyID = {$row['companyID']} AND vacancyID = {$row['vacancyID']};";
                                         $loopedJobResult = $conn -> query($loopedJobSQL);
@@ -98,8 +100,23 @@
                                         } else {
                                             print "<img class='img-fluid' src='images/loop_small.png' alt='logo here' style='height: 10%;' onClick='loopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
                                         }
-                                        
+                                        print "<div id='myModal{$counter}' class='modal'>
+                                                <!-- Modal content -->
+                                                <div class='modal-content'>
+                                                    <span class='close'>&times;</span>
+                                                    <table id='skillsTable'>
+                                                        <tr>
+                                                            <th>Skills Required</th>
+                                                        </tr>";
+                                        foreach ($skillsNeeded as $row) 
+                                        {   
+                                            echo '<tr>';
+                                            echo '<td>' . $row . '</td>';
+                                            echo '</tr>';
+                                        }
+                                        print "</table></div></div>";
                                         print "</div></div></div></div>";
+                                        
                     }
                 } else {
                     print "<h1>No Vacanies Found.</h1>";
@@ -108,25 +125,6 @@
             ?>
         </div>
 
-        <div id="myModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <table id="skillsTable">
-                    <tr>
-                        <th>Skills Required</th>
-                    </tr>
-                    <?php 
-                        foreach ($skillsNeeded as $row) 
-                        { 
-                            echo '<tr>';
-                            echo '<td>' . $row . '</td>';
-                            echo '</tr>';
-                        }
-                    ?>
-                </table>
-            </div>
-
-        </div>
+        
     </body>
 </html>
