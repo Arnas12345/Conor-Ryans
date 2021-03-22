@@ -25,22 +25,27 @@
                     $companyID = $_GET["companyID"];
                     include ("serverConfig.php");
                     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                    
                     if ($conn -> connect_error) {
                         die("Connection failed:" .$conn -> connect_error);
                     }
+
                     $sql = "select * from Companies where companyID={$companyID};";
                     $result = $conn -> query($sql);
                     $row = $result->fetch_assoc();
+
                     if(isset($row['description']) ){
                         print "<p class='userDetails'>{$row['description']}</p>";
-                    }else{
+                    }
+                    else{
                         print "<p class='userDetails'>No Description Given.</p>";
                     }
 
                     print "<h3>Address:</h3>";
                     if(isset($row['address']) ){
                         print "<p class='userDetails'>{$row['address']}</p>";
-                    }else{
+                    }
+                    else{
                         print "<p class='userDetails'>No Address Given.</p>";
                     }
 
@@ -50,7 +55,8 @@
                     print "<h3>Contact Number:</h3>";
                     if(isset($row['ContactNo']) ){
                         print "<p class='userDetails'>{$row['ContactNo']}</p>";
-                    }else{
+                    }
+                    else {
                         print "<p class='userDetails'>No Contact Number Given.</p>";
                     }
 
