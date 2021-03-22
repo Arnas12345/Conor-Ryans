@@ -65,12 +65,12 @@
                     {   
                         $skillsNeeded = array();
                         $skillsSql = "select a.skillTitle, a.skillDescription
-                        from skills a
-                        INNER JOIN skillsforvacancy b
-                        ON a.skillID = b.skillID
-                        INNER JOIN vacancies c
-                        ON b.vacancyID = c.vacancyID
-                        WHERE c.vacancyID=1";
+                            from skills a
+                            INNER JOIN skillsforvacancy b
+                            ON a.skillID = b.skillID
+                            INNER JOIN vacancies c
+                            ON b.vacancyID = c.vacancyID
+                            WHERE c.vacancyID=1";
                         $skillsResult = $conn -> query($skillsSql);
                         while($skillsRow = $skillsResult -> fetch_assoc()) {
                             $skillsNeeded[] = $skillsRow['skillTitle'];
