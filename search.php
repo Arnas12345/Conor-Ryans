@@ -45,14 +45,14 @@
                     if ($_POST["selectVal"] == "name") {
                         $name = $_POST["value"];
                         printSearchFor($_POST["selectVal"], $name);
-                        $sql = "select * from Users where username LIKE \"{$name}%\" AND userID !={$_SESSION['user']};";
+                        $sql = "select * from users where username LIKE \"{$name}%\" AND userID !={$_SESSION['user']};";
                         $result = $conn -> query($sql);
                         if(mysqli_num_rows($result) != 0) {
                             while($row = $result->fetch_assoc())
                             {   
                                 print "<div class='user'>";
                                 print "<a class='userDetails' href='profile.php?userID={$row['userID']}'><b>{$row['username']} - {$row['email']}</b></a>";
-                                $connectionsSQL = "select * from Connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$row['userID']}%\";";
+                                $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$row['userID']}%\";";
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
                                 if($connectionsRow) {
@@ -71,7 +71,7 @@
                     if ($_POST["selectVal"] == "companyName") {
                         $companyName = $_POST["value"];
                         printSearchFor($_POST["selectVal"], $companyName);
-                        $sql = "select * from Companies where companyName LIKE \"{$companyName}%\";";
+                        $sql = "select * from companies where companyName LIKE \"{$companyName}%\";";
                         $result = $conn -> query($sql);
                         if(mysqli_num_rows($result) != 0) {
                             while($row = $result->fetch_assoc())
@@ -91,7 +91,7 @@
                         printSearchFor($_POST["selectVal"], $skill);
                         $SQL = "select a.userID, a.email
                                 from users a
-                                INNER JOIN userSkills b
+                                INNER JOIN userskills b
                                 ON a.userID = b.userID
                                 INNER JOIN skills c
                                 ON b.skillID = c.skillID
@@ -101,7 +101,7 @@
                                 while($skillRow = $skillResult->fetch_assoc()) {
                                     print "<div class='user'>";
                                     print "<a class='userDetails' href='profile.php?userID={$skillRow['userID']}'><b>{$skillRow['email']}</b></a>";
-                                    $connectionsSQL = "select * from Connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$skillRow['userID']}%\";";
+                                    $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$skillRow['userID']}%\";";
                                     $result2 = $conn -> query($connectionsSQL);
                                     $connectionsRow = $result2->fetch_assoc();
                                     if($connectionsRow) {
@@ -130,7 +130,7 @@
                                 while($currentlyEmployedRow = $currentlyEmployedResult->fetch_assoc()) {
                                     print "<div class='user'>";
                                     print "<a class='userDetails' href='profile.php?userID={$currentlyEmployedRow['userID']}'><b>{$currentlyEmployedRow['email']}</b></a>";
-                                    $connectionsSQL = "select * from Connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$currentlyEmployedRow['userID']}%\";";
+                                    $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$currentlyEmployedRow['userID']}%\";";
                                     $result2 = $conn -> query($connectionsSQL);
                                     $connectionsRow = $result2->fetch_assoc();
                                     if($connectionsRow) {
@@ -161,7 +161,7 @@
                                 while($previousHistoryRow = $previousHistoryResult->fetch_assoc()) {
                                     print "<div class='user'>";
                                     print "<a class='userDetails' href='profile.php?userID={$previousHistoryRow['userID']}'><b>{$previousHistoryRow['email']}</b></a>";
-                                    $connectionsSQL = "select * from Connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$previousHistoryRow['userID']}%\";";
+                                    $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$previousHistoryRow['userID']}%\";";
                                     $result2 = $conn -> query($connectionsSQL);
                                     $connectionsRow = $result2->fetch_assoc();
                                     if($connectionsRow) {

@@ -11,12 +11,12 @@
         <div class = "profile-container" >
             <div class = "profileImage" >
                 <img src = "images/ellipse.png" alt = "profile image" height="20%" weight="20%" >
+            </div>
             <div class="editProfile">
                 <form action="editProfile.php">
                     <input type="submit" value="Edit Profile" />
                 </form>
             </div>
-        </div>
         </div>
         <div class = "description-container">
             <div class = "description-heading">
@@ -33,7 +33,7 @@
                         die("Connection failed:" .$conn -> connect_error);
                     }
 
-                    $sql = "select * from Users where userID =\"{$_SESSION['user']}%\";";
+                    $sql = "select * from users where userID =\"{$_SESSION['user']}%\";";
                     $result = $conn -> query($sql);
                     if($row = $result->fetch_assoc()) {
                         print "<p class='userDetails'>{$row['description']}</p>";

@@ -19,6 +19,12 @@
             <div class = "profileImage" >
                 <img src = "images/ellipse.png" alt = "profile image" height="20%" weight="20%" >
             </div>
+            <div class="changeProfileImage">
+                <form method="post" action="editProfile.php" enctype="multipart/form-data">
+                    <input type="file" name="image">
+                    <input type="submit" name="submit" value="Upload">
+                </form>
+            </div>
         </div>
         <div class = "description-container">
             <div class = "description-heading">
@@ -36,8 +42,22 @@
                         }
 
                         $userID = $_SESSION['user'];
-                        $sql = "select * from Users where userID={$userID};";
+                        $sql = "select * from users where userID={$userID};";
                         $result = $conn -> query($sql);
+
+                        if(isset($_POST['submit'])) {
+                            // $imageName = file_get_contents($_FILES['image']['name']);
+                            $imageData = file_get_contents($_FILES['image']['tmp_name']);
+                            // $imageType = file_get_contents($_FILES['image']['type']);
+                            // echo $imageData;
+
+                            $userProfileImage ="UPDATE users 
+                                                SET profileImage={$imageData}
+                                                WHERE userID={$userID}";
+                            $conn->query($userProfileImage);
+
+
+                        }
 
                         //Sets the description if one exists
                         $description = '';
@@ -47,11 +67,11 @@
                         //User can select all skills they want
                         print '<h3>Select Skills</h3>
                                 <select name="skills[]" multiple>';
-                        $skillsSql = "select * from Skills;";
+                        $skillsSql = "select * from skills;";
                         $skillsResult = $conn -> query($skillsSql);
                         while($skillsRow = $skillsResult->fetch_assoc())
                         {   
-                            $getUsersSkillsSql = "select * from Userskills WHERE userID={$userID}";
+                            $getUsersSkillsSql = "select * from userskills WHERE userID={$userID}";
                             $getUsersSkillsResult = $conn -> query($getUsersSkillsSql);
                             //Loop is incorrect prints all skills for how many times the user has skills
                             // while($getUsersSkillsRow = $getUsersSkillsResult->fetch_assoc()) {
@@ -66,7 +86,7 @@
                         print '<h3>Select Current Employer</h3>
                                 <select name="currentEmployer">
                                 <option name="None">None</option>';
-                        $currentEmployerSQL = "select * from Companies;";
+                        $currentEmployerSQL = "select * from companies;";
                         $currentEmployerResult = $conn -> query($currentEmployerSQL);
                         while($currentEmployerRow = $currentEmployerResult->fetch_assoc())
                         {   
@@ -102,7 +122,7 @@
                         print '<h3>Select Current Employer</h3>
                                 <select name="employementHistory">
                                 <option name="None">None</option>';
-                        $employerSQL = "select * from Companies;";
+                        $employerSQL = "select * from companies;";
                         $employerResult = $conn -> query($employerSQL);
                         while($employerRow = $employerResult->fetch_assoc())
                         {   
@@ -115,7 +135,7 @@
                                 <br>';
 
                         $previousHistorySQL = "SELECT a.FromDate, a.ToDate, b.companyName, b.companyID
-                            FROM jobHistory a
+                            FROM jobhistory a
                             INNER JOIN companies b
                             ON a.companyID = b.companyID
                             WHERE a.userID = {$userID};";
@@ -135,7 +155,7 @@
     </body>
 </html>
 
-<?php 
+<!-- <?php 
 
     function updateProfile() {
         include ("serverConfig.php");
@@ -145,23 +165,23 @@
         }
         //Update user description
         $userID = $_SESSION['user'];
-        $sql = "UPDATE Users
+        $sql = "UPDATE users
                 SET description = '{$_POST['description']}'
-                WHERE UserID = {$userID}";
+                WHERE userID = {$userID}";
 
         //Updates the skills if selected
         if(isset($_POST['skills'])) {
             $values = $_POST['skills'];
             
-            $deleteSkills = "DELETE FROM UserSkills WHERE userID={$userID};";
+            $deleteSkills = "DELETE FROM userskills WHERE userID={$userID};";
             $conn -> query($deleteSkills);
             if ($conn->query($deleteSkills) === TRUE) {
                 foreach($values as $value) {
-                    $skillsSqlForm = "select * from Skills where skillTitle=\"{$value}\";";
+                    $skillsSqlForm = "select * from skills where skillTitle=\"{$value}\";";
                     $skillsResultForm = $conn -> query($skillsSqlForm);
                     $skillsRowForm = $skillsResultForm->fetch_assoc();
 
-                    $userSkillsSQL = "INSERT INTO Userskills (userID, skillID)
+                    $userSkillsSQL = "INSERT INTO userskills (userID, skillID)
                     VALUES ('{$_SESSION['user']}', '{$skillsRowForm['skillID']}')";
                     $conn->query($userSkillsSQL);
                 }
@@ -173,21 +193,20 @@
 
         //Update users current employer
         if(isset($_POST['currentEmployer'])) {
-            $currentEmployerSQLForm = "select * from Companies where companyName=\"{$_POST['currentEmployer']}\";";
+            $currentEmployerSQLForm = "select * from companies where companyName=\"{$_POST['currentEmployer']}\";";
             $currentEmployerResultForm = $conn -> query($currentEmployerSQLForm);
             $currentEmployerRowForm = $currentEmployerResultForm->fetch_assoc();
             $companyName = $currentEmployerRowForm['companyID'];
-            //Fix NULL VALue
             if($_POST['currentEmployer'] === "None") $companyName = 'NULL';
-            $userCurrentEmployerSQL = "UPDATE Users
+            $userCurrentEmployerSQL = "UPDATE users
             SET companyID = {$companyName}
-            WHERE UserID = {$userID}";
+            WHERE userID = {$userID}";
             $conn->query($userCurrentEmployerSQL);
         }
 
 
         if ($conn->query($sql) === TRUE) {
-            // header( "Location: profile_user.php" );
+            header( "Location: profile_user.php" );
 
         } 
         else {
@@ -201,11 +220,11 @@
     if(isset($_POST["addQualification"])) {
         //Adds a qualification
         if(isset($_POST['University']) && isset($_POST['Course']) && isset($_POST['Level']) && isset($_POST['DateCompleted'])) {
-            $accademicSQL = "INSERT INTO Accademicdegrees (academicTitle, academicDescription, academicLevel)
+            $accademicSQL = "INSERT INTO accademicdegrees (academicTitle, academicDescription, academicLevel)
             VALUES ('{$_POST['University']}', '{$_POST['Course']}', '{$_POST['Level']}')";
             $conn->query($accademicSQL);
             
-            $accademicSQLGet = "select * from Accademicdegrees where academicTitle=\"{$_POST['University']}\"
+            $accademicSQLGet = "select * from accademicdegrees where academicTitle=\"{$_POST['University']}\"
             AND academicDescription=\"{$_POST['Course']}\" AND academicLevel=\"{$_POST['Level']}\";";
             $accademicSQLGetResult = $conn -> query($accademicSQLGet);
             $accademicSQLGetRow = $accademicSQLGetResult->fetch_assoc();
@@ -220,7 +239,7 @@
     if(isset($_POST["addJobHistory"])) {
         //Adds a qualification
         if(isset($_POST['employementHistory']) && isset($_POST['dateStarted']) && isset($_POST['dateEnded']) && $_POST['employementHistory'] != 'None') {
-            $companySQL = "select * from Companies where companyName=\"{$_POST['employementHistory']}\";";
+            $companySQL = "select * from companies where companyName=\"{$_POST['employementHistory']}\";";
             $companySQLResult = $conn -> query($companySQL);
             $companySQLRow = $companySQLResult->fetch_assoc();
 
@@ -238,4 +257,4 @@
         echo "<script> refreshPage(); </script>";
     }
 
-?>
+?> -->

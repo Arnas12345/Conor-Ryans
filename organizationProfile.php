@@ -5,12 +5,17 @@
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time() ?>">
     </head>
     <body>
-        <?php include("headerTemplate.html"); ?>
+        <?php include("companyTemplate.html"); ?>
         <h1 class="page-header">Organization Profile</h1>
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >
                 <img src = "images/ellipse.png" alt = "profile image" height="20%" weight="20%" >
+            </div>
+            <div class="editProfile">
+                <form action="editCompany.php">
+                    <input type="submit" value="Edit Organization" />
+                </form>
             </div>
         </div>
         <div class = "description-container">
@@ -22,7 +27,7 @@
                 <?php
                     session_start();
 
-                    $companyID = $_GET["companyID"];
+                    $companyID = $_SESSION["company"];
                     include ("serverConfig.php");
                     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
                     
@@ -34,8 +39,9 @@
                     $result = $conn -> query($sql);
                     $row = $result->fetch_assoc();
 
-                    if(isset($row['description']) ){
-                        print "<p class='userDetails'>{$row['description']}</p>";
+                    if(isset($row['Description']) ){
+                        print "<p class='userDetails'>{$row['Description']}</p>";
+                        setcookie("companyDescription", $row['Description'], time() + 3600);
                     }
                     else{
                         print "<p class='userDetails'>No Description Given.</p>";
@@ -44,6 +50,7 @@
                     print "<h3>Address:</h3>";
                     if(isset($row['address']) ){
                         print "<p class='userDetails'>{$row['address']}</p>";
+                        setcookie("address", $row['address'], time() + 3600);
                     }
                     else{
                         print "<p class='userDetails'>No Address Given.</p>";
@@ -51,10 +58,12 @@
 
                     print "<h3>Email:</h3>";
                     print "<p class='userDetails'>{$row['email']}</p>";
+                    setcookie("email", $row['email'], time() + 3600);
 
                     print "<h3>Contact Number:</h3>";
                     if(isset($row['ContactNo']) ){
                         print "<p class='userDetails'>{$row['ContactNo']}</p>";
+                        setcookie("contactNo", $row['ContactNo'], time() + 3600);
                     }
                     else {
                         print "<p class='userDetails'>No Contact Number Given.</p>";

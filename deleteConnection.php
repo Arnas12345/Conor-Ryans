@@ -13,7 +13,7 @@
             $secondUserID = $_GET['id'];
             $currentUser = $_SESSION['user'];
 
-            $connectionsSQL = "DELETE FROM Connections WHERE userIDFirst=\"{$currentUser}\" AND userIDSecond=\"{$secondUserID}\";";
+            $connectionsSQL = "DELETE FROM connections WHERE userIDFirst=\"{$currentUser}\" AND userIDSecond=\"{$secondUserID}\";";
 
             if ($conn->query($connectionsSQL) === TRUE) {
                 echo "Sucessful";

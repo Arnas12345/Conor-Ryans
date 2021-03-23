@@ -19,7 +19,7 @@
             $companyID = $_GET['companyID'];
             $currentUser = $_SESSION['user'];
 
-            $connectionsSQL = "DELETE FROM Looped WHERE userID = {$currentUser} AND companyID = {$companyID} AND vacancyID = {$vacancyID};";
+            $connectionsSQL = "DELETE FROM looped WHERE userID = {$currentUser} AND companyID = {$companyID} AND vacancyID = {$vacancyID};";
 
             if ($conn->query($connectionsSQL) === TRUE) {
                 echo "Sucessful";
