@@ -6,8 +6,9 @@
     </head>
     <body>
         <?php 
-            include("headerTemplate.html"); 
             session_start();
+            if(isset($_SESSION['user'])) include("headerTemplate.html");
+            else include("companyTemplate.html");
             $userID = $_GET["userID"];
             include ("serverConfig.php");
             $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
@@ -15,7 +16,7 @@
                 die("Connection failed:" .$conn -> connect_error);
             }
 
-            $sql = "select * from Users where userID={$userID};";
+            $sql = "select * from users where userID={$userID};";
             $result = $conn -> query($sql);
             $row = $result->fetch_assoc();
             print "<h1 class='page-header'>{$row['username']}'s Profile</h1>";
@@ -40,7 +41,7 @@
                     if ($conn -> connect_error) {
                         die("Connection failed:" .$conn -> connect_error);
                     }
-                    $sql = "select description from Users where userID={$userID};";
+                    $sql = "select description from users where userID={$userID};";
                     $result = $conn -> query($sql);
                     if($row = $result->fetch_assoc()) {
                         print "<p class='userDetails'>{$row['description']}</p>";

@@ -69,7 +69,7 @@
                 $currentCompany = $_SESSION['company'];
 
                 $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
-                from Vacancies a
+                from vacancies a
                 INNER JOIN companies b
                 ON a.companyID = b.companyID
                 WHERE a.companyID ={$currentCompany}
@@ -143,9 +143,9 @@
                                         while($getApplicantsRow = $getApplicantsResult -> fetch_assoc()) {
                                             echo '<tr>';
                                             echo "<td><a id='applicant{$getApplicantsRow['userID']}'href='profile.php?userID={$getApplicantsRow['userID']}'>{$getApplicantsRow['username']}</a></td>";
-                                            if($getApplicantsRow['status'] == 'pending') {
+                                            if($getApplicantsRow['status'] == 'Pending') {
                                                 echo "<td><a id='decline{$getApplicantsRow['userID']}' href='organizationHome.php?deleteUser=true&userID={$getApplicantsRow['userID']}&vacancyID={$getApplicantsRow['vacancyID']}'>&#x2716;</a></td>";
-                                                echo "<td><a id='accept{$getApplicantsRow['userID']}'>&#x2714;</a></td>";
+                                                echo "<td><a id='accept{$getApplicantsRow['userID']}' href='organizationHome.php?acceptUser=true&userID={$getApplicantsRow['userID']}&vacancyID={$getApplicantsRow['vacancyID']}'>&#x2714;</a></td>";
                                             } else echo "<td><p>{$getApplicantsRow['status']}</p></td>";
                                             echo '</tr>';
                                         }
@@ -164,15 +164,18 @@
     </body>
 </html>
 
-<?php 
-    if (isset($_GET['deleteUser'])) {
+<?php
+    if (isset($_GET['deleteUser'])) changeApplicantStatus("Declined");
+    if (isset($_GET['acceptUser'])) changeApplicantStatus("Accepted");
+
+    function changeApplicantStatus($status) {
         include ("serverConfig.php");
         $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
         if ($conn -> connect_error) {
             die("Connection failed:" .$conn -> connect_error);
         }
         $declineApplicationSQL = "UPDATE looped 
-                                SET status='Declined'
+                                SET status='{$status}'
                                 WHERE userID={$_GET['userID']} AND vacancyID={$_GET['vacancyID']};";
         $conn -> query($declineApplicationSQL);
         echo "<script> refreshPage(); </script>";
