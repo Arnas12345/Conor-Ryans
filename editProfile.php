@@ -19,6 +19,12 @@
             <div class = "profileImage" >
                 <img src = "images/ellipse.png" alt = "profile image" height="20%" weight="20%" >
             </div>
+            <div class="changeProfileImage">
+                <form method="post" action="editProfile.php" enctype="multipart/form-data">
+                    <input type="file" name="image">
+                    <input type="submit" name="submit" value="Upload">
+                </form>
+            </div>
         </div>
         <div class = "description-container">
             <div class = "description-heading">
@@ -38,6 +44,20 @@
                         $userID = $_SESSION['user'];
                         $sql = "select * from Users where userID={$userID};";
                         $result = $conn -> query($sql);
+
+                        if(isset($_POST['submit'])) {
+                            // $imageName = file_get_contents($_FILES['image']['name']);
+                            $imageData = file_get_contents($_FILES['image']['tmp_name']);
+                            // $imageType = file_get_contents($_FILES['image']['type']);
+                            // echo $imageData;
+
+                            $userProfileImage ="UPDATE users 
+                                                SET profileImage={$imageData}
+                                                WHERE userID={$userID}";
+                            $conn->query($userProfileImage);
+
+
+                        }
 
                         //Sets the description if one exists
                         $description = '';
