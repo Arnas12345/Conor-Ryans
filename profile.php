@@ -25,7 +25,7 @@
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >
-                <img src = "images/ellipse.png" alt = "profile image" height="20%" weight="20%" >
+                <img src = "images/blank-profile-picture.png" alt = "profile image" height="25%" weight="25%" style="border-radius:50%;">
             </div>
         </div>
         <div class = "description-container">

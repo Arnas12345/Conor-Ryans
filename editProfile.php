@@ -4,7 +4,11 @@
     <head>
         <title>Loop : Home</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
+        <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php
+
+use function PHPSTORM_META\type;
+
+echo time(); ?>">
     </head>
     <script type="text/javascript">
         function refreshPage() {
@@ -22,7 +26,7 @@
             <div class="changeProfileImage">
                 <form method="post" action="editProfile.php" enctype="multipart/form-data">
                     <input type="file" name="image">
-                    <input type="submit" name="submit" value="Upload">
+                    <input type="submit" name="submitImage" value="Upload">
                 </form>
             </div>
         </div>
@@ -45,18 +49,19 @@
                         $sql = "select * from users where userID={$userID};";
                         $result = $conn -> query($sql);
 
-                        if(isset($_POST['submit'])) {
-                            // $imageName = file_get_contents($_FILES['image']['name']);
-                            $imageData = file_get_contents($_FILES['image']['tmp_name']);
-                            // $imageType = file_get_contents($_FILES['image']['type']);
-                            // echo $imageData;
+                        if(isset($_POST['submitImage'])) {
+                            echo "<pre>" , print_r($_FILES["image"]) , "</pre>";
+                            $profileImageName = time() . "_" . $_FILES["image"]["name"];
+                            $target = "profileImages/" . $profileImageName;
 
-                            $userProfileImage ="UPDATE users 
-                                                SET profileImage={$imageData}
-                                                WHERE userID={$userID}";
+                            str_replace($target, " ", "");
+                            if(copy($_FILES["image"]["tmp_name"], $target)) {
+                                $userProfileImage ="UPDATE users 
+                                                    SET profileImage='$profileImageName'
+                                                    WHERE userID={$userID};";
+                            }
+                            
                             $conn->query($userProfileImage);
-
-
                         }
 
                         //Sets the description if one exists

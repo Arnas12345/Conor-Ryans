@@ -1,3 +1,5 @@
+
+
 <html>
     <head>
         <title>Loop : Home</title>
@@ -10,7 +12,28 @@
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >
-                <img src = "images/ellipse.png" alt = "profile image" height="20%" weight="20%" >
+                <?php
+                    session_start();
+
+                    include ("serverConfig.php");
+                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                    if ($conn -> connect_error) {
+                        die("Connection failed:" .$conn -> connect_error);
+                    }
+
+                    $sql = "select * from users where userID =\"{$_SESSION['user']}%\";";
+                    $result = $conn -> query($sql);
+                    $row = $result->fetch_assoc();
+                    
+                    $profileImage = $row['profileImage'];
+                    if($profileImage === null) {
+                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="15%" style="border-radius:50%;" >';
+
+                    }
+                    else {
+                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='15%' style='border-radius:50%; object-fit: cover;' >";
+                    }
+                ?>
             </div>
             <div class="editProfile">
                 <form action="editProfile.php">
@@ -25,7 +48,6 @@
             <div class = "bio-description">
                 <h3>Bio:</h3>
                 <?php
-                    session_start();
 
                     include ("serverConfig.php");
                     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
@@ -43,6 +65,8 @@
                     else {
                         print "<p>No Bio found.</p>";
                     }
+
+                    $profileImage = $row['profileImage'];
                 ?>
 
             </div>
