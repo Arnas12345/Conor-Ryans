@@ -88,7 +88,7 @@
         $conn->query($sql);
 
         if ($conn->query($sql) === TRUE) {
-            // header( "Location: organizationProfile.php" );
+            header( "Location: organizationProfile.php" );
 
         } 
         else {
