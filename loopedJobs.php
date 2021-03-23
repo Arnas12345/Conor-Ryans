@@ -11,7 +11,6 @@
         <hr>
        
         <div class="page-box">
-            <h1 style="visibility: hidden">s</h1>
             <?php
                 session_start();
                 include ("serverConfig.php");
@@ -28,12 +27,14 @@
                         ON b.vacancyID = c.vacancyID
                         WHERE c.userID = {$_SESSION['user']};";
                 $result = $conn -> query($sql);
-                    print "<table border=1 class='LoopedJobs'>";
-                    print "<TR>
-                                <TH>Company Name</TH>
-                                <TH>Job Title</TH>
-                                <TH>Status</TH>
-                            </TR>";
+                    print "<table class='loopedJobs'>";
+                    print "<thead>
+                                <tr>
+                                    <th>Company Name</th>
+                                    <th>Job Title</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>";
                     while($row = $result->fetch_assoc())
                     {   
                         print "<TR>";

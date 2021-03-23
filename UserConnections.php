@@ -11,7 +11,6 @@
         <hr>
        
         <div class="page-box">
-            <h1 style="visibility: hidden">s</h1>
             <?php
                 session_start();
                 include ("serverConfig.php");
