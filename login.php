@@ -12,7 +12,7 @@
             $email = $_POST['email'];
             $password = $_POST['pass'];
             
-            $sql = "select * from Users where email=\"{$email}\";";
+            $sql = "select * from users where email=\"{$email}\";";
             $result = $conn -> query($sql);
             $row = $result->fetch_assoc();
             $userID = $row["userID"];
@@ -23,8 +23,8 @@
                 return strcasecmp($inputEmail, $DBEmail) == 0;
             }
 
+            // if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
             if(emailMatches($email, $sqlEmail)) {
-                
                 $_SESSION['user'] = $userID;
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['loggedin'] = true;

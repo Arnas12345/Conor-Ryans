@@ -13,12 +13,12 @@
             $email = $_POST['email'];
             $hashedPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-            $sql = "INSERT INTO Users (username, email, password)
+            $sql = "INSERT INTO users (username, email, password)
             VALUES ('{$username}', '{$email}', '{$hashedPass}')";
 
             if ($conn->query($sql) === TRUE) {
                 
-                $sql = "select * from Users where email=\"{$email}\";";
+                $sql = "select * from users where email=\"{$email}\";";
                 $result = $conn -> query($sql);
                 $row = $result->fetch_assoc();
                 $userID = $row["userID"];

@@ -13,7 +13,7 @@
             $secondUserID = $_GET['id'];
             $currentUser = $_SESSION['user'];
 
-            $sql = "INSERT INTO Connections (userIDFirst, userIDSecond, CreationDate)
+            $sql = "INSERT INTO connections (userIDFirst, userIDSecond, CreationDate)
             VALUES ('{$currentUser}', '{$secondUserID}', Now())";
 
             if ($conn->query($sql) === TRUE) {

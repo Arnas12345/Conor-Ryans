@@ -20,7 +20,7 @@
             $currentUser = $_SESSION['user'];
 
             $sql = "INSERT INTO Looped (userID, companyID, vacancyID, status)
-            VALUES ('{$currentUser}', '{$companyID}', '{$vacanyID}', 'pending')";
+            VALUES ('{$currentUser}', '{$companyID}', '{$vacanyID}', 'Pending')";
 
             if ($conn->query($sql) === TRUE) {
                 header( "Location: loopedJobs.php" );
