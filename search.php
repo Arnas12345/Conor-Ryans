@@ -3,6 +3,7 @@
         <title>Loop : Search</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/search.css?v=<?php echo time(); ?>">
+       
         <script type="text/javascript">
             function makeConnection(variable) {
                 window.location.href= 'addConnection.php?id=' + variable;
@@ -55,9 +56,9 @@
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
                                 if($connectionsRow) {
-                                    print "<img class='connectionImage' src='images/connected.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$row['userID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/connectedv1.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$row['userID']})'></img><br>";
                                 } else {
-                                    print "<img class='connectionImage' src='images/unconnected.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$row['userID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$row['userID']})'></img><br>";
                                 }
                                 print "</div>";
                             }

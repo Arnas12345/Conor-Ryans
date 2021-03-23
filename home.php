@@ -79,14 +79,13 @@
                             $skillsNeeded[] = $skill;
                         }
                         $counter++;
-                        print "<div class='vacancy'>";
-                        print "<div class='container'>
+                        print "<div class='container vacancy'>
                                     <div class='row'>
                                         <div class='col-4' >
                                             <img class='job_logo' src='images/job-icon.jpg' alt='logo here'></img>
                                         </div>
                                         <div class='col-8' >
-                                        <a class='vacancyDetails' href='company.php?companyID={$row['companyID']}'><b><u>{$row['companyName']}</u></b></a>
+                                        <a class='CompanyDetails' href='company.php?companyID={$row['companyID']}'><b><h3>{$row['companyName']}</h3></b></a>
                                         <p class='vacancyDetails'><b>Title: </b>{$row['vacancyTitle']}</p>
                                         <p class='vacancyDetails'><b>Description: </b>{$row['vacancyDescription']}</p>
                                         <p class='vacancyDetails'><b>Role: </b>{$row['role']}</p>
@@ -97,9 +96,9 @@
                                         $loopedJobResult = $conn -> query($loopedJobSQL);
                                         $loopedJobRow = $loopedJobResult->fetch_assoc();
                                         if($loopedJobRow) {
-                                            print "<img class='img-fluid' src='images/job-icon.jpg' alt='logo here' style='height: 10%;' onClick='unLoopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
+                                            print "<img class='img-fluid' src='images/cancel_loop.png' alt='logo here' style='height: 25%;' onClick='unLoopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
                                         } else {
-                                            print "<img class='img-fluid' src='images/loop_small.png' alt='logo here' style='height: 10%;' onClick='loopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
+                                            print "<img class='img-fluid' src='images/Like_Loop_small.png' alt='logo here'  onClick='loopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
                                         }
                                         print "<div id='myModal{$counter}' class='modal'>
                                                 <!-- Modal content -->
@@ -120,7 +119,7 @@
                                             echo '</tr>';
                                         }
                                         print "</table></div></div>";
-                                        print "</div></div></div></div>";
+                                        print "</div></div></div>";
                                         
                     }
                 } else {
