@@ -19,7 +19,7 @@
             $companyID = $_GET['companyID'];
             $currentUser = $_SESSION['user'];
 
-            $sql = "INSERT INTO Looped (userID, companyID, vacancyID, status)
+            $sql = "INSERT INTO looped (userID, companyID, vacancyID, status)
             VALUES ('{$currentUser}', '{$companyID}', '{$vacanyID}', 'Pending')";
 
             if ($conn->query($sql) === TRUE) {

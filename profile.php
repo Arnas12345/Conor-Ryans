@@ -6,9 +6,9 @@
     </head>
     <body>
         <?php 
-            if(isset($_SESSION['username'])) include("headerTemplate.html");
-            else include("companyTemplate.html");
             session_start();
+            if(isset($_SESSION['user'])) include("headerTemplate.html");
+            else include("companyTemplate.html");
             $userID = $_GET["userID"];
             include ("serverConfig.php");
             $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);

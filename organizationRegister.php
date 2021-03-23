@@ -14,12 +14,12 @@
             $companyEmail = $_POST['email'];
             $hashedPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-            $sql = "INSERT INTO Companies (companyName, email, password)
+            $sql = "INSERT INTO companies (companyName, email, password)
             VALUES ('{$companyName}', '{$companyEmail}', '{$hashedPass}')";
 
             if ($conn->query($sql) === TRUE) {
                 
-                $sql = "select * from Companies where email=\"{$companyEmail}\";";
+                $sql = "select * from companies where email=\"{$companyEmail}\";";
                 $result = $conn -> query($sql);
                 $row = $result->fetch_assoc();
                 $companyID = $row["companyID"];

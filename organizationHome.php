@@ -69,7 +69,7 @@
                 $currentCompany = $_SESSION['company'];
 
                 $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
-                from Vacancies a
+                from vacancies a
                 INNER JOIN companies b
                 ON a.companyID = b.companyID
                 WHERE a.companyID ={$currentCompany}

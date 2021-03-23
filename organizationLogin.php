@@ -12,7 +12,7 @@
             $companyEmail = $_POST['email'];
             $password = $_POST['pass'];
             
-            $sql = "select * from Companies where email=\"{$companyEmail}\";";
+            $sql = "select * from companies where email=\"{$companyEmail}\";";
             $result = $conn -> query($sql);
             $row = $result->fetch_assoc();
             $companyID = $row["companyID"];
@@ -23,8 +23,8 @@
                 return strcasecmp($inputEmail, $DBEmail);
             }
 
+            // if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
             if(emailMatches($companyEmail, $sqlEmail) == 0) {
-                
                 $_SESSION['company'] = $companyID;
                 $_SESSION['companyName'] = $row['companyName'];
                 $_SESSION['loggedin'] = true;

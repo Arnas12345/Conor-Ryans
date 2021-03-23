@@ -23,8 +23,8 @@
                 return strcasecmp($inputEmail, $DBEmail) == 0;
             }
 
-            // if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
             if(emailMatches($email, $sqlEmail)) {
+            // if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
                 $_SESSION['user'] = $userID;
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['loggedin'] = true;

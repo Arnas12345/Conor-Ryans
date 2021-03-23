@@ -35,7 +35,7 @@
                         die("Connection failed:" .$conn -> connect_error);
                     }
 
-                    $sql = "select * from Companies where companyID={$companyID};";
+                    $sql = "select * from companies where companyID={$companyID};";
                     $result = $conn -> query($sql);
                     $row = $result->fetch_assoc();
 
@@ -84,7 +84,7 @@
                 }
 
                 $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
-                from Vacancies a
+                from vacancies a
                 INNER JOIN companies b
                 ON a.companyID = b.companyID
                 WHERE b.companyID = {$companyID}
