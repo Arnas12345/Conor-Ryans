@@ -3,8 +3,6 @@
    $DB_USERNAME = 'root';
    $DB_PASSWORD = '';
    $DB_DATABASE ='loop';
-<<<<<<< HEAD
-=======
 
 
    // $DB_SERVER = 'sql308.epizy.com';
@@ -17,5 +15,4 @@
    //       die("Connection failed:" .$conn -> connect_error);
    //    }
    // }
->>>>>>> c81301be54d32333c733dc2d75415c8b2f6c979b
 ?>
