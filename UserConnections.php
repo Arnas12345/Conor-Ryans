@@ -10,7 +10,7 @@
         <h1 class="page-header">My Connections</h1>
         <hr>
        
-        <div class="page-boxUserConnections">
+        <div class="page-box">
             <?php
                 session_start();
                 include ("serverConfig.php");

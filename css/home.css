@@ -129,6 +129,8 @@ a:active {
     float: right;
     font-size: 28px;
     font-weight: bold;
+    text-align: right;
+    
 }
 
 .close:hover,
@@ -136,4 +138,45 @@ a:active {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.skillsTable {
+    text-align: center;
+    border-spacing: 5px;
+    margin-left:auto;
+    margin-right:auto;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 90%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    border-collapse: separate;
+}
+
+.skillsTable thead tr {
+    background-color: #79b6ca;
+    color: #ffffff;
+    text-align: center;
+}
+
+.skillsTable th,
+.skillsTable td {
+    padding: 12px 15px;
+}
+
+.skillsTable tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.skillsTable tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.skillsTable tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.skillsTable tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
 }

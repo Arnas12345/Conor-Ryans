@@ -29,7 +29,7 @@
             var modal = document.getElementById("myModal" + modalNumber);
             modal.style.display = "block";
             
-            var span = document.getElementsByClassName("close")[0];
+            var span = document.getElementsByClassName("close" + modalNumber)[0];
             span.onclick = function() {
                 modal.style.display = "none";
             }
@@ -75,7 +75,8 @@
                         WHERE c.vacancyID= {$row['vacancyID']}";
                         $skillsResult = $conn -> query($skillsSql);
                         while($skillsRow = $skillsResult -> fetch_assoc()) {
-                            $skillsNeeded[] = $skillsRow['skillTitle'];
+                            $skill = array('skillTitle' => $skillsRow['skillTitle'], 'skillDesc' => $skillsRow['skillDescription']);
+                            $skillsNeeded[] = $skill;
                         }
                         $counter++;
                         print "<div class='vacancy'>";
@@ -103,15 +104,19 @@
                                         print "<div id='myModal{$counter}' class='modal'>
                                                 <!-- Modal content -->
                                                 <div class='modal-content'>
-                                                    <span class='close'>&times;</span>
-                                                    <table id='skillsTable'>
+                                                    <span class='close{$counter} close'>&times;</span>
+                                                    <table class='skillsTable'>
+                                                    <thead>
                                                         <tr>
                                                             <th>Skills Required</th>
-                                                        </tr>";
+                                                            <th>Skills Description</th>
+                                                        </tr>
+                                                    </thead>";
                                         foreach ($skillsNeeded as $row) 
                                         {   
                                             echo '<tr>';
-                                            echo '<td>' . $row . '</td>';
+                                            echo '<td>' . $row['skillTitle'] . '</td>';
+                                            echo '<td>' . $row['skillDesc'] . '</td>';
                                             echo '</tr>';
                                         }
                                         print "</table></div></div>";
