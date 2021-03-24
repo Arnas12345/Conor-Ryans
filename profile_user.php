@@ -9,11 +9,14 @@
     <body>
         <?php include("headerTemplate.html"); ?>
         <h1 class="page-header">My Profile</h1>
+        <?php 
+            session_start();
+            print "<h2> userID: {$_SESSION['user']} </h2>";
+        ?>
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >
                 <?php
-                    session_start();
 
                     include ("serverConfig.php");
                     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
