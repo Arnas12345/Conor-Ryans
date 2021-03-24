@@ -50,7 +50,7 @@ echo time(); ?>">
                         $result = $conn -> query($sql);
 
                         if(isset($_POST['submitImage'])) {
-                            echo "<pre>" , print_r($_FILES["image"]) , "</pre>";
+                            
                             $profileImageName = time() . "_" . $_FILES["image"]["name"];
                             $target = "profileImages/" . $profileImageName;
 

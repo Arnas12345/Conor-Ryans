@@ -24,15 +24,18 @@
                     $sql = "select * from users where userID =\"{$_SESSION['user']}%\";";
                     $result = $conn -> query($sql);
                     $row = $result->fetch_assoc();
-                    $profileImage = null;
-                    if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
-                    if($profileImage === null) {
-                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="15%" style="border-radius:50%;" >';
 
+                    $profileImage = null;
+
+                    if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
+
+                    if($profileImage === null) {
+                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="25%" style="min-width:180px; min-height:180px; border-radius:50%;" >';
                     }
                     else {
-                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='15%' style='border-radius:50%; object-fit: cover;' >";
+                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='25%' style='min-width:180px; min-height:180px; border-radius:50%; object-fit: cover; overflow:hidden;' >";
                     }
+
                 ?>
             </div>
             <div class="editProfile">

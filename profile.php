@@ -26,7 +26,30 @@
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >
-                <img src = "images/blank-profile-picture.png" alt = "profile image" height="25%" weight="25%" style="border-radius:50%;">
+                <?php
+
+                    include ("serverConfig.php");
+                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                    if ($conn -> connect_error) {
+                        die("Connection failed:" .$conn -> connect_error);
+                    }
+
+                    $sql = "select * from users where userID =\"{$userID}%\";";
+                    $result = $conn -> query($sql);
+                    $row = $result->fetch_assoc();
+
+                    $profileImage = null;
+
+                    if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
+
+                    if($profileImage === null) {
+                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="25%" style="min-width:180px; min-height:180px; border-radius:50%;" >';
+                    }
+                    else {
+                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='25%' style='min-width:180px; min-height:180px; border-radius:50%; object-fit: cover; overflow:hidden;' >";
+                    }
+
+                ?>
             </div>
         </div>
         <div class = "description-container">

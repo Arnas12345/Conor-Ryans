@@ -101,6 +101,14 @@ a:active {
     margin-bottom: 2%;
 }
 
+.userImage {
+    border-radius: 50%;
+    width:auto;
+    height: auto;
+    max-width: 25%;
+    max-height: 25%;
+}
+
 .userDetails {
     padding-bottom: 3%;
     margin: 3%;
