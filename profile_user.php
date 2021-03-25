@@ -11,7 +11,7 @@
         <h1 class="page-header">My Profile</h1>
         <?php 
             session_start();
-            print "<h2> userID: {$_SESSION['user']} </h2>";
+            //print "<h2> userID: {$_SESSION['user']} </h2>";
         ?>
         <hr>
         <div class = "profile-container" >
