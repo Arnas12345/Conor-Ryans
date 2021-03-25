@@ -9,28 +9,34 @@
                 die("Connection failed:" .$conn -> connect_error);
             }
 
-            $username = $_POST['name'];
-            $email = $_POST['email'];
-            $hashedPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+            if($_POST['pass'] === $_POST['passConfirm']) {
 
-            $sql = "INSERT INTO users (username, email, password)
-            VALUES ('{$username}', '{$email}', '{$hashedPass}')";
+                $username = $_POST['name'];
+                $email = $_POST['email'];
+                $hashedPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-            if ($conn->query($sql) === TRUE) {
-                
-                $sql = "select * from users where email=\"{$email}\";";
-                $result = $conn -> query($sql);
-                $row = $result->fetch_assoc();
-                $userID = $row["userID"];
+                $sql = "INSERT INTO users (username, email, password)
+                VALUES ('{$username}', '{$email}', '{$hashedPass}')";
 
-                $_SESSION['user'] = $userID;
-                $_SESSION['username'] = $username;
-                $_SESSION['loggedin'] = true;
-                header( "Location: home.php" );
+                if ($conn->query($sql) === TRUE) {
+                                
+                    $sql = "select * from users where email=\"{$email}\";";
+                    $result = $conn -> query($sql);
+                    $row = $result->fetch_assoc();
+                    $userID = $row["userID"];
 
-            } 
+                    $_SESSION['user'] = $userID;
+                    $_SESSION['username'] = $username;
+                    $_SESSION['loggedin'] = true;
+                    header( "Location: home.php" );
+
+                } 
+                else {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                    header( "Location: index.php" );
+                }
+            }
             else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
                 header( "Location: index.php" );
             }
 
