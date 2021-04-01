@@ -6,9 +6,10 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php
 
-use function PHPSTORM_META\type;
+            use function PHPSTORM_META\type;
 
-echo time(); ?>">
+        echo time(); ?>">
+
     </head>
     <script type="text/javascript">
         function refreshPage() {
@@ -49,19 +50,21 @@ echo time(); ?>">
                         $sql = "select * from users where userID={$userID};";
                         $result = $conn -> query($sql);
 
-                        if(isset($_POST['submitImage'])) {
-                            echo "<pre>" , print_r($_FILES["image"]) , "</pre>";
+                        if(isset($_POST['submitImage']) && $_FILES["image"]["name"]) {
+                            
                             $profileImageName = time() . "_" . $_FILES["image"]["name"];
                             $target = "profileImages/" . $profileImageName;
 
-                            str_replace($target, " ", "");
+                            str_replace(" ", "", $target);
                             if(copy($_FILES["image"]["tmp_name"], $target)) {
                                 $userProfileImage ="UPDATE users 
                                                     SET profileImage='$profileImageName'
                                                     WHERE userID={$userID};";
                             }
                             
-                            $conn->query($userProfileImage);
+                            if($conn->query($userProfileImage)) {
+                                header( "Location: profile_user.php" );
+                            }
                         }
 
                         //Sets the description if one exists
