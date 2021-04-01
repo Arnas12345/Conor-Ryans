@@ -1,16 +1,59 @@
 <html>
     <head>
-        <title>Loop : User Profie</title>
+        <title>Loop : Company Profile</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time() ?>">
     </head>
     <body>
-        <?php include("headerTemplate.html"); ?>
-        <h1 class="page-header">Organization Profile</h1>
+        <?php 
+            
+            session_start();
+
+            function getCompanyData($cID) {
+                include ("serverConfig.php");
+                $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                if ($conn -> connect_error) {
+                    die("Connection failed:" .$conn -> connect_error);
+                }
+
+                $sql = "select * from companies where companyID =\"{$cID}%\";";
+                $result = $conn -> query($sql);
+                $conn->close();
+
+                return $result->fetch_assoc();
+            }
+
+            
+            if(isset($_SESSION['user'])) include("headerTemplate.html");
+            else include("companyTemplate.html");
+            $companyID = $_GET["companyID"];
+
+            $row = getCompanyData($companyID);
+
+            print "<h1 class='page-header'>{$row['companyName']}</h1>";
+            
+        ?>
+
         <hr>
+
         <div class = "profile-container" >
             <div class = "profileImage" >
-                <img src = "images/ellipse.png" alt = "profile image" height="20%" weight="20%" >
+                <?php
+
+                    $row = getCompanyData($companyID);
+
+                    $profileImage = null;
+
+                    if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
+
+                    if($profileImage === null) {
+                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="25%" style="min-width:180px; min-height:180px; border-radius:50%;" >';
+                    }
+                    else {
+                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='25%' style='min-width:180px; min-height:180px; border-radius:50%; object-fit: cover; overflow:hidden;' >";
+                    }
+
+                ?>
             </div>
         </div>
         <div class = "description-container">
@@ -20,25 +63,14 @@
             <div class = "bio-description">
                 <h3>Description:</h3>
                 <?php
-                    session_start();
 
-                    $companyID = $_GET["companyID"];
-                    include ("serverConfig.php");
-                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
-                    
-                    if ($conn -> connect_error) {
-                        die("Connection failed:" .$conn -> connect_error);
-                    }
+                    $row = getCompanyData($companyID);
 
-                    $sql = "select * from companies where companyID={$companyID};";
-                    $result = $conn -> query($sql);
-                    $row = $result->fetch_assoc();
-
-                    if(isset($row['description']) ){
-                        print "<p class='userDetails'>{$row['description']}</p>";
+                    if(isset($row['Description']) ){
+                        print "<p class='userDetails'>{$row['Description']}</p>";
                     }
                     else{
-                        print "<p class='userDetails'>No Description Given.</p>";
+                        print "<p class='userDetails'>No Description.</p>";
                     }
 
                     print "<h3>Address:</h3>";
@@ -46,7 +78,7 @@
                         print "<p class='userDetails'>{$row['address']}</p>";
                     }
                     else{
-                        print "<p class='userDetails'>No Address Given.</p>";
+                        print "<p class='userDetails'>No Address.</p>";
                     }
 
                     print "<h3>Email:</h3>";
@@ -57,10 +89,9 @@
                         print "<p class='userDetails'>{$row['ContactNo']}</p>";
                     }
                     else {
-                        print "<p class='userDetails'>No Contact Number Given.</p>";
+                        print "<p class='userDetails'>No Contact Number.</p>";
                     }
 
-                    $conn->close();
                 ?>
             </div>
         </div>
@@ -80,6 +111,7 @@
                 ON a.companyID = b.companyID
                 WHERE b.companyID = {$companyID}
                 ORDER BY timeAdded DESC;";
+
                 $result = $conn -> query($sql);
                 
                 if(mysqli_num_rows($result) != 0) {
@@ -110,10 +142,13 @@
                                         <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>";                   
                                         print "</div></div></div>";
                     }
-                } else {
+                } 
+                else {
                     print "<h1>No Vacanies Found.</h1>";
                 }
-                    $conn->close();
+                
+                $conn->close();
+
             ?>
         </div>
     </body>
