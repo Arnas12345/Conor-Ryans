@@ -105,9 +105,9 @@
                                     $result2 = $conn -> query($connectionsSQL);
                                     $connectionsRow = $result2->fetch_assoc();
                                     if($connectionsRow) {
-                                        print "<img class='connectionImage' src='images/connected.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$skillRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/connectedv1.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$skillRow['userID']})'></img><br>";
                                     } else {
-                                        print "<img class='connectionImage' src='images/unconnected.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$skillRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$skillRow['userID']})'></img><br>";
                                     }
                                     print "</div>";
                                 }
@@ -134,9 +134,9 @@
                                     $result2 = $conn -> query($connectionsSQL);
                                     $connectionsRow = $result2->fetch_assoc();
                                     if($connectionsRow) {
-                                        print "<img class='connectionImage' src='images/connected.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$currentlyEmployedRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/connectedv1.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$currentlyEmployedRow['userID']})'></img><br>";
                                     } else {
-                                        print "<img class='connectionImage' src='images/unconnected.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$currentlyEmployedRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$currentlyEmployedRow['userID']})'></img><br>";
                                     }
                                     print "</div>";
                                 }
@@ -165,9 +165,9 @@
                                     $result2 = $conn -> query($connectionsSQL);
                                     $connectionsRow = $result2->fetch_assoc();
                                     if($connectionsRow) {
-                                        print "<img class='connectionImage' src='images/connected.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$previousHistoryRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/connectedv1.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$previousHistoryRow['userID']})'></img><br>";
                                     } else {
-                                        print "<img class='connectionImage' src='images/unconnected.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$previousHistoryRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$previousHistoryRow['userID']})'></img><br>";
                                     }
                                     print "</div>";
                                 }

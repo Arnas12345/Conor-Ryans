@@ -98,8 +98,7 @@
                             $skillsNeeded[] = $skillsRow['skillTitle'];
                         }
                         
-                        print "<div class='vacancy'>";
-                        print "<div class='container'>
+                        print "<div class='container vacancy'>
                                     <div class='row'>
                                         <div class='col-4' >
                                             <img class='job_logo' src='images/job-icon.jpg' alt='logo here'></img>
@@ -108,9 +107,8 @@
                                         <p class='vacancyDetails'><b>Title: </b>{$row['vacancyTitle']}</p>
                                         <p class='vacancyDetails'><b>Description: </b>{$row['vacancyDescription']}</p>
                                         <p class='vacancyDetails'><b>Role: </b>{$row['role']}</p>
-                                        <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>";
-                                        
-                                        print "</div></div></div></div>";
+                                        <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>";                   
+                                        print "</div></div></div>";
                     }
                 } else {
                     print "<h1>No Vacanies Found.</h1>";
