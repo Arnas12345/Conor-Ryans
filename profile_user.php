@@ -35,6 +35,7 @@
             $row = getUserData($userID);
             
         ?>
+        
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >
