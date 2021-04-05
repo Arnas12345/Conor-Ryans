@@ -37,12 +37,6 @@
 
             include("headerTemplate.html");
             
-            $userID = $_SESSION["user"];
-
-            $row = getUserData($userID);
-
-            print "<h1 class='page-header'>{$row['username']}</h1>";
-            
         ?>
 
         <h1 class="page-header">Edit Profile</h1>
@@ -50,6 +44,8 @@
         <div class = "profile-container" >
             <div class = "profileImage">
                 <?php
+
+                    $userID = $_SESSION["user"];
 
                     $row = getUserData($userID);
                     $profileImage = null;

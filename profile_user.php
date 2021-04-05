@@ -85,30 +85,26 @@
             </div>
             <div class = "skills-description">
                 <h3>Skills:</h3>
-                <?php
-                    fetchProfileElement("skills");
-                ?>
+                <?php fetchProfileElement("skills"); ?>
             </div>
             
             <div class = "Qualifications-description">
                 <h3>Employment History:</h3>
-                <?php
-                    fetchProfileElement("employment-history");
-                ?>
+                <?php fetchProfileElement("employment-history"); ?>
             </div>
 
             <div class = "Certs-description">
                 <h3>Qualifications:</h3>
-                <?php
-                    fetchProfileElement("qualifications");                    
-                ?>
+
+                <?php fetchProfileElement("qualifications"); ?>
+
             </div>
 
             <div class = "Qualifications-description">
                 <h3>Current Employer:</h3>
-                <?php
-                    fetchProfileElement("current-employer");
-                ?>
+
+                <?php fetchProfileElement("current-employer"); ?>
+
             </div>
         </div>
     </body>
@@ -127,18 +123,18 @@
         switch($elementToFetch){
             case ("current-employer") : 
                 $sql = "SELECT a.companyName
-                    FROM companies a
-                    INNER JOIN users b
-                    ON a.companyID = b.companyID
-                    WHERE b.userID = {$userID};";
+                        FROM companies a
+                        INNER JOIN users b
+                        ON a.companyID = b.companyID
+                        WHERE b.userID = {$userID};";
                 $result = $conn -> query($sql);
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails'>{$row['companyName']}</p>";
                     setcookie("currentEmployer",$row['companyName'],time()+3600);
                 } 
                 else {
-                    setcookie("currentEmployer", "", time() - 3600);
                     print "<p>No Current Employer.</p>";
+                    setcookie("currentEmployer", "", time()-3600);
                 }
                 break;
 

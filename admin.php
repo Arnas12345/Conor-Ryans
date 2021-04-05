@@ -1,3 +1,12 @@
+<?php
+    session_start();
+
+    if (!(isset($_SESSION["admin"])) || $_SESSION["admin"] == false) {
+        header( "Location: home.php" );
+    } 
+
+?>
+
 <html>
     <head>
         <title>Loop : Search</title>
@@ -30,6 +39,14 @@
     <body>
         <h1 class="page-header">Admin Page</h1>
         <hr>
+        <div class="nav-links">
+            <a class="delete-link" href="flushOldProfilePictures.php"> 
+                Delete Old Images
+            </a>    
+            <a class="logout-link" href="logout.php"> 
+                Logout
+            </a> 
+        </div> 
         <form class="search" method="post" action="admin.php">
             <select class="select" name="selectVal">
                 <option value="name">Name</option>
@@ -41,6 +58,7 @@
             <input class="input" type="text" name="value" placeholder="Search for User">
             <input class="submit" type="submit" value="Search">
         </form>
+            
         <div class="page-box">
             <?php
                 if(isset($_POST["selectVal"])) {
