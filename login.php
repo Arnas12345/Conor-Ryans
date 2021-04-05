@@ -18,12 +18,20 @@
             $userID = $row["userID"];
             $sqlEmail = $row["email"];
             $sqlPass = $row["password"];
+            $isAdmin = $row["Admin"];
 
             function emailMatches ($inputEmail, $DBEmail) {
                 return strcasecmp($inputEmail, $DBEmail) == 0;
             }
-
             if(emailMatches($email, $sqlEmail)) {
+                // if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
+                    $_SESSION['user'] = $userID;
+                    $_SESSION['username'] = $row['username'];
+                    $_SESSION['loggedin'] = true;
+                    $_SESSION['Admin'] = true;
+                    header( "Location: admin.php" );
+                }
+            else if(emailMatches($email, $sqlEmail)) {
             // if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
                 $_SESSION['user'] = $userID;
                 $_SESSION['username'] = $row['username'];
