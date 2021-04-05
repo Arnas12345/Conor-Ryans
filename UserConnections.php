@@ -29,7 +29,7 @@
                     while($row = $result->fetch_assoc())
                     {   
                         print "<div class='user'>";
-                        print "<a class='userDetails' href='profile.php?userID={$row['userID']}'><b>{$row['username']} - {$row['email']}</b></a>";
+                        print "<a class='userDetails text-center' href='profile.php?userID={$row['userID']}'><b><p>{$row['username']} - {$row['email']}</p></b></a>";
                         print "</div>";
                     }
                     $conn->close();
