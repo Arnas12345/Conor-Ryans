@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
     </head>
     <body>
-        <h1 class="page-header">My Profile</h1>
+        
         <?php 
             
             session_start();
@@ -35,7 +35,9 @@
             $row = getUserData($userID);
             
         ?>
+
         <hr>
+        <h1 class="page-header">My Profile</h1>
         <div class = "profile-container" >
             <div class = "profileImage" >
                 <?php
@@ -47,10 +49,10 @@
                     if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
 
                     if($profileImage === null) {
-                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="25%" style="min-width:180px; min-height:180px; border-radius:50%;" >';
+                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="18%" style="min-width:180px; min-height:180px; border-radius:50%;" >';
                     }
                     else {
-                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='25%' style='min-width:180px; min-height:180px; border-radius:50%; object-fit: cover; overflow:hidden;' >";
+                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='18%' style= 'min-width:160px; min-height:160px; border-radius:50%; object-fit: cover; overflow:hidden;' >";
                     }
 
                 ?>
@@ -61,6 +63,7 @@
                 </form>
             </div>
         </div>
+        
         <div class = "description-container">
             <div class = "description-heading">
                 <H1 style = "text-align: center;">Description</H1>
@@ -132,7 +135,8 @@
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails'>{$row['companyName']}</p>";
                     setcookie("currentEmployer",$row['companyName'],time()+3600);
-                } else {
+                } 
+                else {
                     setcookie("currentEmployer", "", time() - 3600);
                     print "<p>No Current Employer.</p>";
                 }

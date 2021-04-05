@@ -17,13 +17,55 @@
         }
     </script>
     <body>
-        <?php include("headerTemplate.html"); ?>
+        <?php 
+            
+            session_start();
+
+            function getUserData($uID) {
+                include ("serverConfig.php");
+                $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                if ($conn -> connect_error) {
+                    die("Connection failed:" .$conn -> connect_error);
+                }
+
+                $sql = "select * from users where userID =\"{$uID}%\";";
+                $result = $conn -> query($sql);
+                $conn -> close();
+                $row = $result->fetch_assoc();
+                return $row;
+            }
+
+            include("headerTemplate.html");
+            
+            $userID = $_SESSION["user"];
+
+            $row = getUserData($userID);
+
+            print "<h1 class='page-header'>{$row['username']}</h1>";
+            
+        ?>
+
         <h1 class="page-header">Edit Profile</h1>
         <hr>
         <div class = "profile-container" >
-            <div class = "profileImage" >
-                <img src = "images/ellipse.png" alt = "profile image" height="20%" weight="20%" >
+            <div class = "profileImage">
+                <?php
+
+                    $row = getUserData($userID);
+                    $profileImage = null;
+
+                    if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
+
+                    if($profileImage === null) {
+                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="18%" style="min-width:160px; min-height:160px; border-radius:50%;" >';
+                    }
+                    else {
+                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='18%' style='min-width:160px; min-height:160px; border-radius:50%; object-fit: cover; overflow:hidden;' >";
+                    }
+
+                ?>
             </div>
+
             <div class="changeProfileImage">
                 <form method="post" action="editProfile.php" enctype="multipart/form-data">
                     <input type="file" name="image">
@@ -31,6 +73,7 @@
                 </form>
             </div>
         </div>
+
         <div class = "description-container">
             <div class = "description-heading">
                 <H1 style = "text-align: center;">Description</H1>
@@ -39,7 +82,7 @@
                 <form method="post" action="editProfile.php">
                     <h3>Enter Bio:</h3>
                     <?php
-                        session_start();
+
                         include ("serverConfig.php");
                         $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
                         if ($conn -> connect_error) {
@@ -70,7 +113,14 @@
                         //Sets the description if one exists
                         $description = '';
                         if(isset($_COOKIE['description'])) $description = $_COOKIE['description'];
-                        print "<textarea id='description' rows='5' cols='60' name='description'>{$description}</textarea><br>";
+                        print "<textarea id='description' rows='5' cols='60' 
+                                    name='description' pattern='[A-Za-z][0-9]{6,}' 
+                                    title='Please input more than 6 characters. Letters and numbers only.'>
+                                
+                                    {$description}
+                                    
+                                </textarea>
+                                <br>";
 
                         //User can select all skills they want
                         print '<h3>Select Skills</h3>
@@ -157,6 +207,8 @@
                                 <a id='deleteJobHistory' href='editProfile.php?deleteJobHistory=true&currentUser={$userID}&companyID={$previousHistoryRow['companyID']}'>&#x2716;</a>";
                             }
                         }
+
+                        $conn -> close();
                     ?>
                     <br>
                     <input type="submit" name="submit" value="Submit Edit"/>
@@ -168,12 +220,14 @@
 
 <?php 
 
-    function updateProfile() {
-        include ("serverConfig.php");
-        $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
-        if ($conn -> connect_error) {
-            die("Connection failed:" .$conn -> connect_error);
-        }
+    include ("serverConfig.php");
+    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+    if ($conn -> connect_error) {
+        die("Connection failed:" .$conn -> connect_error);
+    }
+
+    function updateProfile($conn) {
+        
         //Update user description
         $userID = $_SESSION['user'];
         $sql = "UPDATE users
@@ -217,7 +271,7 @@
 
 
         if ($conn->query($sql) === TRUE) {
-            header( "Location: profile_user.php" );
+            // header( "Location: profile_user.php" );
 
         } 
         else {
@@ -226,7 +280,7 @@
         
     }
 
-    if(isset($_POST["submit"])) updateProfile();
+    if(isset($_POST["submit"])) updateProfile($conn);
 
     if(isset($_POST["addQualification"])) {
         //Adds a qualification
@@ -273,4 +327,6 @@
         $conn -> query($deleteUserQualification);
         echo "<script> refreshPage(); </script>";
     }
+
+    $conn ->close();
 ?>
