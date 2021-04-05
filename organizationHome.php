@@ -31,6 +31,7 @@
             }
         }
         
+        
         function showApplicants(modalNumber) {
             var modal = document.getElementById("applicantsModal" + modalNumber);
             modal.style.display = "block";

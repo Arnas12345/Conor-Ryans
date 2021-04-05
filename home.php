@@ -40,10 +40,24 @@
                 }
             }
         }
+
+            var modal = document.getElementById("friendmodal");
+     
+            
+            var span = document.getElementsByClassName("close")[0];
+
+            btn.onclick = function() {
+            modal.style.display = "block";
+            }
+
+    
     </script>
     <body>
         <?php include ("headerTemplate.html");?>
         <h1 class="page-header">Job Feed</h1>
+       
+
+    </div>
         <hr>
         <div class="page-box">
             <?php
@@ -118,21 +132,21 @@
                         print "<div class='container vacancy'>
                                     <div class='row'>
                                         <div class='col-4' >
-                                            <img class='job_logo' src='images/job-icon.jpg' alt='logo here'></img>
+                                            <img class='img-fluid' width='200' height='200' src='images/job-icon.jpg'  alt='logo here'></img>
                                         </div>
                                         <div class='col-8' >
-                                            <a class='CompanyDetails' href='company.php?companyID={$row['companyID']}'><b><h3>{$row['companyName']}</h3></b></a>
-                                            <p class='vacancyDetails'><b>Title: </b>{$row['vacancyTitle']}</p>
-                                            <p class='vacancyDetails'><b>Description: </b>{$row['vacancyDescription']}</p>
-                                            <p class='vacancyDetails'><b>Role: </b>{$row['role']}</p>
-                                            <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
-                                            <button onClick='showSkills({$counter})'>Show Skills</button>";
+                                            <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
+                                            <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
+                                            <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
+                                            <p class='vacancyDetails text-left'><b>Role: </b>{$row['role']}</p>
+                                            <p class='vacancyDetails text-left'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
+                                            <button class='showskills' onClick='showSkills({$counter})'>Show Skills</button>";
                                         
                                         $loopedJobSQL = "select * from looped where userID = {$_SESSION['user']} AND companyID = {$row['companyID']} AND vacancyID = {$row['vacancyID']};";
                                         $loopedJobResult = $conn -> query($loopedJobSQL);
                                         $loopedJobRow = $loopedJobResult->fetch_assoc();
                                         if($loopedJobRow) {
-                                            print "<img class='img-fluid' src='images/cancel_loop.png' alt='logo here' style='height: 25%;' onClick='unLoopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
+                                            print "<img class='img-fluid' src='images/cancel_loop.png' alt='logo here' style='height: 12%;' onClick='unLoopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
                                         } else {
                                             print "<img class='img-fluid' src='images/Like_Loop_small.png' alt='logo here'  onClick='loopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
                                         }
@@ -157,6 +171,9 @@
                                             }
                                         } else echo "<tr><td colspan='3'>No Specific Skills Required</td></tr>";
                                         print "</table></div></div>";
+                                        
+                                        
+                                        
                                         print "</div></div></div>";
                                         
                     }
