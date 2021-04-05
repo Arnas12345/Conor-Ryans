@@ -60,19 +60,54 @@
     </div>
         <hr>
         <div class="page-box">
-            <h1 style="visibility: hidden">s</h1>
             <?php
                 include ("serverConfig.php");
                 $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
                 if ($conn -> connect_error) {
                     die("Connection failed:" .$conn -> connect_error);
                 }
-
-                $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
-                from vacancies a
-                INNER JOIN companies b
-                ON a.companyID = b.companyID
-                ORDER BY timeAdded DESC;";
+                print '
+                <form method="post" action="home.php?sortBySkills=true">
+                <h3>Select Skills</h3>
+                <div class="custom-select">
+                <select name="skill">';
+                $skillsSql = "select * from skills;";
+                $skillsResult = $conn -> query($skillsSql);
+                print "<option value=''>Select A Skill</option>";
+                while($skillsRow = $skillsResult->fetch_assoc())
+                {   
+                    $getUsersSkillsSql = "select * from userskills WHERE userID={$userID}";
+                    $getUsersSkillsResult = $conn -> query($getUsersSkillsSql);
+                    print "<option value='{$skillsRow['skillTitle']}'>{$skillsRow['skillTitle']}</option>";
+                }
+                print '</select><input type="submit" name="sortBySkills" value="Sort"></div></form><br>';
+                $sql = "";
+                if (isset($_GET['sortBySkills'])) {
+                    if(!empty($_POST['skill'])) {
+                        $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID, d.skillTitle, d.skillDescription
+                        from vacancies a
+                        INNER JOIN companies b
+                        ON a.companyID = b.companyID
+                        INNER JOIN skillsforvacancy c
+                        ON a.vacancyID = c.vacancyID
+                        INNER JOIN skills d
+                        ON c.skillID = d.skillID
+                        WHERE d.skillTitle = '{$_POST['skill']}'
+                        ORDER BY timeAdded DESC;";
+                    } else {
+                        $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
+                        from vacancies a
+                        INNER JOIN companies b
+                        ON a.companyID = b.companyID
+                        ORDER BY timeAdded DESC;";
+                    }
+                } else {
+                    $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
+                    from vacancies a
+                    INNER JOIN companies b
+                    ON a.companyID = b.companyID
+                    ORDER BY timeAdded DESC;";
+                }
                 $result = $conn -> query($sql);
                 
                 if(mysqli_num_rows($result) != 0) {
@@ -93,18 +128,19 @@
                             $skillsNeeded[] = $skill;
                         }
                         $counter++;
+
                         print "<div class='container vacancy'>
                                     <div class='row'>
                                         <div class='col-4' >
                                             <img class='img-fluid' width='200' height='200' src='images/job-icon.jpg'  alt='logo here'></img>
                                         </div>
                                         <div class='col-8' >
-                                        <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
-                                        <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
-                                        <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
-                                        <p class='vacancyDetails text-left'><b>Role: </b>{$row['role']}</p>
-                                        <p class='vacancyDetails text-left'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
-                                        <button class='showskills' onClick='showSkills({$counter})'>Show Skills</button>";
+                                            <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
+                                            <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
+                                            <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
+                                            <p class='vacancyDetails text-left'><b>Role: </b>{$row['role']}</p>
+                                            <p class='vacancyDetails text-left'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
+                                            <button class='showskills' onClick='showSkills({$counter})'>Show Skills</button>";
                                         
                                         $loopedJobSQL = "select * from looped where userID = {$_SESSION['user']} AND companyID = {$row['companyID']} AND vacancyID = {$row['vacancyID']};";
                                         $loopedJobResult = $conn -> query($loopedJobSQL);
@@ -125,13 +161,15 @@
                                                             <th>Skills Description</th>
                                                         </tr>
                                                     </thead>";
-                                        foreach ($skillsNeeded as $row) 
-                                        {   
-                                            echo '<tr>';
-                                            echo '<td>' . $row['skillTitle'] . '</td>';
-                                            echo '<td>' . $row['skillDesc'] . '</td>';
-                                            echo '</tr>';
-                                        }
+                                        if(!empty($skillsNeeded)) {
+                                            foreach ($skillsNeeded as $row) 
+                                            {   
+                                                echo '<tr>';
+                                                echo '<td>' . $row['skillTitle'] . '</td>';
+                                                echo '<td>' . $row['skillDesc'] . '</td>';
+                                                echo '</tr>';
+                                            }
+                                        } else echo "<tr><td colspan='3'>No Specific Skills Required</td></tr>";
                                         print "</table></div></div>";
                                         
                                         
@@ -147,3 +185,9 @@
         </div>
     </body>
 </html>
+
+<?php
+    if (isset($_GET['sortBySkills'])) {
+        echo $_POST['skill'];
+    }
+?>

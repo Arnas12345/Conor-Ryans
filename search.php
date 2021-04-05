@@ -47,10 +47,27 @@
                         printSearchFor($_POST["selectVal"], $name);
                         $sql = "select * from users where username LIKE \"{$name}%\" AND userID !={$_SESSION['user']};";
                         $result = $conn -> query($sql);
+
+                        $profileImage = null;
+
                         if(mysqli_num_rows($result) != 0) {
                             while($row = $result->fetch_assoc())
                             {   
                                 print "<div class='user'>";
+
+                                if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
+                                
+                                if($profileImage === null) {
+                                    print '<img class="userImage" src ="images/blank-profile-picture.png" 
+                                            alt="profile image" height="25%" width="25%" 
+                                            style="min-width:180px; min-height:180px; border-radius:50%;" >';
+                                }
+                                else {
+                                    print "<img class='userImage' src = 'profileImages/{$profileImage}' 
+                                            alt='profile image' height='25%' width='25%' 
+                                            style='min-width:180px; min-height:180px; border-radius:50%; 
+                                            object-fit: cover; overflow:hidden;' >";
+                                }
                                 print "<a class='userDetails' href='profile.php?userID={$row['userID']}'><b>{$row['username']} - {$row['email']}</b></a>";
                                 $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$row['userID']}%\";";
                                 $result2 = $conn -> query($connectionsSQL);
@@ -105,9 +122,9 @@
                                     $result2 = $conn -> query($connectionsSQL);
                                     $connectionsRow = $result2->fetch_assoc();
                                     if($connectionsRow) {
-                                        print "<img class='connectionImage' src='images/connected.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$skillRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/connectedv1.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$skillRow['userID']})'></img><br>";
                                     } else {
-                                        print "<img class='connectionImage' src='images/unconnected.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$skillRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$skillRow['userID']})'></img><br>";
                                     }
                                     print "</div>";
                                 }
@@ -134,9 +151,9 @@
                                     $result2 = $conn -> query($connectionsSQL);
                                     $connectionsRow = $result2->fetch_assoc();
                                     if($connectionsRow) {
-                                        print "<img class='connectionImage' src='images/connected.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$currentlyEmployedRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/connectedv1.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$currentlyEmployedRow['userID']})'></img><br>";
                                     } else {
-                                        print "<img class='connectionImage' src='images/unconnected.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$currentlyEmployedRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$currentlyEmployedRow['userID']})'></img><br>";
                                     }
                                     print "</div>";
                                 }
@@ -165,9 +182,9 @@
                                     $result2 = $conn -> query($connectionsSQL);
                                     $connectionsRow = $result2->fetch_assoc();
                                     if($connectionsRow) {
-                                        print "<img class='connectionImage' src='images/connected.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$previousHistoryRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/connectedv1.png' alt='logo here' height='20%' weight='20%' onClick='deleteConnection({$previousHistoryRow['userID']})'></img><br>";
                                     } else {
-                                        print "<img class='connectionImage' src='images/unconnected.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$previousHistoryRow['userID']})'></img><br>";
+                                        print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$previousHistoryRow['userID']})'></img><br>";
                                     }
                                     print "</div>";
                                 }

@@ -7,32 +7,52 @@
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
     </head>
     <body>
-        <?php include("headerTemplate.html"); ?>
         <h1 class="page-header">My Profile</h1>
+        <?php 
+            
+            session_start();
+
+            function getUserData($uID) {
+                include ("serverConfig.php");
+                $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                if ($conn -> connect_error) {
+                    die("Connection failed:" .$conn -> connect_error);
+                }
+
+                $sql = "select * from users where userID ={$uID};";
+                $result = $conn -> query($sql);
+                $conn->close();
+
+                return $result->fetch_assoc();
+            }
+
+            
+            if(isset($_SESSION['user'])) include("headerTemplate.html");
+            else include("companyTemplate.html");
+
+            $userID = $_SESSION['user'];
+
+            $row = getUserData($userID);
+            
+        ?>
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >
                 <?php
-                    session_start();
 
-                    include ("serverConfig.php");
-                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
-                    if ($conn -> connect_error) {
-                        die("Connection failed:" .$conn -> connect_error);
-                    }
+                    $row = getUserData($userID);
 
-                    $sql = "select * from users where userID =\"{$_SESSION['user']}%\";";
-                    $result = $conn -> query($sql);
-                    $row = $result->fetch_assoc();
                     $profileImage = null;
-                    if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
-                    if($profileImage === null) {
-                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="15%" style="border-radius:50%;" >';
 
+                    if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
+
+                    if($profileImage === null) {
+                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="25%" style="min-width:180px; min-height:180px; border-radius:50%;" >';
                     }
                     else {
-                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='15%' style='border-radius:50%; object-fit: cover;' >";
+                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='25%' style='min-width:180px; min-height:180px; border-radius:50%; object-fit: cover; overflow:hidden;' >";
                     }
+
                 ?>
             </div>
             <div class="editProfile">
@@ -48,19 +68,11 @@
             <div class = "bio-description">
                 <h3>Bio:</h3>
                 <?php
-
-                    include ("serverConfig.php");
-                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
-                    if ($conn -> connect_error) {
-                        die("Connection failed:" .$conn -> connect_error);
-                    }
-
-                    $sql = "select * from users where userID =\"{$_SESSION['user']}%\";";
-                    $result = $conn -> query($sql);
-                    if($row = $result->fetch_assoc()) {
+                    $userID = $_SESSION['user'];
+                    $row = getUserData($userID);
+                    if(isset($row['description']) && $row['description'] !== null ){
                         print "<p class='userDetails'>{$row['description']}</p>";
                         setcookie("description",$row['description'],time()+3600);
-                        $conn->close();
                     } 
                     else {
                         print "<p>No Bio found.</p>";
@@ -120,7 +132,6 @@
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails'>{$row['companyName']}</p>";
                     setcookie("currentEmployer",$row['companyName'],time()+3600);
-                    $conn->close();
                 } else {
                     setcookie("currentEmployer", "", time() - 3600);
                     print "<p>No Current Employer.</p>";
@@ -139,7 +150,7 @@
                         print "<p>Graduated {$resultRow['academicDescription']}, {$resultRow['academicLevel']} at {$resultRow['academicTitle']} on {$resultRow['completionDate']}</p>";
                     }
                 } else {
-                    print "<p>No Previous Job History Found.</p>";
+                    print "<p>No Qualifications Found.</p>";
                 }
                 break;
 
@@ -177,6 +188,7 @@
 
             default : break;
         }
+        $conn -> close();
         
     }
 

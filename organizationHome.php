@@ -12,6 +12,7 @@
         <title>Loop : Company Home</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/companyHome.css?v=<?php echo time(); ?>">
+        <link rel="stylesheet" type="text/css" href="css/home.css?v=<?php echo time(); ?>">
     </head>
     <script type="text/javascript">
         function showSkills(modalNumber) {
@@ -113,16 +114,22 @@
                                                 <!-- Modal content -->
                                                 <div class='modal-content'>
                                                     <span class='close'>&times;</span>
-                                                    <table id='skillsTable'>
-                                                        <tr>
-                                                            <th>Skills Required</th>
-                                                        </tr>";
-                                        foreach ($skillsNeeded as $skill) 
-                                        {   
-                                            echo '<tr>';
-                                            echo '<td>' . $skill . '</td>';
-                                            echo '</tr>';
-                                        }
+                                                    <table class='skillsTable'>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Skills Required</th>
+                                                            </tr>
+                                                        </thead>";
+                                        
+                                        if(!empty($skillsNeeded)) {
+                                            foreach ($skillsNeeded as $row) 
+                                            {   
+                                                echo '<tr>';
+                                                echo '<td>' . $row['skillTitle'] . '</td>';
+                                                echo '<td>' . $row['skillDesc'] . '</td>';
+                                                echo '</tr>';
+                                            }
+                                        } else echo "<tr><td colspan='3'>No Specific Skills Required</td></tr>";
                                         print "</table></div></div>";
 
                                         //Applicants modal
@@ -130,10 +137,13 @@
                                                 <!-- Modal content -->
                                                 <div class='modal-content'>
                                                     <span class='close'>&times;</span>
-                                                    <table id='applicantsTable'>
-                                                        <tr>
-                                                            <th>Applicants</th>
-                                                        </tr>";
+                                                    <table class='skillsTable'>
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Applicants</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>";
                                         $getApplicantsSQL = "Select a.username, a.userID, b.status, b.vacancyID
                                                             FROM users a
                                                             INNER JOIN looped b
@@ -143,10 +153,12 @@
                                         $getApplicantsResult = $conn -> query($getApplicantsSQL);
                                         while($getApplicantsRow = $getApplicantsResult -> fetch_assoc()) {
                                             echo '<tr>';
-                                            echo "<td><a id='applicant{$getApplicantsRow['userID']}'href='profile.php?userID={$getApplicantsRow['userID']}'>{$getApplicantsRow['username']}</a></td>";
+                                            echo "<td><a id='applicant{$getApplicantsRow['userID']}' class='applicant' href='profile.php?userID={$getApplicantsRow['userID']}'>{$getApplicantsRow['username']}</a></td>";
                                             if($getApplicantsRow['status'] == 'Pending') {
-                                                echo "<td><a id='decline{$getApplicantsRow['userID']}' href='organizationHome.php?deleteUser=true&userID={$getApplicantsRow['userID']}&vacancyID={$getApplicantsRow['vacancyID']}'>&#x2716;</a></td>";
-                                                echo "<td><a id='accept{$getApplicantsRow['userID']}' href='organizationHome.php?acceptUser=true&userID={$getApplicantsRow['userID']}&vacancyID={$getApplicantsRow['vacancyID']}'>&#x2714;</a></td>";
+                                                echo "<td>
+                                                        <a id='decline{$getApplicantsRow['userID']}' class='status' href='organizationHome.php?deleteUser=true&userID={$getApplicantsRow['userID']}&vacancyID={$getApplicantsRow['vacancyID']}'>&#x2716;</a>
+                                                        <a id='accept{$getApplicantsRow['userID']}' class='status' href='organizationHome.php?acceptUser=true&userID={$getApplicantsRow['userID']}&vacancyID={$getApplicantsRow['vacancyID']}'>&#x2714;</a>
+                                                    </td>";
                                             } else echo "<td><p>{$getApplicantsRow['status']}</p></td>";
                                             echo '</tr>';
                                         }

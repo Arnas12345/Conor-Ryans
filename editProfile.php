@@ -6,9 +6,10 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php
 
-use function PHPSTORM_META\type;
+            use function PHPSTORM_META\type;
 
-echo time(); ?>">
+        echo time(); ?>">
+
     </head>
     <script type="text/javascript">
         function refreshPage() {
@@ -49,19 +50,21 @@ echo time(); ?>">
                         $sql = "select * from users where userID={$userID};";
                         $result = $conn -> query($sql);
 
-                        if(isset($_POST['submitImage'])) {
-                            echo "<pre>" , print_r($_FILES["image"]) , "</pre>";
+                        if(isset($_POST['submitImage']) && $_FILES["image"]["name"]) {
+                            
                             $profileImageName = time() . "_" . $_FILES["image"]["name"];
                             $target = "profileImages/" . $profileImageName;
 
-                            str_replace($target, " ", "");
+                            str_replace(" ", "", $target);
                             if(copy($_FILES["image"]["tmp_name"], $target)) {
                                 $userProfileImage ="UPDATE users 
                                                     SET profileImage='$profileImageName'
                                                     WHERE userID={$userID};";
                             }
                             
-                            $conn->query($userProfileImage);
+                            if($conn->query($userProfileImage)) {
+                                header( "Location: profile_user.php" );
+                            }
                         }
 
                         //Sets the description if one exists
@@ -106,7 +109,8 @@ echo time(); ?>">
                                 <input type="text" placeholder="Enter University Name" name="University"></input>
                                 <input type="text" placeholder="Enter Course Name" name="Course"></input>
                                 <input type="text" placeholder="Enter QCA Level Name" name="Level"></input>
-                                <input type="text" placeholder="Enter Date Completed" name="DateCompleted"></input>
+                                <label for="DateCompleted" style="padding-left:1%">Date Completed:</label>
+                                <input type="date" name="DateCompleted">
                                 <input type="submit" name="addQualification" value="Add Qualification"/>
                                 <br>';
 
@@ -124,7 +128,7 @@ echo time(); ?>">
                         }
                         
                         //User can select previous history
-                        print '<h3>Select Current Employer</h3>
+                        print '<h3>Select Job History</h3>
                                 <select name="employementHistory">
                                 <option name="None">None</option>';
                         $employerSQL = "select * from companies;";
@@ -134,8 +138,10 @@ echo time(); ?>">
                             print "<option name='{$employerRow['companyName']}'>{$employerRow['companyName']}</option>";
                         }
                         print '</select>
-                                <input type="text" placeholder="Job Start Date" name="dateStarted"></input>
-                                <input type="text" placeholder="Job End Date" name="dateEnded"></input>
+                                <label for="dateStarted" style="padding-left:1%">Job Start:</label>
+                                <input type="date" name="dateStarted">
+                                <label for="dateEnded" style="padding-left:1%">Job End:</label>
+                                <input type="date" name="dateEnded">
                                 <input type="submit" name="addJobHistory" value="Add Employment History"/>
                                 <br>';
 
@@ -148,7 +154,7 @@ echo time(); ?>">
                         if(mysqli_num_rows($previousHistoryResult) != 0) {
                             while($previousHistoryRow = $previousHistoryResult->fetch_assoc()) {
                                 print "<p>Graduated {$previousHistoryRow['companyName']}, {$previousHistoryRow['FromDate']} at {$previousHistoryRow['ToDate']}</p>
-                                <a id='deletedQualification' href='editProfile.php?deleteJobHistory=true&currentUser={$userID}&companyID={$previousHistoryRow['companyID']}'>&#x2716;</a>";
+                                <a id='deleteJobHistory' href='editProfile.php?deleteJobHistory=true&currentUser={$userID}&companyID={$previousHistoryRow['companyID']}'>&#x2716;</a>";
                             }
                         }
                     ?>
@@ -160,7 +166,7 @@ echo time(); ?>">
     </body>
 </html>
 
-<!-- <?php 
+<?php 
 
     function updateProfile() {
         include ("serverConfig.php");
@@ -262,4 +268,9 @@ echo time(); ?>">
         echo "<script> refreshPage(); </script>";
     }
 
-?> -->
+    if (isset($_GET['deleteJobHistory'])) {
+        $deleteUserJobHistory = "DELETE FROM userqualificaion WHERE userID={$_GET['currentUser']} AND academicID={$_GET['academicID']};";
+        $conn -> query($deleteUserQualification);
+        echo "<script> refreshPage(); </script>";
+    }
+?>
