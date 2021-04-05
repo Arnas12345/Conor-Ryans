@@ -119,12 +119,16 @@
                                                                 <th>Skills Required</th>
                                                             </tr>
                                                         </thead>";
-                                        foreach ($skillsNeeded as $skill) 
-                                        {   
-                                            echo '<tr>';
-                                            echo '<td>' . $skill . '</td>';
-                                            echo '</tr>';
-                                        }
+                                        
+                                        if(!empty($skillsNeeded)) {
+                                            foreach ($skillsNeeded as $row) 
+                                            {   
+                                                echo '<tr>';
+                                                echo '<td>' . $row['skillTitle'] . '</td>';
+                                                echo '<td>' . $row['skillDesc'] . '</td>';
+                                                echo '</tr>';
+                                            }
+                                        } else echo "<tr><td colspan='3'>No Specific Skills Required</td></tr>";
                                         print "</table></div></div>";
 
                                         //Applicants modal

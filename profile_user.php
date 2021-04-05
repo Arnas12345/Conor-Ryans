@@ -11,7 +11,6 @@
         <h1 class="page-header">My Profile</h1>
         <?php 
             session_start();
-            //print "<h2> userID: {$_SESSION['user']} </h2>";
         ?>
         <hr>
         <div class = "profile-container" >
@@ -125,7 +124,7 @@
                 $result = $conn -> query($sql);
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails'>{$row['companyName']}</p>";
-                    setcookie("currentEmployer",$row['companyName'],time()+3600);
+                    setcookie("currentEmployer",$row['companyName'],time()+100);
                     $conn->close();
                 } else {
                     setcookie("currentEmployer", "", time() - 3600);
@@ -145,7 +144,7 @@
                         print "<p>Graduated {$resultRow['academicDescription']}, {$resultRow['academicLevel']} at {$resultRow['academicTitle']} on {$resultRow['completionDate']}</p>";
                     }
                 } else {
-                    print "<p>No Previous Job History Found.</p>";
+                    print "<p>No Qualifications Found.</p>";
                 }
                 break;
 

@@ -109,7 +109,8 @@
                                 <input type="text" placeholder="Enter University Name" name="University"></input>
                                 <input type="text" placeholder="Enter Course Name" name="Course"></input>
                                 <input type="text" placeholder="Enter QCA Level Name" name="Level"></input>
-                                <input type="text" placeholder="Enter Date Completed" name="DateCompleted"></input>
+                                <label for="DateCompleted" style="padding-left:1%">Date Completed:</label>
+                                <input type="date" name="DateCompleted">
                                 <input type="submit" name="addQualification" value="Add Qualification"/>
                                 <br>';
 
@@ -127,7 +128,7 @@
                         }
                         
                         //User can select previous history
-                        print '<h3>Select Current Employer</h3>
+                        print '<h3>Select Job History</h3>
                                 <select name="employementHistory">
                                 <option name="None">None</option>';
                         $employerSQL = "select * from companies;";
@@ -137,8 +138,10 @@
                             print "<option name='{$employerRow['companyName']}'>{$employerRow['companyName']}</option>";
                         }
                         print '</select>
-                                <input type="text" placeholder="Job Start Date" name="dateStarted"></input>
-                                <input type="text" placeholder="Job End Date" name="dateEnded"></input>
+                                <label for="dateStarted" style="padding-left:1%">Job Start:</label>
+                                <input type="date" name="dateStarted">
+                                <label for="dateEnded" style="padding-left:1%">Job End:</label>
+                                <input type="date" name="dateEnded">
                                 <input type="submit" name="addJobHistory" value="Add Employment History"/>
                                 <br>';
 
@@ -151,7 +154,7 @@
                         if(mysqli_num_rows($previousHistoryResult) != 0) {
                             while($previousHistoryRow = $previousHistoryResult->fetch_assoc()) {
                                 print "<p>Graduated {$previousHistoryRow['companyName']}, {$previousHistoryRow['FromDate']} at {$previousHistoryRow['ToDate']}</p>
-                                <a id='deletedQualification' href='editProfile.php?deleteJobHistory=true&currentUser={$userID}&companyID={$previousHistoryRow['companyID']}'>&#x2716;</a>";
+                                <a id='deleteJobHistory' href='editProfile.php?deleteJobHistory=true&currentUser={$userID}&companyID={$previousHistoryRow['companyID']}'>&#x2716;</a>";
                             }
                         }
                     ?>
@@ -163,7 +166,7 @@
     </body>
 </html>
 
-<!-- <?php 
+<?php 
 
     function updateProfile() {
         include ("serverConfig.php");
@@ -265,4 +268,9 @@
         echo "<script> refreshPage(); </script>";
     }
 
-?> -->
+    if (isset($_GET['deleteJobHistory'])) {
+        $deleteUserJobHistory = "DELETE FROM userqualificaion WHERE userID={$_GET['currentUser']} AND academicID={$_GET['academicID']};";
+        $conn -> query($deleteUserQualification);
+        echo "<script> refreshPage(); </script>";
+    }
+?>
