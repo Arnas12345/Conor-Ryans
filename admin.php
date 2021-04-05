@@ -28,7 +28,6 @@
         </script>
     </head>
     <body>
-        <?php include("adminTemplate.html"); ?>
         <h1 class="page-header">Admin Page</h1>
         <hr>
         <form class="search" method="post" action="admin.php">
