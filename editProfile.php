@@ -113,7 +113,14 @@
                         //Sets the description if one exists
                         $description = '';
                         if(isset($_COOKIE['description'])) $description = $_COOKIE['description'];
-                        print "<textarea id='description' rows='5' cols='60' name='description'>{$description}</textarea><br>";
+                        print "<textarea id='description' rows='5' cols='60' 
+                                    name='description' pattern='[A-Za-z][0-9]{6,}' 
+                                    title='Please input more than 6 characters. Letters and numbers only.'>
+                                
+                                    {$description}
+                                    
+                                </textarea>
+                                <br>";
 
                         //User can select all skills they want
                         print '<h3>Select Skills</h3>
@@ -264,14 +271,12 @@
 
 
         if ($conn->query($sql) === TRUE) {
-            header( "Location: profile_user.php" );
+            // header( "Location: profile_user.php" );
 
         } 
         else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-
-        $conn -> close();
         
     }
 
