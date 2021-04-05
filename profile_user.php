@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
     </head>
     <body>
-        <h1 class="page-header">My Profile</h1>
+        
         <?php 
             
             session_start();
@@ -35,8 +35,9 @@
             $row = getUserData($userID);
             
         ?>
-        
+
         <hr>
+        <h1 class="page-header">My Profile</h1>
         <div class = "profile-container" >
             <div class = "profileImage" >
                 <?php
@@ -62,6 +63,7 @@
                 </form>
             </div>
         </div>
+        
         <div class = "description-container">
             <div class = "description-heading">
                 <H1 style = "text-align: center;">Description</H1>
@@ -133,7 +135,8 @@
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails'>{$row['companyName']}</p>";
                     setcookie("currentEmployer",$row['companyName'],time()+3600);
-                } else {
+                } 
+                else {
                     setcookie("currentEmployer", "", time() - 3600);
                     print "<p>No Current Employer.</p>";
                 }
