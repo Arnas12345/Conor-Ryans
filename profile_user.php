@@ -131,12 +131,7 @@
                 $result = $conn -> query($sql);
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails'>{$row['companyName']}</p>";
-<<<<<<< HEAD
-                    setcookie("currentEmployer",$row['companyName'],time()+100);
-                    $conn->close();
-=======
                     setcookie("currentEmployer",$row['companyName'],time()+3600);
->>>>>>> 5f0582a294e98c988983ce023ff78039bb50798a
                 } else {
                     setcookie("currentEmployer", "", time() - 3600);
                     print "<p>No Current Employer.</p>";
