@@ -6,37 +6,40 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <?php 
+    <?php 
+            
             session_start();
+
+            function getUserData($uID) {
+                include ("serverConfig.php");
+                $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                if ($conn -> connect_error) {
+                    die("Connection failed:" .$conn -> connect_error);
+                }
+
+                $sql = "select * from users where userID =\"{$uID}%\";";
+                $result = $conn -> query($sql);
+                $conn->close();
+
+                return $result->fetch_assoc();
+            }
+
+            
             if(isset($_SESSION['user'])) include("headerTemplate.html");
             else include("companyTemplate.html");
             $userID = $_GET["userID"];
-            include ("serverConfig.php");
-            $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
-            if ($conn -> connect_error) {
-                die("Connection failed:" .$conn -> connect_error);
-            }
 
-            $sql = "select * from users where userID={$userID};";
-            $result = $conn -> query($sql);
-            $row = $result->fetch_assoc();
-            print "<h1 class='page-header'>{$row['username']}'s Profile</h1>";
-            $conn->close();
+            $row = getUserData($userID);
+
+            print "<h1 class='page-header'>{$row['username']}</h1>";
+            
         ?>
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >
                 <?php
 
-                    include ("serverConfig.php");
-                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
-                    if ($conn -> connect_error) {
-                        die("Connection failed:" .$conn -> connect_error);
-                    }
-
-                    $sql = "select * from users where userID =\"{$userID}%\";";
-                    $result = $conn -> query($sql);
-                    $row = $result->fetch_assoc();
+                    $row = getUserData($userID);
 
                     $profileImage = null;
 
@@ -59,18 +62,11 @@
             <div class = "bio-description">
                 <h3>Bio:</h3>
                 <?php
-                    $userID = $_GET["userID"];
-                    include ("serverConfig.php");
-                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
-                    if ($conn -> connect_error) {
-                        die("Connection failed:" .$conn -> connect_error);
-                    }
-                    $sql = "select description from users where userID={$userID};";
-                    $result = $conn -> query($sql);
-                    if($row = $result->fetch_assoc()) {
+                    $row = getUserData($userID);
+                    if($row) {
                         print "<p class='userDetails'>{$row['description']}</p>";
-                        $conn->close();
-                    } else {
+                    } 
+                    else {
                         print "<p>No Bio found.</p>";
                     }
                 ?>
@@ -128,7 +124,6 @@
                 $result = $conn -> query($sql);
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails'>{$row['companyName']}</p>";
-                    $conn->close();
                 } else {
                     print "<p>No Current Employer.</p>";
                 }
@@ -184,6 +179,8 @@
 
             default : break;
         }
+
+        $conn->close();
         
     }
 

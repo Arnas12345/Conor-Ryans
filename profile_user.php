@@ -7,25 +7,40 @@
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
     </head>
     <body>
-        <?php include("headerTemplate.html"); ?>
         <h1 class="page-header">My Profile</h1>
         <?php 
+            
             session_start();
+
+            function getUserData($uID) {
+                include ("serverConfig.php");
+                $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                if ($conn -> connect_error) {
+                    die("Connection failed:" .$conn -> connect_error);
+                }
+
+                $sql = "select * from users where userID ={$uID};";
+                $result = $conn -> query($sql);
+                $conn->close();
+
+                return $result->fetch_assoc();
+            }
+
+            
+            if(isset($_SESSION['user'])) include("headerTemplate.html");
+            else include("companyTemplate.html");
+
+            $userID = $_SESSION['user'];
+
+            $row = getUserData($userID);
+            
         ?>
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >
                 <?php
 
-                    include ("serverConfig.php");
-                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
-                    if ($conn -> connect_error) {
-                        die("Connection failed:" .$conn -> connect_error);
-                    }
-
-                    $sql = "select * from users where userID =\"{$_SESSION['user']}%\";";
-                    $result = $conn -> query($sql);
-                    $row = $result->fetch_assoc();
+                    $row = getUserData($userID);
 
                     $profileImage = null;
 
@@ -53,19 +68,11 @@
             <div class = "bio-description">
                 <h3>Bio:</h3>
                 <?php
-
-                    include ("serverConfig.php");
-                    $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
-                    if ($conn -> connect_error) {
-                        die("Connection failed:" .$conn -> connect_error);
-                    }
-
-                    $sql = "select * from users where userID =\"{$_SESSION['user']}%\";";
-                    $result = $conn -> query($sql);
-                    if($row = $result->fetch_assoc()) {
+                    $userID = $_SESSION['user'];
+                    $row = getUserData($userID);
+                    if(isset($row['description']) && $row['description'] !== null ){
                         print "<p class='userDetails'>{$row['description']}</p>";
                         setcookie("description",$row['description'],time()+3600);
-                        $conn->close();
                     } 
                     else {
                         print "<p>No Bio found.</p>";
@@ -124,8 +131,12 @@
                 $result = $conn -> query($sql);
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails'>{$row['companyName']}</p>";
+<<<<<<< HEAD
                     setcookie("currentEmployer",$row['companyName'],time()+100);
                     $conn->close();
+=======
+                    setcookie("currentEmployer",$row['companyName'],time()+3600);
+>>>>>>> 5f0582a294e98c988983ce023ff78039bb50798a
                 } else {
                     setcookie("currentEmployer", "", time() - 3600);
                     print "<p>No Current Employer.</p>";
@@ -182,6 +193,7 @@
 
             default : break;
         }
+        $conn -> close();
         
     }
 
