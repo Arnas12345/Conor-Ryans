@@ -37,8 +37,6 @@
 
                 include ("validateLoggedIn.php");
                 include ("serverConfig.php");
-                
-                session_start();
 
                 if(isset($_POST["selectVal"])) {
                     

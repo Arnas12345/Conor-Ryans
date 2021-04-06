@@ -6,10 +6,8 @@
     </head>
     <body>
         <?php 
-        
+
             include ("validateLoggedIn.php");
-            
-            session_start();
 
             function getCompanyData($cID) {
                 include ("serverConfig.php");
