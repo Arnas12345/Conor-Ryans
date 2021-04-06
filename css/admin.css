@@ -12,15 +12,6 @@ body {
     text-align: center;
 }
 
-.nav-links {
-    display: flex;
-  justify-content: center;
-}
-
-.logout-link {
-    padding-left: 8%;
-}
-
 .header {
     text-decoration: none;
     font-family: verdana;
@@ -127,3 +118,10 @@ a:active {
 .connectionImage {
     padding-bottom: 3%;
 }
+
+.deletUserImage {
+    padding-bottom: 3%;
+}
+
+
+
