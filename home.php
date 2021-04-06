@@ -1,11 +1,3 @@
-<?php
-    session_start();
-
-    if (!(isset($_SESSION["loggedin"])) || $_SESSION["loggedin"] == false) {
-        header( "Location: login.html" );
-    } 
-
-?>
 
 <html>
     <head>
@@ -53,7 +45,11 @@
     
     </script>
     <body>
-        <?php include ("headerTemplate.html");?>
+        <?php 
+            include ("validateLoggedIn.php");
+            include ("headerTemplate.html");
+        ?>
+
         <h1 class="page-header">Job Feed</h1>
        
 
@@ -61,11 +57,13 @@
         <hr>
         <div class="page-box">
             <?php
+                
                 include ("serverConfig.php");
                 $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
                 if ($conn -> connect_error) {
                     die("Connection failed:" .$conn -> connect_error);
                 }
+                
                 print '
                 <form method="post" action="home.php?sortBySkills=true">
                 <h3>Sort By Skills</h3>
@@ -74,13 +72,19 @@
                 $skillsSql = "select * from skills;";
                 $skillsResult = $conn -> query($skillsSql);
                 print "<option value=''>Select A Skill</option>";
-                while($skillsRow = $skillsResult->fetch_assoc())
-                {   
+                
+                while($skillsRow = $skillsResult->fetch_assoc()) {   
+
                     print "<option value='{$skillsRow['skillTitle']}'>{$skillsRow['skillTitle']}</option>";
+                
                 }
+                
                 print '</select><input type="submit" name="sortBySkills" value="Sort"></div></form><br>';
                 $sql = "";
+
+                //Sort By Skills
                 if (isset($_GET['sortBySkills'])) {
+                    //Gets the vacancies that match the skill
                     if(!empty($_POST['skill'])) {
                         print "<h2>Sorting by {$_POST['skill']}";
                         $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID, d.skillTitle, d.skillDescription
@@ -93,7 +97,8 @@
                         ON c.skillID = d.skillID
                         WHERE d.skillTitle = '{$_POST['skill']}'
                         ORDER BY timeAdded DESC;";
-                    } else {
+                    } 
+                    else { //If no skill is selected show all vacancies
                         $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
                         from vacancies a
                         INNER JOIN companies b
@@ -101,11 +106,13 @@
                         ORDER BY timeAdded DESC;";
                     }
                     $result = $conn -> query($sql);
-                
+                    
+                    //If it finds vacancies
                     if(mysqli_num_rows($result) != 0) {
                         $counter = 0;
-                        while($row = $result->fetch_assoc())
-                        {   
+                        //print them all out
+                        while($row = $result->fetch_assoc()) {
+
                             $skillsNeeded = array();
                             $skillsSql = "select a.skillTitle, a.skillDescription
                             from skills a
@@ -115,10 +122,12 @@
                             ON b.vacancyID = c.vacancyID
                             WHERE c.vacancyID= {$row['vacancyID']}";
                             $skillsResult = $conn -> query($skillsSql);
+
                             while($skillsRow = $skillsResult -> fetch_assoc()) {
                                 $skill = array('skillTitle' => $skillsRow['skillTitle'], 'skillDesc' => $skillsRow['skillDescription']);
                                 $skillsNeeded[] = $skill;
                             }
+
                             $counter++;
     
                             print "<div class='container vacancy'>
@@ -139,7 +148,8 @@
                                             $loopedJobRow = $loopedJobResult->fetch_assoc();
                                             if($loopedJobRow) {
                                                 print "<img class='img-fluid' src='images/cancel_loop.png' alt='logo here' style='height: 12%;' onClick='unLoopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
-                                            } else {
+                                            } 
+                                            else {
                                                 print "<img class='img-fluid' src='images/Like_Loop_small.png' alt='logo here'  onClick='loopJob(${row['vacancyID']}, ${row['companyID']})'></img>";
                                             }
                                             print "<div id='myModal{$counter}' class='modal'>
@@ -161,7 +171,8 @@
                                                     echo '<td>' . $row['skillDesc'] . '</td>';
                                                     echo '</tr>';
                                                 }
-                                            } else echo "<tr><td colspan='3'>No Specific Skills Required</td></tr>";
+                                            }
+                                            else echo "<tr><td colspan='3'>No Specific Skills Required</td></tr>";
                                             print "</table></div></div>";
                                             
                                             
@@ -169,11 +180,15 @@
                                             print "</div></div></div>";
                                             
                         }
-                    } else {
+                    } 
+                    else {
                         print "<h1>No Vacanies Found.</h1>";
                     }
-                } else {
+                }
+                else {
+                    //If it is not sorting by skills run this code, i.e. on page open
                     $counter = 0;
+                    //Shows the automatically suggested jobs first that you have a skill in
                     print "<h2>Automatically Suggested Jobs</h2>";
 
                     $userSkills = "select a.skillTitle
@@ -185,6 +200,7 @@
                     $allVacancies = array();
                     $skills = array();
                     $userSkillResults = $conn -> query($userSkills);
+                    //If the user has skills
                     if(mysqli_num_rows($userSkillResults) != 0) {
                         while($userSkillRow = $userSkillResults->fetch_assoc()) {
                             $skills[] = $userSkillRow['skillTitle'];
@@ -199,16 +215,22 @@
                             WHERE d.skillTitle = \"{$userSkillRow['skillTitle']}\"
                             ORDER BY timeAdded DESC;";
                             $vacanciesResult = $conn -> query($vacanciesSQL);
+                            //Get all vacancies with the users skills
                             if(mysqli_num_rows($vacanciesResult) != 0) {
                                 while($vacanciesRow = $vacanciesResult->fetch_assoc()){
                                     $vacancies[] = $vacanciesRow['vacancyID'];
                                 }   
                             } else print "<h1>No Vacanies To Suggest.</h1>";
                         }
+                        // get the rest of the vacancies that dont have the users skills
                         $vacancies = array_unique($vacancies);
                         $numOfVacancies = count($vacancies);
                         $y = 0;
-                        $otherVacanciesSQL = "select a.vacancyID
+                        $vacanciesWithNoSkillsSQL = "select vacancyID, timeAdded
+                            from vacancies
+                            WHERE NOT EXISTS (SELECT vacancyID FROM skillsforvacancy where skillsforvacancy.vacancyID = vacancies.vacancyID)";
+                        $otherVacanciesSQL = "UNION
+                            select a.vacancyID, a.timeAdded
                             from vacancies a
                             INNER JOIN companies b
                             ON a.companyID = b.companyID
@@ -225,13 +247,15 @@
                                 else $otherVacanciesSQL .= "a.vacancyID != \"{$vacancy}\" AND ";
                             }
                         $otherVacanciesSQL .= "ORDER BY timeAdded DESC;";
-                        $otherVacanciesResult = $conn -> query($otherVacanciesSQL);
+                        $vacanciesWithNoSkillsSQL .= $otherVacanciesSQL;
+                        $otherVacanciesResult = $conn -> query($vacanciesWithNoSkillsSQL);
+                        
+
                         if(mysqli_num_rows($otherVacanciesResult) != 0) {
                             while($otherVacanciesRow = $otherVacanciesResult->fetch_assoc()){
                                 $allVacancies[] = $otherVacanciesRow['vacancyID'];
                             }   
                         }
-
                         if (!empty($vacancies)) {
                             $vacancies = array_unique($vacancies);
                             foreach($vacancies as $vacancy) {

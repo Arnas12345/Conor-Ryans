@@ -19,7 +19,7 @@
     <body>
         <?php 
             
-            session_start();
+            include ("validateLoggedIn.php");
 
             function getUserData($uID) {
                 include ("serverConfig.php");

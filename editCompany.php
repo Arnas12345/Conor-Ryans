@@ -9,9 +9,10 @@
     
     <body>
 
-    <?php 
-            
-            session_start();
+        <?php 
+
+            include ("validateLoggedIn.php");
+                
 
             function getCompanyData($cID) {
                 include ("serverConfig.php");
@@ -34,7 +35,7 @@
             $row = getCompanyData($companyID);
 
             print "<h1 class='page-header'>{$row['companyName']}</h1>";
-            
+                
         ?>
 
         <h1 class="page-header">Edit Profile</h1>

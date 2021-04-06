@@ -7,7 +7,12 @@
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
     </head>
     <body>
-        <?php include("companyTemplate.html"); ?>
+        
+        <?php 
+            include ("validateLoggedIn.php");
+            include ("companyTemplate.html"); 
+        ?>
+
         <h1 class="page-header">Add Vacancy</h1>
         <hr>
         <div class = "description-container">
@@ -53,23 +58,26 @@
 <?php 
 
     function addVacancy() {
-        session_start();
+        
         include ("serverConfig.php");
         $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
         if ($conn -> connect_error) {
             die("Connection failed:" .$conn -> connect_error);
         }
         $companyID = $_SESSION['company'];
-        $skills = $_POST['skills'];
+        if(isset($_POST['skills'])) $skills = $_POST['skills'];
+
         $sql = "INSERT INTO vacancies (companyID, vacancyTitle, vacancyDescription, requiredExperience, role)
                 VALUES ('{$companyID}', '{$_POST['vacancyTitle']}', '{$_POST['description']}', '{$_POST['reqExperience']}', '{$_POST['vacancyRole']}')";
 
         if ($conn->query($sql) === TRUE) {
             $last_id = mysqli_insert_id($conn);
-            foreach($skills as $skill) {
-                $skillSQL = "INSERT INTO skillsforvacancy (vacancyID, skillID)
-                VALUES ('{$last_id}', '{$skill}')";
-                $conn->query($skillSQL);
+            if(isset($skills)) {
+                foreach($skills as $skill) {
+                    $skillSQL = "INSERT INTO skillsforvacancy (vacancyID, skillID)
+                    VALUES ('{$last_id}', '{$skill}')";
+                    $conn->query($skillSQL);
+                }
             }
             header( "Location: organizationHome.php" );
 

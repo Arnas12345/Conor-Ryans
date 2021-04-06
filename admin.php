@@ -1,12 +1,3 @@
-<?php
-    session_start();
-
-    if (!(isset($_SESSION["admin"])) || $_SESSION["admin"] == false) {
-        header( "Location: home.php" );
-    } 
-
-?>
-
 <html>
     <head>
         <title>Loop : Search</title>
@@ -87,9 +78,12 @@
             
         <div class="page-box">
             <?php
+
+                include ("validateAdmin.php");
+                include ("serverConfig.php");
+
                 if(isset($_POST["selectVal"])) {
-                    session_start();
-                    include ("serverConfig.php");
+                    
                     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
                     if ($conn -> connect_error) {
                         die("Connection failed:" .$conn -> connect_error);
