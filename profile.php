@@ -33,7 +33,6 @@
             $row = getUserData($userID);
 
             print "<h1 class='page-header'>{$row['username']}</h1>";
-            
         ?>
 
         <hr>

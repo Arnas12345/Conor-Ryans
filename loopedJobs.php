@@ -6,20 +6,18 @@
 
     </head>
     <body>
-        
+        <?php include ("headerTemplate.html"); ?>
+        <h1 class='page-header'>My Looped Jobs</h1>
+        <hr>
         <div class="page-box">
             <?php
                 include ("validateLoggedIn.php");
-                include ("headerTemplate.html"); 
                 include ("serverConfig.php");
 
                 $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
                 if ($conn -> connect_error) {
                     die("Connection failed:" .$conn -> connect_error);
                 }
-
-                print "<h1 class='page-header'>My Looped Jobs</h1>";
-
                 $sql = "SELECT a.companyName, b.vacancyTitle, c.status
                         FROM companies a 
                         INNER JOIN vacancies b
