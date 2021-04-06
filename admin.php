@@ -120,10 +120,11 @@
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
                                 if($connectionsRow) {
-                                    print "<img class='connectionImage' src='images/Delete.png' alt='Delete connection' height='20%' weight='20%' onClick='DeleteUser({$row['userID']})'></img><br>";
-                                    print "<img class='connectionImage' src='images/tick.png' alt='logo here' height='20%' weight='20%' onClick='unbanUser({$row['userID']})'></img><br>";
+
+                                    print "<img class='connectionImage' src='images/unbanned.png' alt='logo here' height='20%' weight='20%' onClick='unbanUser({$row['userID']})'></img><br>";
                                 } else {
-                                    print "<img class='connectionImage' src='images/ban.png' alt='logo here' height='20%' weight='20%' onClick='BanUser({$row['userID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/banned.png' alt='logo here' height='20%' weight='20%' onClick='BanUser({$row['userID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/DeleteV1.png' alt='Delete connection' height='20%' weight='20%' onClick='deleteCompany({$row['companyID']})'></img><br>";
                                 }
                                 
                                 print "</div>";
@@ -150,10 +151,10 @@
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
                                 if($connectionsRow) {
-                                    print "<img class='connectionImage' src='images/Delete.png' alt='Delete connection' height='20%' weight='20%' onClick='deleteCompany({$row['companyID']})'></img><br>";
-                                    print "<img class='connectionImage' src='images/tick.png' alt='logo here' height='20%' weight='20%' onClick='unBanCompany({$row['companyID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/unbanned.png' alt='logo here' height='20%' weight='20%' onClick='unBanCompany({$row['companyID']})'></img><br>";
                                 } else {
-                                    print "<img class='connectionImage' src='images/ban.png' alt='logo here' height='20%' weight='20%' onClick='BanCompany({$row['companyID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/banned.png' alt='logo here' height='20%' weight='20%' onClick='BanCompany({$row['companyID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/DeleteV1.png' alt='Delete connection' height='20%' weight='20%' onClick='deleteCompany({$row['companyID']})'></img><br>";
                                 }
                             }
                             $conn->close();
