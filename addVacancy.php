@@ -60,16 +60,19 @@
             die("Connection failed:" .$conn -> connect_error);
         }
         $companyID = $_SESSION['company'];
-        $skills = $_POST['skills'];
+        if(isset($_POST['skills'])) $skills = $_POST['skills'];
+
         $sql = "INSERT INTO vacancies (companyID, vacancyTitle, vacancyDescription, requiredExperience, role)
                 VALUES ('{$companyID}', '{$_POST['vacancyTitle']}', '{$_POST['description']}', '{$_POST['reqExperience']}', '{$_POST['vacancyRole']}')";
 
         if ($conn->query($sql) === TRUE) {
             $last_id = mysqli_insert_id($conn);
-            foreach($skills as $skill) {
-                $skillSQL = "INSERT INTO skillsforvacancy (vacancyID, skillID)
-                VALUES ('{$last_id}', '{$skill}')";
-                $conn->query($skillSQL);
+            if(isset($skills)) {
+                foreach($skills as $skill) {
+                    $skillSQL = "INSERT INTO skillsforvacancy (vacancyID, skillID)
+                    VALUES ('{$last_id}', '{$skill}')";
+                    $conn->query($skillSQL);
+                }
             }
             header( "Location: organizationHome.php" );
 
