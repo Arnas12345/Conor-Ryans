@@ -36,6 +36,7 @@
             include ("validateLoggedIn.php");
             include ("serverConfig.php"); 
         ?>
+        
         <h1 class="page-header">Search Page</h1>
         <hr>
         <form class="search" method="post" action="search.php">
@@ -127,7 +128,8 @@
                                             alt='profile image' height='25%' width='25%' 
                                             style='min-width:180px; min-height:180px; border-radius:50%; 
                                             object-fit: cover; overflow:hidden;' >";
-                                }
+                                
+                                        }
                                 print "<a class='userDetails' href='profile.php?userID={$row['userID']}'><b>{$row['username']} - {$row['email']}</b></a>";
                                 $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$row['userID']}%\";";
                                 $result2 = $conn -> query($connectionsSQL);
@@ -174,6 +176,7 @@
                                 ON b.skillID = c.skillID
                                 WHERE a.userID != {$_SESSION['user']} AND c.skillTitle LIKE \"{$skill}%\";";
                         $skillResult = $conn -> query($SQL);
+                        
                         if(mysqli_num_rows($skillResult) != 0) {
                                 while($skillRow = $skillResult->fetch_assoc()) {
                                     print "<div class='user'>";
@@ -188,7 +191,8 @@
                                     }
                                     print "</div>";
                                 }
-                        } else {
+                        } 
+                        else {
                             print "<h1>No Users found with the skill \"{$skill}\".</h1>";
                         }
                         $conn->close();
