@@ -39,14 +39,18 @@
             
             $tmpfile = substr($file, strpos($file, "/")+1, strlen($file) );
             
-            $query = "SELECT * FROM users WHERE profileImage='$tmpfile'";
+            $userQuery = "SELECT * FROM users WHERE profileImage='$tmpfile'";
+            $companyQuery = "SELECT * FROM companies WHERE profileImage='$tmpfile'";
 
-            $result = mysqli_query($conn,$query);
-            $num_row = mysqli_num_rows($result);
+            $uResult = mysqli_query($conn,$userQuery);
+            $uNum_row = mysqli_num_rows($uResult);
+            // $uRrow=mysqli_fetch_array($uResult);
 
-            $row=mysqli_fetch_array($result);
+            $cResult = mysqli_query($conn,$companyQuery);
+            $cNum_row = mysqli_num_rows($cResult);
+            // $cRow=mysqli_fetch_array($cResult);
 
-            if( $num_row > 0 ) {
+            if( $uNum_row > 0 || $cNum_row > 0) {
                 print "<h3>Keep file in use: " . $tmpfile . "</h3>" . '<br><hr>';          
             }
             else {
