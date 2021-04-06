@@ -1,12 +1,3 @@
-<?php
-    session_start();
-
-    if (!(isset($_SESSION["loggedin"])) || $_SESSION["loggedin"] == false) {
-        header( "Location: organizationLogin.html" );
-    } 
-
-?>
-
 <html>
     <head>
         <title>Loop : Company Home</title>
@@ -55,8 +46,13 @@
         }
     </script>
     <body>
-        <?php include ("companyTemplate.html");
+
+        <?php
+
+            include ("validateLoggedIn.php");
+            include ("companyTemplate.html");
         ?>
+
         <h1 class="page-header">Vacancies Page</h1>
         <hr>
         

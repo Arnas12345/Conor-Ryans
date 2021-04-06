@@ -1,12 +1,3 @@
-<?php
-    session_start();
-
-    if (!(isset($_SESSION["admin"])) || $_SESSION["admin"] == false) {
-        header( "Location: home.php" );
-    } 
-
-?>
-
 <html>
     <head>
         <title>Loop : Search</title>
@@ -61,6 +52,10 @@
             
         <div class="page-box">
             <?php
+
+                include ("validateAdmin.php");
+                include ("validateLoggedIn.php");
+
                 if(isset($_POST["selectVal"])) {
                     session_start();
                     include ("serverConfig.php");

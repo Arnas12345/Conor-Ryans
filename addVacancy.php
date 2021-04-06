@@ -7,7 +7,12 @@
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
     </head>
     <body>
-        <?php include("companyTemplate.html"); ?>
+        
+        <?php 
+            include ("validateLoggedIn.php");
+            include ("companyTemplate.html"); 
+        ?>
+
         <h1 class="page-header">Add Vacancy</h1>
         <hr>
         <div class = "description-container">

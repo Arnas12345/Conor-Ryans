@@ -2,6 +2,8 @@
     <body>
         <?php
 
+            include ("validateLoggedIn.php");
+            
             session_start();
 
             include ("serverConfig.php");
