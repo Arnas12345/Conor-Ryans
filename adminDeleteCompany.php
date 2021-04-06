@@ -2,17 +2,17 @@
     <body>
         <?php
 
-            include ("validateAdmin.php");
-            include ("serverConfig.php");
+            session_start();
 
+            include ("serverConfig.php");
             $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
             if ($conn -> connect_error) {
                 die("Connection failed:" .$conn -> connect_error);
             }
 
-            $userToDelete = $_GET['id'];
+            $companyToDelete = $_GET['id'];
 
-            $connectionsSQL = "DELETE FROM users WHERE userID={$userToDelete};";
+            $connectionsSQL = "DELETE FROM companies WHERE companyID={$companyToDelete};";
 
             if ($conn->query($connectionsSQL) === TRUE) {
                 echo "Sucessful";

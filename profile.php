@@ -11,8 +11,6 @@
 
             include ("validateLoggedIn.php");
 
-            session_start();
-
             function getUserData($uID) {
                 include ("serverConfig.php");
                 $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
@@ -37,7 +35,7 @@
             print "<h1 class='page-header'>{$row['username']}</h1>";
             
         ?>
-        
+
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >

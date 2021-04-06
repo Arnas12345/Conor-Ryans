@@ -26,6 +26,32 @@
                 };
             }
         </script>
+
+        <script type="text/javascript">
+            function BanCompany(variable) {
+                if (confirm("Are you sure you want to ban this Company?") == true) {
+                    window.location.href= 'adminBanCompany.php?id=' + variable;
+                };
+            }
+        </script>
+
+        <script type="text/javascript">
+            function unBanCompany(variable) {
+                if (confirm("Are you sure you want to unban this Company?") == true) {
+                    window.location.href= 'adminUnbanCompany.php?id=' + variable;
+                };
+            }
+        </script>
+
+        <script type="text/javascript">
+            function deleteCompany(variable) {
+                if (confirm("Are you sure you want to unban this Company?") == true) {
+                    window.location.href= 'adminUnbanCompany.php?id=' + variable;
+                };
+            }
+        </script>
+  
+
     </head>
     <body>
         <h1 class="page-header">Admin Page</h1>
@@ -54,11 +80,10 @@
             <?php
 
                 include ("validateAdmin.php");
-                include ("validateLoggedIn.php");
+                include ("serverConfig.php");
 
                 if(isset($_POST["selectVal"])) {
-                    session_start();
-                    include ("serverConfig.php");
+                    
                     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
                     if ($conn -> connect_error) {
                         die("Connection failed:" .$conn -> connect_error);
@@ -91,15 +116,15 @@
                                             object-fit: cover; overflow:hidden;' >";
                                 }
                                 print "<a class='userDetails' href='profile.php?userID={$row['userID']}'><b>{$row['username']} - {$row['email']}</b></a>";
-                                $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$row['userID']}%\";";
+                                $connectionsSQL = "select * from banneduser where userID = {$row['userID']};";
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
                                 if($connectionsRow) {
-                                    print "<img class='connectionImage' src='images/ban.png' alt='logo here' height='20%' weight='20%' onClick='BanUser({$row['userID']})'></img><br>";
-                                    print "<img class='connectionImage' src='images/Delete.png' alt='Delete connection' height='20%' weight='20%' onClick='DeleteUser({$row['userID']})'></img><br>";
-                                    print "<img class='connectionImage' src='images/tick.png' alt='logo here' height='20%' weight='20%' onClick='unbanUser({$row['userID']})'></img><br>";
+
+                                    print "<img class='connectionImage' src='images/unbanned.png' alt='logo here' height='20%' weight='20%' onClick='unbanUser({$row['userID']})'></img><br>";
                                 } else {
-                                    print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='unbanUser({$row['userID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/banned.png' alt='logo here' height='20%' weight='20%' onClick='BanUser({$row['userID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/DeleteV1.png' alt='Delete connection' height='20%' weight='20%' onClick='deleteCompany({$row['companyID']})'></img><br>";
                                 }
                                 
                                 print "</div>";
@@ -121,8 +146,19 @@
                                 print "<div class='user'>";
                                 print "<a class='userDetails' href='company.php?companyID={$row['companyID']}'><b>{$row['companyName']} - {$row['email']}</b></a>";
                                 print "</div>";
+
+                                $connectionsSQL = "select * from bannedcompany where companyID = {$row['companyID']};";
+                                $result2 = $conn -> query($connectionsSQL);
+                                $connectionsRow = $result2->fetch_assoc();
+                                if($connectionsRow) {
+                                    print "<img class='connectionImage' src='images/unbanned.png' alt='logo here' height='20%' weight='20%' onClick='unBanCompany({$row['companyID']})'></img><br>";
+                                } else {
+                                    print "<img class='connectionImage' src='images/banned.png' alt='logo here' height='20%' weight='20%' onClick='BanCompany({$row['companyID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/DeleteV1.png' alt='Delete connection' height='20%' weight='20%' onClick='deleteCompany({$row['companyID']})'></img><br>";
+                                }
                             }
                             $conn->close();
+                            
                         } else {
                             print "<h1>No Company found.</h1>";
                         }
