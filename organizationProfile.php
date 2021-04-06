@@ -7,6 +7,8 @@
     <body>
 
         <?php 
+
+            include ("validateLoggedIn.php");
             
             session_start();
 

@@ -19,6 +19,8 @@
     <body>
         <?php 
             
+            include ("validateLoggedIn.php");
+            
             session_start();
 
             function getUserData($uID) {

@@ -1,11 +1,3 @@
-<?php
-    session_start();
-
-    if (!(isset($_SESSION["loggedin"])) || $_SESSION["loggedin"] == false) {
-        header( "Location: login.html" );
-    } 
-
-?>
 
 <html>
     <head>
@@ -53,7 +45,11 @@
     
     </script>
     <body>
-        <?php include ("headerTemplate.html");?>
+        <?php 
+            include ("validateLoggedIn.php");
+            include ("headerTemplate.html");
+        ?>
+
         <h1 class="page-header">Job Feed</h1>
        
 

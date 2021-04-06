@@ -6,7 +6,11 @@
 
     </head>
     <body>
-        <?php include("headerTemplate.html"); ?>
+        <?php 
+            include ("validateLoggedIn.php");
+            include ("headerTemplate.html"); 
+        ?>
+        
         <h1 class="page-header">My Looped Jobs</h1>
         <hr>
        

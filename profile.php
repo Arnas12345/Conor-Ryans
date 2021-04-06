@@ -6,8 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-    <?php 
-            
+        
+        <?php 
+
+            include ("validateLoggedIn.php");
+
             session_start();
 
             function getUserData($uID) {
@@ -34,6 +37,7 @@
             print "<h1 class='page-header'>{$row['username']}</h1>";
             
         ?>
+        
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >

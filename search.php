@@ -34,9 +34,14 @@
         </form>
         <div class="page-box">
             <?php
+
+                include ("validateLoggedIn.php");
+                include ("serverConfig.php");
+                
+                session_start();
+
                 if(isset($_POST["selectVal"])) {
-                    session_start();
-                    include ("serverConfig.php");
+                    
                     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
                     if ($conn -> connect_error) {
                         die("Connection failed:" .$conn -> connect_error);
