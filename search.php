@@ -18,7 +18,6 @@
         </script>
     </head>
     <body>
-        <?php include("headerTemplate.html"); ?>
         <h1 class="page-header">Search Page</h1>
         <hr>
         <form class="search" method="post" action="search.php">
@@ -35,6 +34,7 @@
         <div class="page-box">
             <?php
 
+                include ("headerTemplate.html");
                 include ("validateLoggedIn.php");
                 include ("serverConfig.php");
 
