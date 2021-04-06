@@ -15,29 +15,87 @@
                     window.location.href= 'deleteConnection.php?id=' + variable;
                 };
             }
+
+            function changeFunc() {
+                var selectBox = document.getElementById("select");
+                var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+                window.location.href= 'search.php?search=' + selectedValue;
+            }
+
+            function jsfunction() {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const product = urlParams.get('search');
+                document.getElementById('select').value = product;
+            }
         </script>
     </head>
     <body>
+        <?php 
+            include("headerTemplate.html");
+            include ("validateLoggedIn.php");
+            include ("serverConfig.php"); 
+        ?>
+        
         <h1 class="page-header">Search Page</h1>
         <hr>
         <form class="search" method="post" action="search.php">
-            <select class="select" name="selectVal">
-                <option value="name">Name</option>
-                <option value="companyName">Company Name</option>
-                <option value="skill">Skill</option>
-                <option value="previousHistory">Previous History</option>
-                <option value="currentlyEmployed">Currently Employed</option>
-            </select>
-            <input class="input" type="text" name="value" placeholder="Search for User">
+            <div class="selectedForm">
+                <select class="select" id="select" name="selectVal" onchange="changeFunc()">
+                    <option value="name">Name</option>
+                    <option value="companyName">Company Name</option>
+                    <option value="skill">Skill</option>
+                    <option value="previousHistory">Previous History</option>
+                    <option value="currentlyEmployed">Currently Employed</option>
+                </select>
+            </div>
+            <?php
+                $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
+                if ($conn -> connect_error) {
+                    die("Connection failed:" .$conn -> connect_error);
+                }
+
+                if(!isset($_GET['search'])) print '<input class="input" type="text" name="value" placeholder="Search for User">';
+                if(isset($_GET['search']) && $_GET['search'] == "name") {
+                    print '<input class="input" type="text" name="value" placeholder="Search for User">';
+                    echo '<script type="text/javascript">jsfunction();</script>';
+                }
+                if(isset($_GET['search']) && $_GET['search'] == "companyName") {
+                    print '<input class="input" type="text" name="value" placeholder="Search for Company">';
+                    echo '<script type="text/javascript">jsfunction();</script>';
+                }
+                if(isset($_GET['search']) && $_GET['search'] == "skill") {
+                    $skillsSql = "select * from skills;";
+                    $skillsResult = $conn -> query($skillsSql);
+                    print "<select name='skill'><option value=''>Select A Skill</option>";
+                    while($skillsRow = $skillsResult->fetch_assoc())
+                    {   
+                        print "<option value='{$skillsRow['skillTitle']}'>{$skillsRow['skillTitle']}</option>";
+                    }
+                    print '</select>';
+                    echo '<script type="text/javascript">jsfunction();</script>';
+                }
+                if(isset($_GET['search']) && $_GET['search'] == "previousHistory") {
+                    print '<input class="input" type="text" name="value" placeholder="Search for User">';
+                    echo '<script type="text/javascript">jsfunction();</script>';
+                }
+                if(isset($_GET['search']) && $_GET['search'] == "currentlyEmployed") {
+                    $companySQL = "select * from companies;";
+                    $companyResult = $conn -> query($companySQL);
+                    print "<select name='company'><option value=''>Select A Company</option>";
+                    while($companyRow = $companyResult->fetch_assoc())
+                    {   
+                        print "<option value='{$companyRow['companyName']}'>{$companyRow['companyName']}</option>";
+                    }
+                    print '</select>';
+                    echo '<script type="text/javascript">jsfunction();</script>';
+                }
+                
+            ?>
             <input class="submit" type="submit" value="Search">
         </form>
         <div class="page-box">
             <?php
-
-                include ("headerTemplate.html");
-                include ("validateLoggedIn.php");
-                include ("serverConfig.php");
-
                 if(isset($_POST["selectVal"])) {
                     
                     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
@@ -70,7 +128,8 @@
                                             alt='profile image' height='25%' width='25%' 
                                             style='min-width:180px; min-height:180px; border-radius:50%; 
                                             object-fit: cover; overflow:hidden;' >";
-                                }
+                                
+                                        }
                                 print "<a class='userDetails' href='profile.php?userID={$row['userID']}'><b>{$row['username']} - {$row['email']}</b></a>";
                                 $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$row['userID']}%\";";
                                 $result2 = $conn -> query($connectionsSQL);
@@ -107,7 +166,7 @@
                     }
 
                     if ($_POST["selectVal"] == "skill") {
-                        $skill = $_POST["value"];
+                        $skill = $_POST["skill"];
                         printSearchFor($_POST["selectVal"], $skill);
                         $SQL = "select a.userID, a.email
                                 from users a
@@ -117,6 +176,7 @@
                                 ON b.skillID = c.skillID
                                 WHERE a.userID != {$_SESSION['user']} AND c.skillTitle LIKE \"{$skill}%\";";
                         $skillResult = $conn -> query($SQL);
+                        
                         if(mysqli_num_rows($skillResult) != 0) {
                                 while($skillRow = $skillResult->fetch_assoc()) {
                                     print "<div class='user'>";
@@ -131,14 +191,15 @@
                                     }
                                     print "</div>";
                                 }
-                        } else {
+                        } 
+                        else {
                             print "<h1>No Users found with the skill \"{$skill}\".</h1>";
                         }
                         $conn->close();
                     }
 
                     if ($_POST["selectVal"] == "currentlyEmployed") {
-                        $currentlyEmployed = $_POST["value"];
+                        $currentlyEmployed = $_POST["company"];
                         printSearchFor($_POST["selectVal"], $currentlyEmployed);
                         $SQL = "select a.userID, a.email
                                 from users a
@@ -161,7 +222,7 @@
                                     print "</div>";
                                 }
                         } else {
-                            print "<h1>No Users found with the skill \"{$currentlyEmployed}\".</h1>";
+                            print "<h1>No Users found employed by \"{$currentlyEmployed}\".</h1>";
                         }
                         $conn->close();
                     }
@@ -192,7 +253,7 @@
                                     print "</div>";
                                 }
                         } else {
-                            print "<h1>No Users found with the skill \"{$previousHistory}\".</h1>";
+                            print "<h1>No Users found that worked at \"{$previousHistory}\".</h1>";
                         }
                         $conn->close();
                     }
