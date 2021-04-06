@@ -11,8 +11,6 @@
         <?php 
 
             include ("validateLoggedIn.php");
-            
-            session_start();
 
             function getUserData($uID) {
                 include ("serverConfig.php");
@@ -132,11 +130,11 @@
                 $result = $conn -> query($sql);
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails'>{$row['companyName']}</p>";
-                    setcookie("currentEmployer",$row['companyName'],time()+3600);
+                    // setcookie("currentEmployer",$row['companyName'],time()+3600);
                 } 
                 else {
                     print "<p>No Current Employer.</p>";
-                    setcookie("currentEmployer", "", time()-3600);
+                    // setcookie("currentEmployer", "", time()-3600);
                 }
                 break;
 
