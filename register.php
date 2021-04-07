@@ -38,7 +38,9 @@
                 }
             }
             else {
+                print "<h4> Passwords do not match, try again</h4>";
                 header( "Location: index.php" );
+                
             }
 
             $conn->close();

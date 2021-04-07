@@ -32,7 +32,7 @@
     </head>
     <body>
         <?php 
-            include("headerTemplate.html");
+            include ("headerTemplate.html");
             include ("validateLoggedIn.php");
             include ("serverConfig.php"); 
         ?>
@@ -176,7 +176,7 @@
                                 ON b.skillID = c.skillID
                                 WHERE a.userID != {$_SESSION['user']} AND c.skillTitle LIKE \"{$skill}%\";";
                         $skillResult = $conn -> query($SQL);
-                        
+
                         if(mysqli_num_rows($skillResult) != 0) {
                                 while($skillRow = $skillResult->fetch_assoc()) {
                                     print "<div class='user'>";
