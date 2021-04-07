@@ -38,10 +38,10 @@
 
         session_start();
 
-        $companyEmail = $_POST['email'];
+        $email = $_POST['email'];
         $password = $_POST['pass'];
         
-        $sql = "select * from companies where email=\"{$companyEmail}\";";
+        $sql = "select * from companies where email=\"{$email}\";";
         $result = $conn -> query($sql);
         $row = $result->fetch_assoc();
         $companyID = $row["companyID"];
