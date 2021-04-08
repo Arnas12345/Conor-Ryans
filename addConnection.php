@@ -12,8 +12,8 @@
             $secondUserID = $_GET['id'];
             $currentUser = $_SESSION['user'];
 
-            $sql = "INSERT INTO connections (userIDFirst, userIDSecond, CreationDate)
-            VALUES ('{$currentUser}', '{$secondUserID}', Now())";
+            $sql = "INSERT INTO connections (userIDFirst, userIDSecond, CreationDate, Status)
+            VALUES ('{$currentUser}', '{$secondUserID}', Now(), 'Pending')";
 
             if ($conn->query($sql) === TRUE) {
                 header( "Location: profile.php?userID=$secondUserID" );

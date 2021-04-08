@@ -32,17 +32,6 @@
                 }
             }
         }
-
-            var modal = document.getElementById("friendmodal");
-     
-            
-            var span = document.getElementsByClassName("close")[0];
-
-            btn.onclick = function() {
-            modal.style.display = "block";
-            }
-
-    
     </script>
     <body>
         <?php 
