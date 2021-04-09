@@ -13,9 +13,10 @@
             $secondUserID = $_GET['id'];
             $currentUser = $_SESSION['user'];
 
-            $connectionsSQL = "DELETE FROM connections WHERE userIDFirst=\"{$currentUser}\" AND userIDSecond=\"{$secondUserID}\";";
+            $connectionsSQL = "DELETE FROM connections WHERE userIDFirst=\"{$currentUser}\" AND userIDSecond=\"{$secondUserID}\" AND Status='Accepted';";
+            $secondSQL = "DELETE FROM connections WHERE userIDFirst=\"{$secondUserID}\" AND userIDSecond=\"{$currentUser}\" AND Status='Accepted';";
 
-            if ($conn->query($connectionsSQL) === TRUE) {
+            if ($conn->query($connectionsSQL) === TRUE && $conn->query($secondSQL) === TRUE) {
                 echo "Sucessful";
                 header( "Location: home.php" );
 
