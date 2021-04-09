@@ -53,18 +53,18 @@
             return strcasecmp($inputEmail, $DBEmail) == 0;
         }
         
-        if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
-            $_SESSION['user'] = $userID;
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['loggedin'] = true;
-            header( "Location: home.php" );
-        }
-        else if(emailMatches($email, $sqlEmail) && $isAdmin !== NULL && password_verify($password, $sqlPass) ) {
+        if(emailMatches($email, $sqlEmail) && $isAdmin !== NULL && password_verify($password, $sqlPass) ) {
             $_SESSION['user'] = $userID;
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;
             $_SESSION['admin'] = true;
             header( "Location: admin.php" );
+        }
+        else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
+            $_SESSION['user'] = $userID;
+            $_SESSION['username'] = $row['username'];
+            $_SESSION['loggedin'] = true;
+            header( "Location: home.php" );
         }
         else {
             print "<h4 class='alert' style='text-align:center;'>
