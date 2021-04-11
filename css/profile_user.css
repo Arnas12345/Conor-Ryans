@@ -1,12 +1,6 @@
-
-body{
-    background-color:white;
-}
-
 .profileImage{
     text-align: center;
 }
-
 
 .profile-container{
     margin-left: 10%;
@@ -26,4 +20,9 @@ body{
 
 .description-heading{
    text-decoration: underline;
+}
+
+.editProfile {
+    padding-top: 1%;
+    text-align: center;
 }

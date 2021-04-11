@@ -39,7 +39,7 @@
             include ("headerTemplate.html");
         ?>
 
-        <h1 class="page-header">Job Feed</h1>
+        <h1 class="page-heading">Job Feed</h1>
        
 
     </div>
@@ -178,8 +178,6 @@
                     //If it is not sorting by skills run this code, i.e. on page open
                     $counter = 0;
                     //Shows the automatically suggested jobs first that you have a skill in
-                    print "<h2>Automatically Suggested Jobs</h2>";
-
                     $userSkills = "select a.skillTitle
                     from skills a
                     INNER JOIN userskills b
@@ -191,6 +189,7 @@
                     $userSkillResults = $conn -> query($userSkills);
                     //If the user has skills
                     if(mysqli_num_rows($userSkillResults) != 0) {
+                        print "<h2>Automatically Suggested Jobs</h2>";
                         while($userSkillRow = $userSkillResults->fetch_assoc()) {
                             $skills[] = $userSkillRow['skillTitle'];
                             $vacanciesSQL = "select a.vacancyID
@@ -209,7 +208,7 @@
                                 while($vacanciesRow = $vacanciesResult->fetch_assoc()){
                                     $vacancies[] = $vacanciesRow['vacancyID'];
                                 }   
-                            } else print "<h1>No Vacanies To Suggest.</h1>";
+                            } 
                         }
                         // get the rest of the vacancies that dont have the users skills
                         $vacancies = array_unique($vacancies);
@@ -322,9 +321,8 @@
                                                     
                                 }
                             }
-                        } else print "<h1>No Vacanies To Suggest.</h1>";
+                        }
                     } else {
-                        print "<h1>No Vacanies To Suggest.</h1>";
                         $vacanciesSQL = "select *
                         from vacancies 
                         ORDER BY timeAdded DESC;";

@@ -35,7 +35,7 @@
     </script>
     <body>
         <?php include("headerTemplate.html"); ?>
-        <h1 class="page-header">My Connections</h1>
+        <h1 class="page-heading">My Connections</h1>
         <hr>
         <div style='text-align:center'>
             <button class='showRequests' onClick='showRequests()' style='text-align:center'>Show Friend Requests</button>
@@ -71,7 +71,7 @@
             <!-- Modal content -->
             <div class='modal-content'>
                 <span class='close close'>&times;</span>
-                <table class='skillsTable'>
+                <table class='userConnections'>
                     <thead>
                         <tr>
                             <th>User Name</th>
