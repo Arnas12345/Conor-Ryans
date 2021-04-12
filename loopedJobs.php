@@ -7,7 +7,7 @@
     </head>
     <body>
         <?php include ("headerTemplate.html"); ?>
-        <h1 class='page-header'>My Looped Jobs</h1>
+        <h1 class='page-heading'>My Looped Jobs</h1>
         <hr>
         <div class="page-box">
             <?php
@@ -34,12 +34,19 @@
                                     <th>Status</th>
                                 </tr>
                             </thead>";
-                    while($row = $result->fetch_assoc())
-                    {   
+                            
+                    if(mysqli_num_rows($result) != 0) {
+                        while($row = $result->fetch_assoc())
+                        {   
+                            print "<TR>";
+                            print "<TD>{$row['companyName']}</TD>";
+                            print "<TD>{$row['vacancyTitle']}</TD>";
+                            print "<TD>{$row['status']}</TD>";
+                            print "</TR>";
+                        }
+                    } else {
                         print "<TR>";
-                        print "<TD>{$row['companyName']}</TD>";
-                        print "<TD>{$row['vacancyTitle']}</TD>";
-                        print "<TD>{$row['status']}</TD>";
+                        print "<TD colspan='3'>No Looped Jobs</TD>";
                         print "</TR>";
                     }
                     $conn->close();

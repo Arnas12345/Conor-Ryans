@@ -36,7 +36,7 @@
             
         ?>
 
-        <h1 class="page-header">My Profile</h1>
+        <h1 class="page-heading">My Profile</h1>
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage" >

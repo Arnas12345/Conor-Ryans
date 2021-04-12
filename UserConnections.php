@@ -101,6 +101,10 @@
                                     </td>";
                                 echo '</tr>';
                             }
+                        } else {
+                            print "<TR>";
+                            print "<TD colspan='2'>No Connections</TD>";
+                            print "</TR>";
                         }
                     ?>
                     </tbody>

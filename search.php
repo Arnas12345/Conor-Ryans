@@ -37,7 +37,7 @@
             include ("serverConfig.php"); 
         ?>
         
-        <h1 class="page-header">Search Page</h1>
+        <h1 class="page-heading">Search Page</h1>
         <hr>
         <form class="search" method="post" action="search.php">
             <div class="selectedForm">

@@ -1,26 +1,28 @@
 <html>
     <head>
-        <title>Loop : Login</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/login.css?v=<?php echo time() ?>">
+        <link rel="stylesheet" type="text/css" href="css/login.css?v=<?php echo time(); ?>">
     </head>
     <body>
-        <div class="side">
-            <div class="container_logo">
-                <img class="loop_logo" src="images/Loop_logo.png" alt="logo here" height="50%" width="50%"></img>
-                <h1 class="newHere">New Here?</h1>
-                <button type="button" class="signUp" style="background-color: rgb(191, 191, 191);" onClick="location.href='index.php'">Sign Up</button>
-                <br>
-                <a href="organizationLogin.php" style="color: white;">Are you a Organization? Click here</a>
+        <div class="wrapper">
+            <div class="banner">
+                    <div class="login">
+                        <h2 style="text-align: left;">Login</h2>
+                        <form method="post" action="login.php">
+                            <input class="input" type="email" name="email" placeholder="Email" required><br>
+                            <input class="input" type="password" name="pass" placeholder="Password" required><br>
+                            <input class="button" name="submit" type="submit" value="Login" style="margin-left: 27%;">
+                        </form>
+                            <div class="buttons">
+                                <div class="register">
+                                    <h5><u>New Here?</u></h5>
+                                    <button class="button" onClick="location.href='register.html'">Register</button>
+                                </div>
+                            </div>
+                        <a href="organizationLogin.php" style="color: white;">Are you a Organization? Click here</a>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="login">
-            <h1 style="text-align: left; padding-left: 5%">Login</h1>
-            <form method="post" action="login.php">
-                <input class="input" type="email" name="email" placeholder="email" style="color: white" required><br>
-                <input class="input" type="password" name="pass" placeholder="password" style="color: white" required><br>
-                <input class="submitButton" name="submit" type="submit" value="Login">
-            </form>
         </div>
     </body>
 </html>
@@ -60,7 +62,8 @@
             $_SESSION['admin'] = true;
             header( "Location: admin.php" );
         }
-        else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
+        else if(emailMatches($email, $sqlEmail)) {
+        // else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
             $_SESSION['user'] = $userID;
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;
