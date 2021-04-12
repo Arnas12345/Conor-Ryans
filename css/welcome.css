@@ -37,11 +37,6 @@ h2 {
     color: white;
 }
 
-h5 {
-    text-align: center;
-    color: white;
-}
-
 p {
     text-align: center;
     color: white;
@@ -66,49 +61,4 @@ p {
     border:1px solid black;
     color: white;
     margin-top: 2%;
-}
-
-.button2 {
-    padding-left: 13%;
-    padding-right: 13%;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    margin-left: 5%;
-    margin-right: 5%;
-    border-radius: 5px;
-    background-repeat:no-repeat;
-    cursor:pointer;
-    overflow: hidden;
-    background-color: Transparent;
-    border:1px solid black;
-    color: white;
-    margin-top: 5%;
-}
-
-.submit {
-    text-align: center;
-}
-
-.input {
-    padding-left: 3%;
-    padding-right: 15%;
-    padding-top: 4%;
-    padding-bottom: 4%;
-    margin-bottom: 5%;
-    border-radius: 5px;
-    background-repeat:no-repeat;
-    cursor:pointer;
-    overflow: hidden;
-    background-color: Transparent;
-    border:1px solid black;
-    height: 10%;
-    color: white;
-}
-
-.input::placeholder {
-    color: white;
-}
-
-.register {
-    margin-top: 30%;
 }
