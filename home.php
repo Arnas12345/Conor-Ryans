@@ -121,9 +121,7 @@
     
                             print "<div class='container vacancy'>
                                         <div class='row'>
-                                            <div class='col-4' >
-                                                <img class='img-fluid' width='200' height='200' src='images/job-icon.jpg'  alt='logo here'></img>
-                                            </div>
+                                        <div class='col-2' ></div>
                                             <div class='col-8' >
                                                 <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
                                                 <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
@@ -274,9 +272,7 @@
             
                                     print "<div class='container vacancy'>
                                                 <div class='row'>
-                                                    <div class='col-4' >
-                                                        <img class='img-fluid' width='200' height='200' src='images/job-icon.jpg'  alt='logo here'></img>
-                                                    </div>
+                                                <div class='col-2' ></div>
                                                     <div class='col-8' >
                                                         <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
                                                         <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
@@ -365,9 +361,7 @@
         
                                 print "<div class='container vacancy'>
                                             <div class='row'>
-                                                <div class='col-4' >
-                                                    <img class='img-fluid' width='200' height='200' src='images/job-icon.jpg'  alt='logo here'></img>
-                                                </div>
+                                                <div class='col-2' ></div>
                                                 <div class='col-8' >
                                                     <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
                                                     <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>

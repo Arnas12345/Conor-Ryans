@@ -68,9 +68,6 @@
             <select class="select" name="selectVal">
                 <option value="name">Name</option>
                 <option value="companyName">Company Name</option>
-                <option value="skill">Skill</option>
-                <option value="previousHistory">Previous History</option>
-                <option value="currentlyEmployed">Currently Employed</option>
             </select>
             <input class="input" type="text" name="value" placeholder="Search for User">
             <input class="submit" type="submit" value="Search">
@@ -124,7 +121,7 @@
                                     print "<img class='connectionImage' src='images/unbanned.png' alt='logo here' height='20%' weight='20%' onClick='unbanUser({$row['userID']})'></img><br>";
                                 } else {
                                     print "<img class='connectionImage' src='images/banned.png' alt='logo here' height='20%' weight='20%' onClick='BanUser({$row['userID']})'></img><br>";
-                                    print "<img class='connectionImage' src='images/DeleteV1.png' alt='Delete connection' height='20%' weight='20%' onClick='deleteCompany({$row['companyID']})'></img><br>";
+                                    print "<img class='connectionImage' src='images/DeleteV1.png' alt='Delete connection' height='20%' weight='20%' onClick='DeleteUser({$row['userID']})'></img><br>";
                                 }
                                 
                                 print "</div>";
@@ -163,105 +160,12 @@
                             print "<h1>No Company found.</h1>";
                         }
                     }
-
-                    if ($_POST["selectVal"] == "skill") {
-                        $skill = $_POST["value"];
-                        printSearchFor($_POST["selectVal"], $skill);
-                        $SQL = "select a.userID, a.email
-                                from users a
-                                INNER JOIN userskills b
-                                ON a.userID = b.userID
-                                INNER JOIN skills c
-                                ON b.skillID = c.skillID
-                                WHERE a.userID != {$_SESSION['user']} AND c.skillTitle LIKE \"{$skill}%\";";
-                        $skillResult = $conn -> query($SQL);
-                        if(mysqli_num_rows($skillResult) != 0) {
-                                while($skillRow = $skillResult->fetch_assoc()) {
-                                    print "<div class='user'>";
-                                    print "<a class='userDetails' href='profile.php?userID={$skillRow['userID']}'><b>{$skillRow['email']}</b></a>";
-                                    $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$skillRow['userID']}%\";";
-                                    $result2 = $conn -> query($connectionsSQL);
-                                    $connectionsRow = $result2->fetch_assoc();
-                                    if($connectionsRow) {
-                                        print "<img class='connectionImage' src='images/ban.png' alt='logo here' height='20%' weight='20%' onClick='BanUser({$row['userID']})'></img><br>";
-                                        print "<img class='connectionImage' src='images/Delete.png' alt='Delete connection' height='20%' weight='20%' onClick='DeleteUser({$row['userID']})'></img><br>";
-                                        print "<img class='connectionImage' src='images/tick.png' alt='logo here' height='20%' weight='20%' onClick='unbanUser({$row['userID']})'></img><br>";
-                                    } else {
-                                        print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$skillRow['userID']})'></img><br>";
-                                    }
-                                    print "</div>";
-                                }
-                        } else {
-                            print "<h1>No Users found with the skill \"{$skill}\".</h1>";
-                        }
-                        $conn->close();
-                    }
-
-                    if ($_POST["selectVal"] == "currentlyEmployed") {
-                        $currentlyEmployed = $_POST["value"];
-                        printSearchFor($_POST["selectVal"], $currentlyEmployed);
-                        $SQL = "select a.userID, a.email
-                                from users a
-                                INNER JOIN companies b
-                                ON a.companyID = b.companyID
-                                WHERE a.userID != {$_SESSION['user']} AND b.companyName LIKE \"{$currentlyEmployed}%\";";
-                        $currentlyEmployedResult = $conn -> query($SQL);
-                        if(mysqli_num_rows($currentlyEmployedResult) != 0) {
-                                while($currentlyEmployedRow = $currentlyEmployedResult->fetch_assoc()) {
-                                    print "<div class='user'>";
-                                    print "<a class='userDetails' href='profile.php?userID={$currentlyEmployedRow['userID']}'><b>{$currentlyEmployedRow['email']}</b></a>";
-                                    $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$currentlyEmployedRow['userID']}%\";";
-                                    $result2 = $conn -> query($connectionsSQL);
-                                    $connectionsRow = $result2->fetch_assoc();
-                                    if($connectionsRow) {
-                                        print "<img class='connectionImage' src='images/ban.png' alt='logo here' height='20%' weight='20%' onClick='BanUser({$row['userID']})'></img><br>";
-                                        print "<img class='connectionImage' src='images/Delete.png' alt='Delete connection' height='20%' weight='20%' onClick='DeleteUser({$row['userID']})'></img><br>";
-                                        print "<img class='connectionImage' src='images/tick.png' alt='logo here' height='20%' weight='20%' onClick='unbanUser({$row['userID']})'></img><br>";
-                                    } else {
-                                        print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$currentlyEmployedRow['userID']})'></img><br>";
-                                    }
-                                    print "</div>";
-                                }
-                        } else {
-                            print "<h1>No Users found with the skill \"{$currentlyEmployed}\".</h1>";
-                        }
-                        $conn->close();
-                    }
-
-                    if ($_POST["selectVal"] == "previousHistory") {
-                        $previousHistory = $_POST["value"];
-                        printSearchFor($_POST["selectVal"], $previousHistory);
-                        $SQL = "select a.userID, a.email
-                                from users a
-                                INNER JOIN jobhistory b
-                                ON a.userID = b.userID
-                                INNER JOIN companies c
-                                On b.companyID = c.companyID
-                                WHERE a.userID != {$_SESSION['user']} AND c.companyName LIKE \"{$previousHistory}%\";";
-                        $previousHistoryResult = $conn -> query($SQL);
-                        if(mysqli_num_rows($previousHistoryResult) != 0) {
-                                while($previousHistoryRow = $previousHistoryResult->fetch_assoc()) {
-                                    print "<div class='user'>";
-                                    print "<a class='userDetails' href='profile.php?userID={$previousHistoryRow['userID']}'><b>{$previousHistoryRow['email']}</b></a>";
-                                    $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$previousHistoryRow['userID']}%\";";
-                                    $result2 = $conn -> query($connectionsSQL);
-                                    $connectionsRow = $result2->fetch_assoc();
-                                    if($connectionsRow) {
-                                        print "<img class='connectionImage' src='images/ban.png' alt='logo here' height='20%' weight='20%' onClick='BanUser({$row['userID']})'></img><br>";
-                                        print "<img class='connectionImage' src='images/Delete.png' alt='Delete connection' height='20%' weight='20%' onClick='DeleteUser({$row['userID']})'></img><br>";
-                                        print "<img class='connectionImage' src='images/tick.png' alt='logo here' height='20%' weight='20%' onClick='unbanUser({$row['userID']})'></img><br>";
-                                    } else {
-                                        print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$previousHistoryRow['userID']})'></img><br>";
-                                    }
-                                    print "</div>";
-                                }
-                        } else {
-                            print "<h1>No Users found with the skill \"{$previousHistory}\".</h1>";
-                        }
-                        $conn->close();
-                    }
                 }
 
+
+                  
+
+                  
                 function printSearchFor($searchVal, $searchTerm) {
                     print "<h1 class='page-header'>Search by {$searchVal} for {$searchTerm}</h1>";
                 }
