@@ -112,7 +112,7 @@
                                             style='min-width:180px; min-height:180px; border-radius:50%; 
                                             object-fit: cover; overflow:hidden;' >";
                                 }
-                                print "<a class='userDetails' href='profile.php?userID={$row['userID']}'><b>{$row['username']} - {$row['email']}</b></a>";
+                                print "<a class='userDetails' href='adminUserView.php?userID={$row['userID']}'><b>{$row['username']} - {$row['email']}</b></a>";
                                 $connectionsSQL = "select * from banneduser where userID = {$row['userID']};";
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
