@@ -71,7 +71,8 @@
                     $row = getUserData($userID);
                     if(isset($row['description']) && $row['description'] !== null ){
                         print "<p class='userDetails text-left'>{$row['description']}</p>";
-                        setcookie("description",$row['description'],time()+3600);
+                        // setcookie("description",$row['description'],time()+3600);
+                        $_SESSION['description'] = $row['description'];
                     } 
                     else {
                         print "<p>No Bio found.</p>";
@@ -126,11 +127,11 @@
                 $result = $conn -> query($sql);
                 if($row = $result->fetch_assoc()) {
                     print "<p class='userDetails text-left'>{$row['companyName']}</p>";
-                    // setcookie("currentEmployer",$row['companyName'],time()+3600);
+                    $_SESSION['currentEmployer'] = $row['companyName'];
+
                 } 
                 else {
                     print "<p class='text-left'>No Current Employer.</p>";
-                    // setcookie("currentEmployer", "", time()-3600);
                 }
                 break;
 

@@ -105,10 +105,10 @@
 
                         //Sets the description if one exists
                         $description = '';
-                        if(isset($_COOKIE['description'])) $description = $_COOKIE['description'];
+                        if(isset($_SESSION['description'])) $description = $_SESSION['description'];
                         print "<textarea id='description' 
-                                    name='description' pattern='[A-Za-z][0-9]{6,255}' 
-                                    title='Please input more than 6 characters. Letters and numbers only.'>{$description}</textarea>
+                                    name='description' pattern='[A-Za-z0-9]{6,255}' 
+                                    title='Please input between 6 and 255 characters. Letters and numbers only.'>{$description}</textarea>
                                 <br>";
 
                         //User can select all skills they want
@@ -117,16 +117,17 @@
                                 <select class="skills" name="skills[]" multiple>';
                         $skillsSql = "select * from skills;";
                         $skillsResult = $conn -> query($skillsSql);
+                        
+                        $getUsersSkillsSql = "select * from userskills WHERE userID={$userID};";
+                        $getUsersSkillsResult = $conn -> query($getUsersSkillsSql);
+                        $skillsArray = array();
+                        while($getUsersSkillsRow = $getUsersSkillsResult->fetch_assoc()) {
+                            $skillsArray[] = $getUsersSkillsRow['skillID'];
+                        }
                         while($skillsRow = $skillsResult->fetch_assoc())
                         {   
-                            $getUsersSkillsSql = "select * from userskills WHERE userID={$userID}";
-                            $getUsersSkillsResult = $conn -> query($getUsersSkillsSql);
-                            //Loop is incorrect prints all skills for how many times the user has skills
-                            // while($getUsersSkillsRow = $getUsersSkillsResult->fetch_assoc()) {
-                            // if($skillsRow['skillID'] == $getUsersSkillsRow['skillID']) print "<option value='{$skillsRow['skillTitle']}' selected>{$skillsRow['skillTitle']}</option>";
-                            print "<option value='{$skillsRow['skillTitle']}'>{$skillsRow['skillTitle']}</option>";
-                            // else print "<option value='{$skillsRow['skillTitle']}'>{$skillsRow['skillTitle']}</option>";
-                            // }
+                            if(in_array($skillsRow['skillID'], $skillsArray))  print "<option value='{$skillsRow['skillTitle']}' selected>{$skillsRow['skillTitle']}</option>";
+                            else print "<option value='{$skillsRow['skillTitle']}'>{$skillsRow['skillTitle']}</option>";
                         }
                         print '</select><br><hr>';
 
@@ -138,25 +139,30 @@
                         $currentEmployerResult = $conn -> query($currentEmployerSQL);
                         while($currentEmployerRow = $currentEmployerResult->fetch_assoc())
                         {   
-                            if(isset($_COOKIE['currentEmployer']) && $_COOKIE['currentEmployer'] == $currentEmployerRow['companyName']) {
+                            if(isset($_SESSION['currentEmployer']) && $_SESSION['currentEmployer'] == $currentEmployerRow['companyName']) {
                                 print "<option name='{$currentEmployerRow['companyName']}' selected>{$currentEmployerRow['companyName']}</option>";
                             } else print "<option name='{$currentEmployerRow['companyName']}'>{$currentEmployerRow['companyName']}</option>";
                         }
-                        print '</select><br>';
+                        print '</select><br>
+                        <hr>
+                        <input class="button" type="submit" name="submit" value="Submit Edit"/>
+                        </form>';
 
                         //Added qualifications
                         print '<hr><h3>Qualifications</h3>
-                                <input class="text-input" type="text" placeholder="Enter University Name" name="University"></input>
-                                <br>
-                                <input class="text-input" type="text" placeholder="Enter Course Name" name="Course"></input>
-                                <br>
-                                <input class="text-input" type="text" placeholder="Enter QCA Level Name" name="Level"></input>
-                                <br>
-                                <label for="DateCompleted" style="padding-left:1%">Date Completed:</label>
-                                <br>
-                                <input class="calendar" type="date" name="DateCompleted">
-                                <br>
-                                <input class="button" type="submit" name="addQualification" value="Add Qualification"/>
+                                <form action="editProfile.php" method="post">
+                                    <input class="text-input" type="text" placeholder="Enter University Name" name="University" required></input>
+                                    <br>
+                                    <input class="text-input" type="text" placeholder="Enter Course Name" name="Course" required></input>
+                                    <br>
+                                    <input class="text-input" type="text" placeholder="Enter NFQ Level" name="Level" required></input>
+                                    <br>
+                                    <label for="DateCompleted" style="padding-left:1%">Date Completed:</label>
+                                    <br>
+                                    <input class="calendar" type="date" name="DateCompleted" required>
+                                    <br>
+                                    <input class="button" type="submit" name="addQualification" value="Add Qualification"/>
+                                </form>
                                 <br>
                                 <p style="margin-top: 1%">Current Qualifcations:</p><br>';
 
@@ -175,7 +181,8 @@
                         }
                         
                         //User can select previous history
-                        print '<hr><h3>Select Job History</h3>
+                        print '<form action="editProfile.php" method="post">
+                                <hr><h3>Select Job History</h3>
                                 <select class="employer" name="employementHistory">
                                 <option name="None">None</option>';
                         $employerSQL = "select * from companies;";
@@ -188,13 +195,14 @@
                                 <br>
                                 <label for="dateStarted" style="padding-top:1%">Job Start:</label>
                                 <br>
-                                <input class="calendar" type="date" name="dateStarted">
+                                <input class="calendar" type="date" name="dateStarted" required>
                                 <br>
                                 <label for="dateEnded">Job End:</label>
                                 <br>
-                                <input class="calendar" type="date" name="dateEnded">
+                                <input class="calendar" type="date" name="dateEnded" required>
                                 <br>
                                 <input class="button" type="submit" name="addJobHistory" value="Add Employment History"/>
+                                </form>
                                 <br>
                                 <p style="margin-top: 1%">Current Qualifcations:</p><br>';
 
@@ -214,9 +222,6 @@
 
                         $conn -> close();
                     ?>
-                    <hr>
-                    <input class="button" type="submit" name="submit" value="Submit Edit"/>
-                </form>
             </div>
         </div>
     </body>
@@ -231,13 +236,13 @@
     }
 
     function updateProfile($conn) {
-        
         //Update user description
         $userID = $_SESSION['user'];
         $sql = "UPDATE users
                 SET description = '{$_POST['description']}'
                 WHERE userID = {$userID}";
-
+        
+        $_SESSION['description'] = $_POST['description'];
         //Updates the skills if selected
         if(isset($_POST['skills'])) {
             $values = $_POST['skills'];
@@ -307,7 +312,7 @@
 
     if(isset($_POST["addJobHistory"])) {
         //Adds a qualification
-        if(isset($_POST['employementHistory']) && isset($_POST['dateStarted']) && isset($_POST['dateEnded']) && $_POST['employementHistory'] != 'None') {
+        if(isset($_POST['employementHistory']) && isset($_POST['dateStarted']) && isset($_POST['dateEnded'])) {
             $companySQL = "select * from companies where companyName=\"{$_POST['employementHistory']}\";";
             $companySQLResult = $conn -> query($companySQL);
             $companySQLRow = $companySQLResult->fetch_assoc();
@@ -315,7 +320,6 @@
             $jobHistorySQL = "INSERT INTO jobhistory (userID, companyID, FromDate, ToDate)
             VALUES ('{$userID}', '{$companySQLRow['companyID']}', '{$_POST['dateStarted']}', '{$_POST['dateEnded']}')";
             $conn->query($jobHistorySQL);
-
             echo "<script> refreshPage(); </script>";
         }
     };
