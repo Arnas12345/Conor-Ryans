@@ -113,6 +113,7 @@
 
                         //User can select all skills they want
                         print '<hr><h3>Select Skills</h3>
+                                <p>Please Hold Ctrl to select multiple skills</p>
                                 <select class="skills" name="skills[]" multiple>';
                         $skillsSql = "select * from skills;";
                         $skillsResult = $conn -> query($skillsSql);

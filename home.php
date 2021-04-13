@@ -55,7 +55,7 @@
                 
                 print '
                 <form method="post" action="home.php?sortBySkills=true">
-                <h3 style="color: white">Sort By Skills</h3>
+                <h3 style="color: black">Sort By Skills</h3>
                 <div class="custom-select">
                 <select class="skillSelect" name="skill">';
                 $skillsSql = "select * from skills;";
@@ -75,7 +75,7 @@
                 if (isset($_GET['sortBySkills'])) {
                     //Gets the vacancies that match the skill
                     if(!empty($_POST['skill'])) {
-                        print "<h2 style='color: white'>Sorting by {$_POST['skill']}";
+                        print "<h2 style='color: black'>Sorting by {$_POST['skill']}";
                         $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID, d.skillTitle, d.skillDescription
                         from vacancies a
                         INNER JOIN companies b
@@ -186,7 +186,7 @@
                     $userSkillResults = $conn -> query($userSkills);
                     //If the user has skills
                     if(mysqli_num_rows($userSkillResults) != 0) {
-                        print "<h2 style='color: white'>Automatically Suggested Jobs</h2>";
+                        print "<h2 style='color: black'>Automatically Suggested Jobs</h2>";
                         while($userSkillRow = $userSkillResults->fetch_assoc()) {
                             $skills[] = $userSkillRow['skillTitle'];
                             $vacanciesSQL = "select a.vacancyID
@@ -327,7 +327,7 @@
                             }   
                         }
                     }
-                    print "<h2 style='color: white'>Other Jobs</h2>";
+                    print "<h2 style='color: black'>Other Jobs</h2>";
                     $allVacancies = array_unique($allVacancies);
                     if (!empty($allVacancies)) {
                         $vacancies = array_unique($vacancies);

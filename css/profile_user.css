@@ -65,7 +65,7 @@
 }
 
 select option:checked {
-    background: #33072d -webkit-linear-gradient(bottom, #38332c 0%, #5a5754 100%);
+    background: #33072d -webkit-linear-gradient(bottom, #4c4b75 0%, #644b6e 100%);
 }
 
 .employer {
@@ -114,4 +114,8 @@ select option:checked {
 .qualification {
     display: flex;
     justify-content: center;
+}
+
+.text-left {
+    margin-left: 1%;
 }
