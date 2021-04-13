@@ -55,12 +55,12 @@
                 
                 print '
                 <form method="post" action="home.php?sortBySkills=true">
-                <h3>Sort By Skills</h3>
+                <h3 style="color: white">Sort By Skills</h3>
                 <div class="custom-select">
-                <select name="skill">';
+                <select class="skillSelect" name="skill">';
                 $skillsSql = "select * from skills;";
                 $skillsResult = $conn -> query($skillsSql);
-                print "<option value=''>Select A Skill</option>";
+                print "<option class='option' value=''>Select A Skill</option>";
                 
                 while($skillsRow = $skillsResult->fetch_assoc()) {   
 
@@ -68,14 +68,14 @@
                 
                 }
                 
-                print '</select><input type="submit" name="sortBySkills" value="Sort"></div></form><br>';
+                print '</select><input class="sort" type="submit" name="sortBySkills" value="Sort"></div></form><br>';
                 $sql = "";
 
                 //Sort By Skills
                 if (isset($_GET['sortBySkills'])) {
                     //Gets the vacancies that match the skill
                     if(!empty($_POST['skill'])) {
-                        print "<h2>Sorting by {$_POST['skill']}";
+                        print "<h2 style='color: white'>Sorting by {$_POST['skill']}";
                         $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID, d.skillTitle, d.skillDescription
                         from vacancies a
                         INNER JOIN companies b
@@ -121,9 +121,6 @@
     
                             print "<div class='container vacancy'>
                                         <div class='row'>
-                                            <div class='col-4' >
-                                                <img class='img-fluid' width='200' height='200' src='images/job-icon.jpg'  alt='logo here'></img>
-                                            </div>
                                             <div class='col-8' >
                                                 <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
                                                 <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
@@ -189,7 +186,7 @@
                     $userSkillResults = $conn -> query($userSkills);
                     //If the user has skills
                     if(mysqli_num_rows($userSkillResults) != 0) {
-                        print "<h2>Automatically Suggested Jobs</h2>";
+                        print "<h2 style='color: white'>Automatically Suggested Jobs</h2>";
                         while($userSkillRow = $userSkillResults->fetch_assoc()) {
                             $skills[] = $userSkillRow['skillTitle'];
                             $vacanciesSQL = "select a.vacancyID
@@ -274,10 +271,7 @@
             
                                     print "<div class='container vacancy'>
                                                 <div class='row'>
-                                                    <div class='col-4' >
-                                                        <img class='img-fluid' width='200' height='200' src='images/job-icon.jpg'  alt='logo here'></img>
-                                                    </div>
-                                                    <div class='col-8' >
+                                                    <div class='col-12' >
                                                         <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
                                                         <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
                                                         <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
@@ -333,7 +327,7 @@
                             }   
                         }
                     }
-                    print "<h2>Other Jobs</h2>";
+                    print "<h2 style='color: white'>Other Jobs</h2>";
                     $allVacancies = array_unique($allVacancies);
                     if (!empty($allVacancies)) {
                         $vacancies = array_unique($vacancies);
@@ -365,10 +359,7 @@
         
                                 print "<div class='container vacancy'>
                                             <div class='row'>
-                                                <div class='col-4' >
-                                                    <img class='img-fluid' width='200' height='200' src='images/job-icon.jpg'  alt='logo here'></img>
-                                                </div>
-                                                <div class='col-8' >
+                                                <div class='col-12' >
                                                     <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
                                                     <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
                                                     <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>

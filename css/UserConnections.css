@@ -24,19 +24,22 @@ a:active {
     margin-left: 12.5%;
     margin-right: 12.5%;
     bottom: 10px;
-    border-radius: 8px;
-    background-color: rgb(208, 206, 206);
 }
 
 .user {
-    background-color: rgb(191, 191, 191);
-    padding-top: 2%;
-    width: 55%;
-    height: 10%;
+    background-color: rgba(191, 191, 191,0.5);
+    padding-top: 1%;
+    width: 80%;
     line-height: 50%;
-    margin-left: 22.5%;
-    border-radius: 8px;
-    margin-bottom: 2%;
+    margin-left: 12.5%;
+    margin-bottom: 5%;
+    text-align: center;
+    box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+    border-radius: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    padding-bottom: 1%;
 }
 
 .userDetails {
@@ -141,5 +144,14 @@ a:active {
     padding-right: 5%;
     padding-left: 5%;
     text-decoration: none;
+}
+
+.showRequests {
+    background: #2f3640;
+    height: 38px;
+    color: white;
+    border-radius: 8px;
+    margin-left: 2%;
+    margin-bottom: 2%;
 }
 

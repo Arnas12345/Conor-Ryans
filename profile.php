@@ -3,7 +3,6 @@
         <title>Loop : User Profie</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time() ?>">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         
@@ -57,45 +56,42 @@
             </div>
         </div>
         <div class = "description-container">
-            <div class = "description-heading">
-                <H1 style = "text-align: center;">Description</H1>
-            </div>
             <div class = "bio-description">
-                <h3>Bio:</h3>
+                <h3 class="text-left">Bio:</h3>
                 <?php
                     $row = getUserData($userID);
                     if($row) {
-                        print "<p class='userDetails'>{$row['description']}</p>";
+                        print "<p class='userDetails text-left'>{$row['description']}</p>";
                     } 
                     else {
-                        print "<p>No Bio found.</p>";
+                        print "<p class='text-left'>No Bio found.</p>";
                     }
                 ?>
             </div>
 
             <div class = "skills-description">
-                <h3>Skills:</h3>
+                <h3 class="text-left">Skills:</h3>
                 <?php
                     fetchProfileElement("skills");
                 ?>
             </div>
             
             <div class = "Qualifications-description">
-                <h3>Employment History:</h3>
+                <h3 class="text-left">Employment History:</h3>
                 <?php
                     fetchProfileElement("employment-history");
                 ?>
             </div>
 
             <div class = "Certs-description">
-            <h3>Qualifications:</h3>
+            <h3 class="text-left">Qualifications:</h3>
                 <?php
                     fetchProfileElement("qualifications");                    
                 ?>
             </div>
 
             <div class = "Qualifications-description">
-                <h3>Current Employer:</h3>
+                <h3 class="text-left">Current Employer:</h3>
                 <?php
                     fetchProfileElement("current-employer");
                 ?>
@@ -124,9 +120,9 @@
                     WHERE b.userID = {$userID};";
                 $result = $conn -> query($sql);
                 if($row = $result->fetch_assoc()) {
-                    print "<p class='userDetails'>{$row['companyName']}</p>";
+                    print "<p class='userDetails text-left'>{$row['companyName']}</p>";
                 } else {
-                    print "<p>No Current Employer.</p>";
+                    print "<p class='text-left'>No Current Employer.</p>";
                 }
                 break;
 
@@ -139,10 +135,10 @@
                 $result = $conn -> query($sql);
                 if(mysqli_num_rows($result) != 0) {
                     while($resultRow = $result->fetch_assoc()) {
-                        print "<p>Graduated {$resultRow['academicDescription']}, {$resultRow['academicLevel']} at {$resultRow['academicTitle']} on {$resultRow['completionDate']}</p>";
+                        print "<p class='text-left'>Graduated {$resultRow['academicDescription']}, {$resultRow['academicLevel']} at {$resultRow['academicTitle']} on {$resultRow['completionDate']}</p>";
                     }
                 } else {
-                    print "<p>No Previous Job History Found.</p>";
+                    print "<p class='text-left'>No Previous Job History Found.</p>";
                 }
                 break;
 
@@ -155,10 +151,10 @@
                 $result = $conn -> query($sql);
                 if(mysqli_num_rows($result) != 0) {
                     while($resultRow = $result->fetch_assoc()) {
-                        print "<p>{$resultRow['companyName']}, {$resultRow['FromDate']} - {$resultRow['ToDate']}</p>";
+                        print "<p class='text-left'>{$resultRow['companyName']}, {$resultRow['FromDate']} - {$resultRow['ToDate']}</p>";
                     }
                 } else {
-                    print "<p>No Previous Job History Found.</p>";
+                    print "<p class='text-left'>No Previous Job History Found.</p>";
                 }
                 break;
             
@@ -171,10 +167,10 @@
                 $result = $conn -> query($sql);
                 if(mysqli_num_rows($result) != 0) {
                     while($resultRow = $result->fetch_assoc()) {
-                        print "<p>{$resultRow['skillTitle']}</p>";
+                        print "<p class='text-left'>{$resultRow['skillTitle']}</p>";
                     }
                 } else {
-                    print "<p>No Skills Found.</p>";
+                    print "<p class='text-left'>No Skills Found.</p>";
                 }
                 break;
 

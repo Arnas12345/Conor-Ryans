@@ -59,22 +59,19 @@
             </div>
             <div class="editProfile">
                 <form action="editProfile.php">
-                    <input type="submit" value="Edit Profile" />
+                    <input class="edit" type="submit" value="Edit Profile" />
                 </form>
             </div>
         </div>
         
         <div class = "description-container">
-            <div class = "description-heading">
-                <H1 style = "text-align: center;">Description</H1>
-            </div>
             <div class = "bio-description">
-                <h3>Bio:</h3>
+                <h3 class="text-left">Bio:</h3>
                 <?php
                     $userID = $_SESSION['user'];
                     $row = getUserData($userID);
                     if(isset($row['description']) && $row['description'] !== null ){
-                        print "<p class='userDetails'>{$row['description']}</p>";
+                        print "<p class='userDetails text-left'>{$row['description']}</p>";
                         setcookie("description",$row['description'],time()+3600);
                     } 
                     else {
@@ -84,24 +81,24 @@
 
             </div>
             <div class = "skills-description">
-                <h3>Skills:</h3>
+                <h3 class="text-left">Skills:</h3>
                 <?php fetchProfileElement("skills"); ?>
             </div>
             
             <div class = "Qualifications-description">
-                <h3>Employment History:</h3>
+                <h3 class="text-left">Employment History:</h3>
                 <?php fetchProfileElement("employment-history"); ?>
             </div>
 
             <div class = "Certs-description">
-                <h3>Qualifications:</h3>
+                <h3 class="text-left">Qualifications:</h3>
 
                 <?php fetchProfileElement("qualifications"); ?>
 
             </div>
 
             <div class = "Qualifications-description">
-                <h3>Current Employer:</h3>
+                <h3 class="text-left">Current Employer:</h3>
 
                 <?php fetchProfileElement("current-employer"); ?>
 
@@ -129,11 +126,11 @@
                         WHERE b.userID = {$userID};";
                 $result = $conn -> query($sql);
                 if($row = $result->fetch_assoc()) {
-                    print "<p class='userDetails'>{$row['companyName']}</p>";
+                    print "<p class='userDetails text-left'>{$row['companyName']}</p>";
                     // setcookie("currentEmployer",$row['companyName'],time()+3600);
                 } 
                 else {
-                    print "<p>No Current Employer.</p>";
+                    print "<p class='text-left'>No Current Employer.</p>";
                     // setcookie("currentEmployer", "", time()-3600);
                 }
                 break;
@@ -147,10 +144,10 @@
                 $result = $conn -> query($sql);
                 if(mysqli_num_rows($result) != 0) {
                     while($resultRow = $result->fetch_assoc()) {
-                        print "<p>Graduated {$resultRow['academicDescription']}, {$resultRow['academicLevel']} at {$resultRow['academicTitle']} on {$resultRow['completionDate']}</p>";
+                        print "<p class='text-left'>Graduated {$resultRow['academicDescription']}, {$resultRow['academicLevel']} at {$resultRow['academicTitle']} on {$resultRow['completionDate']}</p>";
                     }
                 } else {
-                    print "<p>No Qualifications Found.</p>";
+                    print "<p class='text-left'>No Qualifications Found.</p>";
                 }
                 break;
 
@@ -163,10 +160,10 @@
                 $result = $conn -> query($sql);
                 if(mysqli_num_rows($result) != 0) {
                     while($resultRow = $result->fetch_assoc()) {
-                        print "<p>{$resultRow['companyName']}, {$resultRow['FromDate']} - {$resultRow['ToDate']}</p>";
+                        print "<p class='text-left'>{$resultRow['companyName']}, {$resultRow['FromDate']} - {$resultRow['ToDate']}</p>";
                     }
                 } else {
-                    print "<p>No Previous Job History Found.</p>";
+                    print "<p class='text-left'>No Previous Job History Found.</p>";
                 }
                 break;
             
@@ -179,10 +176,10 @@
                 $result = $conn -> query($sql);
                 if(mysqli_num_rows($result) != 0) {
                     while($resultRow = $result->fetch_assoc()) {
-                        print "<p>{$resultRow['skillTitle']}</p>";
+                        print "<p class='text-left'>{$resultRow['skillTitle']}</p>";
                     }
                 } else {
-                    print "<p>No Skills Found.</p>";
+                    print "<p class='text-left'>No Skills Found.</p>";
                 }
                 break;
 

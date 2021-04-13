@@ -4,16 +4,16 @@
     <head>
         <title>Loop : Home</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php
-
-            use function PHPSTORM_META\type;
-
-        echo time(); ?>">
+        <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
 
     </head>
     <script type="text/javascript">
         function refreshPage() {
             window.location.href = "editProfile.php";
+        }
+
+        function goToProfile() {
+            window.location.href = "profile_user.php";
         }
     </script>
     <body>
@@ -39,7 +39,7 @@
             
         ?>
 
-        <h1 class="page-header">Edit Profile</h1>
+        <h1 class="page-heading">Edit Profile</h1>
         <hr>
         <div class = "profile-container" >
             <div class = "profileImage">
@@ -62,18 +62,15 @@
                 ?>
             </div>
 
-            <div class="changeProfileImage">
+            <div class="changePicture">
                 <form method="post" action="editProfile.php" enctype="multipart/form-data">
-                    <input type="file" name="image">
-                    <input type="submit" name="submitImage" value="Upload">
+                    <input class="file" type="file" name="image">
+                    <input class="edit" type="submit" name="submitImage" value="Upload">
                 </form>
             </div>
         </div>
 
         <div class = "description-container">
-            <div class = "description-heading">
-                <H1 style = "text-align: center;">Description</H1>
-            </div>
             <div class = "bio-description">
                 <form method="post" action="editProfile.php">
                     <h3>Enter Bio:</h3>
@@ -109,18 +106,14 @@
                         //Sets the description if one exists
                         $description = '';
                         if(isset($_COOKIE['description'])) $description = $_COOKIE['description'];
-                        print "<textarea id='description' rows='5' cols='60' 
-                                    name='description' pattern='[A-Za-z][0-9]{6,}' 
-                                    title='Please input more than 6 characters. Letters and numbers only.'>
-                                
-                                    {$description}
-                                    
-                                </textarea>
+                        print "<textarea id='description' 
+                                    name='description' pattern='[A-Za-z][0-9]{6,255}' 
+                                    title='Please input more than 6 characters. Letters and numbers only.'>{$description}</textarea>
                                 <br>";
 
                         //User can select all skills they want
-                        print '<h3>Select Skills</h3>
-                                <select name="skills[]" multiple>';
+                        print '<hr><h3>Select Skills</h3>
+                                <select class="skills" name="skills[]" multiple>';
                         $skillsSql = "select * from skills;";
                         $skillsResult = $conn -> query($skillsSql);
                         while($skillsRow = $skillsResult->fetch_assoc())
@@ -134,11 +127,11 @@
                             // else print "<option value='{$skillsRow['skillTitle']}'>{$skillsRow['skillTitle']}</option>";
                             // }
                         }
-                        print '</select><br>';
+                        print '</select><br><hr>';
 
                         //User can select employer, if current one exists automatically selected
                         print '<h3>Select Current Employer</h3>
-                                <select name="currentEmployer">
+                                <select class="employer" name="currentEmployer">
                                 <option name="None">None</option>';
                         $currentEmployerSQL = "select * from companies;";
                         $currentEmployerResult = $conn -> query($currentEmployerSQL);
@@ -151,14 +144,20 @@
                         print '</select><br>';
 
                         //Added qualifications
-                        print '<h3>Qualifications</h3>
-                                <input type="text" placeholder="Enter University Name" name="University"></input>
-                                <input type="text" placeholder="Enter Course Name" name="Course"></input>
-                                <input type="text" placeholder="Enter QCA Level Name" name="Level"></input>
+                        print '<hr><h3>Qualifications</h3>
+                                <input class="text-input" type="text" placeholder="Enter University Name" name="University"></input>
+                                <br>
+                                <input class="text-input" type="text" placeholder="Enter Course Name" name="Course"></input>
+                                <br>
+                                <input class="text-input" type="text" placeholder="Enter QCA Level Name" name="Level"></input>
+                                <br>
                                 <label for="DateCompleted" style="padding-left:1%">Date Completed:</label>
-                                <input type="date" name="DateCompleted">
-                                <input type="submit" name="addQualification" value="Add Qualification"/>
-                                <br>';
+                                <br>
+                                <input class="calendar" type="date" name="DateCompleted">
+                                <br>
+                                <input class="button" type="submit" name="addQualification" value="Add Qualification"/>
+                                <br>
+                                <p style="margin-top: 1%">Current Qualifcations:</p><br>';
 
                         $qualificationSQL = "SELECT a.academicID, a.academicTitle, a.academicDescription, a.academicLevel, b.completionDate
                             FROM accademicdegrees a
@@ -168,14 +167,15 @@
                         $qualificationResult = $conn -> query($qualificationSQL);
                         if(mysqli_num_rows($qualificationResult) != 0) {
                             while($qualificationRow = $qualificationResult->fetch_assoc()) {
-                                print "<p>Graduated {$qualificationRow['academicDescription']}, {$qualificationRow['academicLevel']} at {$qualificationRow['academicTitle']} on {$qualificationRow['completionDate']}</p>
-                                <a id='deletedQualification' href='editProfile.php?deletedQualification=true&currentUser={$userID}&academicID={$qualificationRow['academicID']}'>&#x2716;</a>";
+                                print "<div class='qualification'>
+                                <p class='graduated'>Graduated {$qualificationRow['academicDescription']}, {$qualificationRow['academicLevel']} at {$qualificationRow['academicTitle']} on {$qualificationRow['completionDate']}</p>
+                                <a style='margin-top: 1%'id='deletedQualification' href='editProfile.php?deletedQualification=true&currentUser={$userID}&academicID={$qualificationRow['academicID']}'>&#x2716;</a></div>";
                             }
                         }
                         
                         //User can select previous history
-                        print '<h3>Select Job History</h3>
-                                <select name="employementHistory">
+                        print '<hr><h3>Select Job History</h3>
+                                <select class="employer" name="employementHistory">
                                 <option name="None">None</option>';
                         $employerSQL = "select * from companies;";
                         $employerResult = $conn -> query($employerSQL);
@@ -184,12 +184,18 @@
                             print "<option name='{$employerRow['companyName']}'>{$employerRow['companyName']}</option>";
                         }
                         print '</select>
-                                <label for="dateStarted" style="padding-left:1%">Job Start:</label>
-                                <input type="date" name="dateStarted">
-                                <label for="dateEnded" style="padding-left:1%">Job End:</label>
-                                <input type="date" name="dateEnded">
-                                <input type="submit" name="addJobHistory" value="Add Employment History"/>
-                                <br>';
+                                <br>
+                                <label for="dateStarted" style="padding-top:1%">Job Start:</label>
+                                <br>
+                                <input class="calendar" type="date" name="dateStarted">
+                                <br>
+                                <label for="dateEnded">Job End:</label>
+                                <br>
+                                <input class="calendar" type="date" name="dateEnded">
+                                <br>
+                                <input class="button" type="submit" name="addJobHistory" value="Add Employment History"/>
+                                <br>
+                                <p style="margin-top: 1%">Current Qualifcations:</p><br>';
 
                         $previousHistorySQL = "SELECT a.FromDate, a.ToDate, b.companyName, b.companyID
                             FROM jobhistory a
@@ -199,15 +205,16 @@
                         $previousHistoryResult = $conn -> query($previousHistorySQL);
                         if(mysqli_num_rows($previousHistoryResult) != 0) {
                             while($previousHistoryRow = $previousHistoryResult->fetch_assoc()) {
-                                print "<p>Graduated {$previousHistoryRow['companyName']}, {$previousHistoryRow['FromDate']} at {$previousHistoryRow['ToDate']}</p>
-                                <a id='deleteJobHistory' href='editProfile.php?deleteJobHistory=true&currentUser={$userID}&companyID={$previousHistoryRow['companyID']}'>&#x2716;</a>";
+                                print "<div class='qualification'>
+                                <p class='graduated'>{$previousHistoryRow['companyName']}, {$previousHistoryRow['FromDate']} - {$previousHistoryRow['ToDate']}</p>
+                                <a style='margin-top: 1%'id='deleteJobHistory' href='editProfile.php?deleteJobHistory=true&currentUser={$userID}&companyID={$previousHistoryRow['companyID']}'>&#x2716;</a></div>";
                             }
                         }
 
                         $conn -> close();
                     ?>
-                    <br>
-                    <input type="submit" name="submit" value="Submit Edit"/>
+                    <hr>
+                    <input class="button" type="submit" name="submit" value="Submit Edit"/>
                 </form>
             </div>
         </div>
@@ -267,13 +274,13 @@
 
 
         if ($conn->query($sql) === TRUE) {
-            // header( "Location: profile_user.php" );
 
         } 
         else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
         
+        echo "<script> goToProfile(); </script>";
     }
 
     if(isset($_POST["submit"])) updateProfile($conn);
@@ -319,8 +326,8 @@
     }
 
     if (isset($_GET['deleteJobHistory'])) {
-        $deleteUserJobHistory = "DELETE FROM userqualificaion WHERE userID={$_GET['currentUser']} AND academicID={$_GET['academicID']};";
-        $conn -> query($deleteUserQualification);
+        $deleteUserJobHistory = "DELETE FROM jobhistory WHERE userID={$_GET['currentUser']} AND companyID={$_GET['companyID']};";
+        $conn -> query($deleteUserJobHistory);
         echo "<script> refreshPage(); </script>";
     }
 

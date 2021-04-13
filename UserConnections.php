@@ -6,17 +6,6 @@
     </head>
     
     <script type="text/javascript">
-        function loopJob(vacancyID, companyID) {
-            window.location.href= 'loopJob.php?vacancyID=' + vacancyID +'&companyID=' + companyID;
-        }
-
-        function unLoopJob(vacancyID, companyID) {
-            window.location.href= 'unLoopJob.php?vacancyID=' + vacancyID +'&companyID=' + companyID;
-                if (confirm("Are you sure you want to delete this looped job?") == true) {
-                    window.location.href= 'unLoopJob.php?vacancyID=' + vacancyID +'&companyID=' + companyID;
-                };
-        }
-
         function showRequests() {
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
@@ -31,6 +20,10 @@
                     modal.style.display = "none";
                 }
             }
+        }
+
+        function refreshPage() {
+            window.location.href = "UserConnections.php";
         }
     </script>
     <body>
@@ -60,7 +53,7 @@
                     while($row = $result->fetch_assoc())
                     {   
                         print "<div class='user'>";
-                        print "<a class='userDetails text-center' href='profile.php?userID={$row['userID']}'><b><p>{$row['username']} - {$row['email']}</p></b></a>";
+                        print "<a class='userDetails text-center' href='profile.php?userID={$row['userID']}'><b><p>{$row['username']}</p></b></a>";
                         print "</div>";
                     }
                     $conn->close();
@@ -139,6 +132,6 @@
                                 WHERE userIDFirst=$userIDFirst AND userIDSecond=$userIDSecond AND Status='Pending';";
             $conn -> query($deletePendingSQL);
         }
-        header('Location:UserConnections.php');
+        echo "<script> refreshPage(); </script>";
     }
 ?>
