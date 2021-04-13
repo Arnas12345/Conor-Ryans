@@ -11,7 +11,7 @@
         <?php 
 
             include ("validateLoggedIn.php");
-
+            include("headerTemplate.html");
             function getUserData($uID) {
                 include ("serverConfig.php");
                 $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
