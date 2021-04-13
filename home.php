@@ -121,7 +121,7 @@
     
                             print "<div class='container vacancy'>
                                         <div class='row'>
-                                            <div class='col-8' >
+                                            <div class='col-12' >
                                                 <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
                                                 <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
                                                 <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
