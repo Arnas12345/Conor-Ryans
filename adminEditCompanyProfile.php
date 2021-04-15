@@ -94,7 +94,7 @@
                             }
                             
                             if($conn->query($userProfileImage)) {
-                                header( "Location: organizationProfile.php" );
+                                header( "Location: adminCompany.php?companyID={$companyID}" );
                             }
                         }
 

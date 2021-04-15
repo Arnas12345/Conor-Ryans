@@ -75,7 +75,7 @@
                         $_SESSION['description'] = $row['description'];
                     } 
                     else {
-                        print "<p>No Bio found.</p>";
+                        print "<p class='text-left'>No Bio found.</p>";
                     }
                 ?>
 
