@@ -60,19 +60,23 @@
 
         setcookie("email", $email, time()+250);
         
-        $sql = "select * from companies where email=\"{$email}\";";
+        $sql = "select * from companies where email=\"{$email}\";"; //get the companys details
         $result = $conn -> query($sql);
         $row = $result->fetch_assoc();
         $companyID = $row["companyID"];
         $sqlEmail = $row["email"];
         $sqlPass = $row["password"];
 
+        $bannedSql = "SELECT * FROM bannedcompany 
+                      WHERE companyID = {$companyID}";
+        $bResult = $conn -> query($sql);
+
         function emailMatches ($inputEmail, $DBEmail) {
             return strcasecmp($inputEmail, $DBEmail) == 0;
         }
         
-        if(emailMatches($email, $sqlEmail)) {
-        // else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
+        if(emailMatches($email, $sqlEmail) && mysqli_num_rows($bResult) == 0 ) {
+        // else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass) && mysqli_num_rows($result) == 0) {
             $_SESSION['company'] = $companyID;
             $_SESSION['loggedin'] = true;
             header( "Location: organizationHome.php" );
