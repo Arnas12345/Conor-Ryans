@@ -50,13 +50,45 @@
                         WHERE b.userIDSecond = {$_SESSION['user']} AND b.status = 'Accepted';";
                 $result = $conn -> query($sql);
                 
-                    while($row = $result->fetch_assoc())
-                    {   
-                        print "<div class='user'>";
-                        print "<a class='userDetails text-center' href='profile.php?userID={$row['userID']}'><b><p>{$row['username']}</p></b></a>";
-                        print "</div>";
+                while($row = $result->fetch_assoc()) {   
+                    print "<div class='user'>";
+
+                    $profileImage = null;
+
+                    if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
+                    
+                    if($profileImage === null) {
+                        print '<img class="userImage" src ="images/blank-profile-picture.png" 
+                                alt="profile image"><br>';
                     }
-                    $conn->close();
+                    else {
+                        print "<img class='userImage' src = 'profileImages/{$profileImage}' 
+                                alt='profile image'><br>";
+                    
+                    }
+
+                    print "<a class='userDetails' href='profile.php?userID={$row['userID']}'><b>{$row['username']}</b></a>";
+                    $connectionsSQL = "select * from connections where userIDFirst = \"{$_SESSION['user']}%\" AND userIDSecond = \"{$row['userID']}%\";";
+                    $result2 = $conn -> query($connectionsSQL);
+                    $connectionsRow = $result2->fetch_assoc();
+                    print "<div class='friend-req-details'>";
+                    if($connectionsRow) {
+                        if($connectionsRow['status'] !== "Pending") {
+                            print "<button class='btn-unconnect' onClick='deleteConnection({$row['userID']})'> Unconnect </button><br>";
+                        }
+                        else {
+                            //print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' onClick='makeConnection({$row['userID']})'></img><br>";
+                            print "<br><a class='pending'> Pending </a><br>";
+                        }
+                    } 
+                    else {
+                        print "<button class='btn-friend-req' onClick='makeConnection({$row['userID']})'> Connect </button><br>";
+                        // print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$row['userID']})'></img><br>";
+                    }
+
+                    print "</div> </div>";
+                }
+                $conn->close();
 
             ?>
         </div>

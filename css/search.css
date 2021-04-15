@@ -18,26 +18,65 @@ a:active {
     color: black;
 }
 
+.userDetails {
+    font-size: 120%;
+    top: 5%;
+}
+
 .page-box {
-    width: 75%;
+    padding-top: 1%;
+    width: 100%;
+    line-height: 50%;
+    margin-left: 0%;
+    margin-bottom: 2%;
     text-align: center;
-    margin-left: 12.5%;
-    margin-right: 12.5%;
-    bottom: 10px;
-    border-radius: 8px;
+    overflow: hidden;
+}
+
+.userImage {
+    width:20%;
+    min-width:100px; 
+    max-width: 160px;
+    border-radius:50%; 
+    object-fit:cover; 
+    overflow:hidden;
+    margin: 2%;
+    float: left;
+}
+
+.user {
+    background-color: rgba(191, 191, 191,0.6);
+    padding-top: 1%;
+    width: 50%;
+    padding: 2% 3%;
+    line-height: 40%;
+    margin-left: 25%;
+    margin-bottom: 2%;
+    box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+    border-radius: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
 }
 
 .search {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.selectedForm {
+    border-radius: 8px;
+    height: 30px;
+    overflow: hidden;
+    margin: 2%;
+    margin-bottom: 1%;
 }
 
 .select {
     background: #2f3640;
-    height: 40px;
     color: white;
-    border-radius: 8px;
-    overflow: hidden;
 }
+
 
 .input {
     background: #2f3640;
@@ -45,39 +84,64 @@ a:active {
     color: white;
     border-radius: 8px;
     overflow: hidden;
+    margin: 2%;
     margin-bottom: 1%;
 }
 
 .submit {
     background: #2f3640;
-    height: 38px;
+    height: 30px;
     color: white;
     border-radius: 8px;
-    margin-left: 2%;
+    margin: 2%;
+    
 }
 
 .input::placeholder {
     color: white;
 }
 
-.user {
-    background-color: rgb(191, 191, 191);
-    padding-top: 2%;
-    width: 55%;
-    line-height: 50%;
-    margin-left: 22.5%;
-    border-radius: 8px;
-    margin-bottom: 2%;
-}
-
-.userImage {
-    border-radius: 50%;
-    width:auto;
-    height: auto;
-    max-width: 25%;
-    max-height: 25%;
-}
-
 .connectionImage {
     padding-bottom: 3%;
+}
+
+.btn-friend-req {
+    background: #2f3640;
+    height: 38px;
+    color: white;
+    border-radius: 8px;
+    margin: 4%;
+}
+
+.friend-req-details {
+    margin: 4%;
+}
+
+.btn-unconnect {
+    background: #9b0404;
+    height: 38px;
+    color: white;
+    border-radius: 8px;
+    margin: 4%;
+}
+
+.pending {
+    margin: 5%;
+    margin-top: 10%;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .user {
+        width: 70%;
+        margin-left: 15%;
+    }
+
+    .page-box {
+        width: 100%;
+        left: 0%;
+        padding:0;
+        margin: 0;
+    }
+
 }
