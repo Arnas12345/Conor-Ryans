@@ -1,4 +1,3 @@
-
 <html>
 
     <head> 
@@ -8,25 +7,12 @@
     </head>
 
     <body style="text-align:center; width:960px; margin:auto;">
+        
+        <?php
 
-        <div style="position: relative; margin-top:30%;" >
-            <a href="admin.php" style="padding-left:40%; font:bold; height:30px;"> Back </a>
-            <form method="post" action="flushOldProfilePictures.php">
-                <input type="submit" name="submit" value="DELETE" 
-                style="height:30px;"/>
-            </form>
-
-        </div>
-    </body>
-
-</html>
-
-<?php
-
-    include ("validateAdmin.php");
-    include ("serverConfig.php");
-
-    if(isset($_POST['submit'])) {
+        include ("validateAdmin.php");
+        include ("adminTemplate.html");
+        include ("serverConfig.php");
 
         $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
         if ($conn -> connect_error) {
@@ -44,11 +30,9 @@
 
             $uResult = mysqli_query($conn,$userQuery);
             $uNum_row = mysqli_num_rows($uResult);
-            // $uRrow=mysqli_fetch_array($uResult);
 
             $cResult = mysqli_query($conn,$companyQuery);
             $cNum_row = mysqli_num_rows($cResult);
-            // $cRow=mysqli_fetch_array($cResult);
 
             if( $uNum_row > 0 || $cNum_row > 0) {
                 print "<h3>Keep file in use: " . $tmpfile . "</h3>" . '<br><hr>';          
@@ -58,5 +42,7 @@
                 unlink($file);
             }
         }
-    }
-?>
+        ?>
+    </body>
+
+</html>

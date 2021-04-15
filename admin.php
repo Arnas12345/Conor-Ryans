@@ -36,6 +36,14 @@
         </script>
 
         <script type="text/javascript">
+            function deleteOldPictures() {
+                if (confirm("Are you sure you want to delete all Unused Profile Images?") == true) {
+                    window.location.href= 'flushOldProfilePictures.php';
+                };
+            }
+        </script>
+
+        <script type="text/javascript">
             function unBanCompany(variable) {
                 if (confirm("Are you sure you want to unban this Company?") == true) {
                     window.location.href= 'adminUnbanCompany.php?id=' + variable;
@@ -62,7 +70,7 @@
         <h1 class="page-heading">Admin Page</h1>
         <hr>
         <div class="nav-links" style="margin-left:auto;">
-            <button type="button" style="margin-left:auto;" class="btn btn-danger" onclick="window.location.href='flushOldProfilePictures.php'">Danger</button>
+            <button type="button" style="float: right; margin-right:5%;" class="btn btn-danger" onclick="deleteOldPictures();">Delete Unused Images</button>
         </div> 
         <form class="search" method="post" action="admin.php">
             <select class="select" name="selectVal">
