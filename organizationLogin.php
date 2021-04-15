@@ -4,9 +4,9 @@
         <link rel="stylesheet" type="text/css" href="css/login.css?v=<?php echo time(); ?>">
 
         <script> 
-            function checkPassword() {
+            function showLoginError(variable) {
                 var alert = document.getElementById("alert");
-                var node = document.createTextNode("Incorrect email or password");
+                var node = document.createTextNode(variable);
                 alert.appendChild(node);
             }
         </script>
@@ -75,15 +75,18 @@
         function emailMatches ($inputEmail, $DBEmail) {
             return strcasecmp($inputEmail, $DBEmail) == 0;
         }
-        
-        if(emailMatches($email, $sqlEmail) && mysqli_num_rows($bResult) == 0 ) {
-        // else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass) && mysqli_num_rows($result) == 0) {
+        if(mysqli_num_rows($bResult) !== 0 ) {
+            echo "<script> showLoginError('This user is banned.') </script>";
+        }       
+        // else if(emailMatches($email, $sqlEmail) ) {
+        else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
             $_SESSION['company'] = $companyID;
             $_SESSION['loggedin'] = true;
+            $_SESSION['companyName'] = $row['companyName'];
             header( "Location: organizationHome.php" );
         }
         else {
-            echo "<script> checkPassword() </script>";
+            echo "<script> showLoginError('Incorrect email or password.') </script>";
         }
 
         $conn->close(); 
