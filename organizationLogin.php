@@ -78,8 +78,8 @@
         if(mysqli_num_rows($bResult) !== 0 ) {
             echo "<script> showLoginError('This user is banned.') </script>";
         }       
-        // else if(emailMatches($email, $sqlEmail) ) {
-        else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
+        else if(emailMatches($email, $sqlEmail) ) {
+        //else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
             $_SESSION['company'] = $companyID;
             $_SESSION['loggedin'] = true;
             $_SESSION['companyName'] = $row['companyName'];
