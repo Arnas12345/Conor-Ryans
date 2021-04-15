@@ -65,3 +65,10 @@
 .vacancyDetails.text-left{
     line-height: 1.5em;
 }
+
+.button {
+    background: #2f3640;
+    height: 38px;
+    color: white;
+    border-radius: 8px;
+}

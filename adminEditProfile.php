@@ -76,7 +76,7 @@
             <div class = "bio-description">
                 <?php 
                     $userID = $_GET["userID"];
-                    print "<form method='post' action='adminEditProfile.php?userID={$userID}' enctype='multipart/form-data'>";?>
+                    print "<form method='post' action='adminEditProfile.php?userID={$userID}'";?>
                     <h3>Enter Bio:</h3>
                     <?php
 
@@ -103,7 +103,7 @@
                             }
                             
                             if($conn->query($userProfileImage)) {
-                                header( "Location: profile_user.php" );
+                                header( "Location: adminUserView.php?userID={$row['userID']}" );
                             }
                         }
 

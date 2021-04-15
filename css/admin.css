@@ -1,24 +1,3 @@
-body {
-    background-color: rgb(191, 191, 191);
-}
-
-.container_logo {
-    padding-top: 2%;
-    text-align: center;
-    padding-bottom: 1%;
-}
-
-.container {
-    text-align: center;
-}
-
-.header {
-    text-decoration: none;
-    font-family: verdana;
-    size: 20%;
-    color: black;
-}
-
 /* unvisited link */
 a:link {
     color: black;
@@ -39,89 +18,135 @@ a:active {
     color: black;
 }
 
-.page-header {
-    text-align: center;
-    color: rgb(82, 82, 82);
+.userDetails {
+    font-size: 120%;
+    top: 5%;
 }
 
 .page-box {
-    width: 75%;
-    background-color: rgb(208, 206, 206);
-    text-align: center;
-    margin-left: 12.5%;
-    margin-right: 12.5%;
-    bottom: 10px;
-    border-radius: 8px;
-}
-
-.search {
-    text-align: center;
-}
-
-.select {
-    border-style: none;
-    background-color: rgb(191, 191, 191);
-    border-radius: 4px;
-    height: 30px;
-}
-
-.input {
-    border-style: none;
-    background-color: rgb(191, 191, 191);
-    border-radius: 4px;
-    height: 30px;
-}
-
-.submit {
-    border-style: none;
-    background-color: rgb(191, 191, 191);
-    border-radius: 4px;
-    height: 30px;
-}
-
-.logo {
-    cursor: pointer;
-}
-
-.search_icon {
-    cursor: pointer;
-}
-
-.input::placeholder {
-    color: black;
-}
-
-.user {
-    background-color: rgb(191, 191, 191);
-    padding-top: 2%;
-    width: 55%;
+    padding-top: 1%;
+    width: 100%;
     line-height: 50%;
-    margin-left: 22.5%;
-    border-radius: 8px;
+    margin-left: 0%;
     margin-bottom: 2%;
+    text-align: center;
+    overflow: hidden;
 }
 
 .userImage {
-    border-radius: 50%;
-    width:auto;
-    height: auto;
-    max-width: 25%;
-    max-height: 25%;
+    width:20%;
+    min-width:100px; 
+    max-width: 160px;
+    border-radius:50%; 
+    object-fit:cover; 
+    overflow:hidden;
+    margin: 2%;
+    float: left;
 }
 
-.userDetails {
-    padding-bottom: 3%;
-    margin: 3%;
-    text-decoration: none;
+.user {
+    background-color: rgba(191, 191, 191,0.6);
+    padding-top: 1%;
+    width: 50%;
+    padding: 2% 3%;
+    line-height: 40%;
+    margin-left: 25%;
+    margin-bottom: 2%;
+    box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+    border-radius: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+}
+
+.selectedForm {
+    border-radius: 8px;
+    height: 30px;
+    overflow: hidden;
+    margin: 2%;
+    margin-bottom: 1%;
+}
+
+.select {
+    background: #2f3640;
+    color: white;
+    height: 30px;
+    border-radius: 8px;
+}
+
+
+.input {
+    background: #2f3640;
+    height: 30px;
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 2%;
+    margin-bottom: 1%;
+}
+
+.submit {
+    background: #2f3640;
+    height: 30px;
+    color: white;
+    border-radius: 8px;
+    margin: 2%;
+    
+}
+
+.input::placeholder {
+    color: white;
 }
 
 .connectionImage {
     padding-bottom: 3%;
 }
 
-.deletUserImage {
-    padding-bottom: 3%;
+.btn-friend-req {
+    background: #2f3640;
+    height: 38px;
+    color: white;
+    border-radius: 8px;
+    margin: 4%;
 }
 
+.friend-req-details {
+    margin: 4%;
+}
 
+.btn-unconnect {
+    background: #9b0404;
+    height: 38px;
+    color: white;
+    border-radius: 8px;
+    margin: 4%;
+}
 
+.pending {
+    border:1px;
+    border-style:solid;
+    border-color:#000000; 
+    padding: 2%;
+    margin-top: 10%;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .user {
+        width: 70%;
+        margin-left: 15%;
+    }
+
+    .page-box {
+        width: 100%;
+        left: 0%;
+        padding:0;
+        margin: 0;
+    }
+
+}
