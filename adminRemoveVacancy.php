@@ -1,4 +1,3 @@
-
 <html>
     <head>
         <title>Loop : Home</title>
@@ -88,7 +87,7 @@
                         }
 
                         $counter++;
-                        print "<img class='connectionImage' src='images/DeleteV1.png' alt='Delete connection' height='15%' weight='15%' onClick='deleteVacancy({$row['vacancyID']})'></img><br>";
+               
                         print "<div class='container vacancy'>
                                     <div class='row'>
                                     <div class='col-2' ></div>
@@ -98,8 +97,8 @@
                                             <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
                                             <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
                                             <p class='vacancyDetails text-left'><b>Role: </b>{$row['role']}</p>
-                                            <p class='vacancyDetails text-left'><b>Req. Experience: </b>{$row['requiredExperience']}</p>";
-                                            
+                                            <p class='vacancyDetails text-left'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
+                                            <button type='button' class='btn btn-danger' style='margin-bottom:1%; float:right;' onClick='deleteVacancy({$row['vacancyID']})'>Delete</button>";
                                             print "</div></div></div>";
                                         
                     }
