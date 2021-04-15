@@ -43,7 +43,7 @@
                     die("Connection failed:" .$conn -> connect_error);
                 }
 
-                $sql = "SELECT a.userID, a.email, a.username, b.status
+                $sql = "SELECT a.userID, a.email, a.username, b.status, a.profileImage
                         FROM users a 
                         INNER JOIN connections b
                         ON a.userID = b.userIDFirst
