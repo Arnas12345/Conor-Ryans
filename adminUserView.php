@@ -9,7 +9,7 @@
         <?php 
 
             include ("validateLoggedIn.php");
-            include("headerTemplate.html");
+            include("adminTemplate.html");
             function getUserData($uID) {
                 include ("serverConfig.php");
                 $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
@@ -68,7 +68,7 @@
                         $_SESSION['description'] = $row['description'];
                     } 
                     else {
-                        print "<p>No Bio found.</p>";
+                        print "<p class='text-left'>No Bio found.</p>";
                     }
                 ?>
 

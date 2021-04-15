@@ -23,14 +23,14 @@
             VALUES ('{$userToban}')";
 
             if ($conn->query($sql) === TRUE) {
-               // header( "Location: admin.php" );
+               header( "Location: admin.php" );
 
             } 
             else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
 
-            //header( "Location: admin.php" );
+            header( "Location: admin.php" );
             $conn->close();
         ?>
     </body>

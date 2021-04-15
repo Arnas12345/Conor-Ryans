@@ -75,6 +75,8 @@ a:active {
 .select {
     background: #2f3640;
     color: white;
+    height: 30px;
+    border-radius: 8px;
 }
 
 
@@ -126,7 +128,10 @@ a:active {
 }
 
 .pending {
-    margin: 5%;
+    border:1px;
+    border-style:solid;
+    border-color:#000000; 
+    padding: 2%;
     margin-top: 10%;
 }
 

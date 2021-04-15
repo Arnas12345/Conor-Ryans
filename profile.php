@@ -60,7 +60,7 @@
                 <h3 class="text-left">Bio:</h3>
                 <?php
                     $row = getUserData($userID);
-                    if($row) {
+                    if(isset($row['description']) && $row['description'] !== null ) {
                         print "<p class='userDetails text-left'>{$row['description']}</p>";
                     } 
                     else {

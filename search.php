@@ -67,12 +67,12 @@
                 if(isset($_GET['search']) && $_GET['search'] == "skill") {
                     $skillsSql = "select * from skills;";
                     $skillsResult = $conn -> query($skillsSql);
-                    print "<select name='skill'><option value=''>Select A Skill</option>";
+                    print "<div class='selectedForm'><select class='select' name='skill'><option value=''>Select A Skill</option>";
                     while($skillsRow = $skillsResult->fetch_assoc())
                     {   
                         print "<option value='{$skillsRow['skillTitle']}'>{$skillsRow['skillTitle']}</option>";
                     }
-                    print '</select>';
+                    print '</select></div>';
                     echo '<script type="text/javascript">jsfunction();</script>';
                 }
                 if(isset($_GET['search']) && $_GET['search'] == "previousHistory") {
@@ -82,12 +82,12 @@
                 if(isset($_GET['search']) && $_GET['search'] == "currentlyEmployed") {
                     $companySQL = "select * from companies;";
                     $companyResult = $conn -> query($companySQL);
-                    print "<select name='company'><option value=''>Select A Company</option>";
+                    print "<div class='selectedForm'><select class='select' name='company'><option value=''>Select A Company</option>";
                     while($companyRow = $companyResult->fetch_assoc())
                     {   
                         print "<option value='{$companyRow['companyName']}'>{$companyRow['companyName']}</option>";
                     }
-                    print '</select>';
+                    print '</select></div>';
                     echo '<script type="text/javascript">jsfunction();</script>';
                 }
                 
@@ -338,7 +338,7 @@
                                     print "<div class='friend-req-details'>";
                                     if($connectionsRow) {
                                         if($connectionsRow['status'] !== "Pending") {
-                                            print "<button class='btn-unconnect' onClick='deleteConnection({$previousHistoryRow['userID']})'> Unconnect </button><br>";
+                                            print "<button class='btn-unconnect' onclick='deleteConnection({$previousHistoryRow['userID']})'> Unconnect </button><br>";
                                         }
                                         else {
                                             //print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' onClick='makeConnection({$row['userID']})'></img><br>";

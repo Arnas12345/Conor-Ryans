@@ -41,7 +41,7 @@
     <body>
         <?php 
             include ("validateLoggedIn.php");
-            include ("headerTemplate.html");
+            include ("adminTemplate.html");
         ?>
 
         <h1 class="page-heading">Job Feed</h1>

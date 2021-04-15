@@ -74,7 +74,7 @@
                     print "<div class='friend-req-details'>";
                     if($connectionsRow) {
                         if($connectionsRow['status'] !== "Pending") {
-                            print "<button class='btn-unconnect' onClick='deleteConnection({$row['userID']})'> Unconnect </button><br>";
+                            print "<button class='btn-unconnect' href='deleteConnection({$row['userID']})'> Unconnect </button><br>";
                         }
                         else {
                             //print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' onClick='makeConnection({$row['userID']})'></img><br>";

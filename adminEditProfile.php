@@ -35,7 +35,7 @@
                 return $row;
             }
 
-            include("headerTemplate.html");
+            include("adminTemplate.html");
             
         ?>
 

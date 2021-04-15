@@ -54,15 +54,15 @@
 
     </head>
     <body>
-        <h1 class="page-header">Admin Page</h1>
+        <?php
+            include ("validateAdmin.php");
+            include ("serverConfig.php");
+            include ("adminTemplate.html");
+        ?>
+        <h1 class="page-heading">Admin Page</h1>
         <hr>
-        <div class="nav-links">
-            <a class="delete-link" href="flushOldProfilePictures.php"> 
-                Delete Old Images
-            </a>    
-            <a class="logout-link" href="logout.php"> 
-                Logout
-            </a> 
+        <div class="nav-links" style="margin-left:auto;">
+            <button type="button" style="margin-left:auto;" class="btn btn-danger" onclick="window.location.href='flushOldProfilePictures.php'">Danger</button>
         </div> 
         <form class="search" method="post" action="admin.php">
             <select class="select" name="selectVal">
@@ -75,9 +75,6 @@
             
         <div class="page-box">
             <?php
-
-                include ("validateAdmin.php");
-                include ("serverConfig.php");
 
                 if(isset($_POST["selectVal"])) {
                     
@@ -112,7 +109,7 @@
                                             style='min-width:180px; min-height:180px; border-radius:50%; 
                                             object-fit: cover; overflow:hidden;' >";
                                 }
-                                print "<a class='userDetails' href='adminUserView.php?userID={$row['userID']}'><b>{$row['username']} - {$row['email']}</b></a>";
+                                print "<a class='userDetails' href='adminUserView.php?userID={$row['userID']}'><b>{$row['username']}</b></a>";
                                 $connectionsSQL = "select * from banneduser where userID = {$row['userID']};";
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
@@ -161,11 +158,7 @@
                         }
                     }
                 }
-
-
-                  
-
-                  
+                
                 function printSearchFor($searchVal, $searchTerm) {
                     print "<h1 class='page-header'>Search by {$searchVal} for {$searchTerm}</h1>";
                 }

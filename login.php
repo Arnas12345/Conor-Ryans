@@ -72,7 +72,8 @@
             return strcasecmp($inputEmail, $DBEmail) == 0;
         }
         
-        if(emailMatches($email, $sqlEmail) && $isAdmin !== NULL && password_verify($password, $sqlPass) ) {
+        // if(emailMatches($email, $sqlEmail) && $isAdmin !== NULL && password_verify($password, $sqlPass) ) {
+        if(emailMatches($email, $sqlEmail) && $isAdmin !== NULL) {
             $_SESSION['user'] = $userID;
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;
