@@ -3,7 +3,6 @@
         <title>Loop : Company Home</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/companyHome.css?v=<?php echo time(); ?>">
-        <link rel="stylesheet" type="text/css" href="css/home.css?v=<?php echo time(); ?>">
     </head>
     <script type="text/javascript">
         function showSkills(modalNumber) {
@@ -53,11 +52,10 @@
             include ("companyTemplate.html");
         ?>
 
-        <h1 class="page-header">Vacancies Page</h1>
+        <h1 class="page-heading">Vacancies Page</h1>
         <hr>
         
         <div class="page-box">
-            <h1 style="visibility: hidden">s</h1>
             <?php
                 include ("serverConfig.php");
                 $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
@@ -65,12 +63,11 @@
                     die("Connection failed:" .$conn -> connect_error);
                 }
                 $currentCompany = $_SESSION['company'];
-
                 $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
                 from vacancies a
                 INNER JOIN companies b
                 ON a.companyID = b.companyID
-                WHERE a.companyID ={$currentCompany}
+                WHERE b.companyID = {$currentCompany}
                 ORDER BY timeAdded DESC;";
                 $result = $conn -> query($sql);
                 
@@ -88,22 +85,19 @@
                         WHERE c.vacancyID= {$row['vacancyID']}";
                         $skillsResult = $conn -> query($skillsSql);
                         while($skillsRow = $skillsResult -> fetch_assoc()) {
-                            $skillsNeeded[] = $skillsRow['skillTitle'];
+                            $skill = array('skillTitle' => $skillsRow['skillTitle'], 'skillDesc' => $skillsRow['skillDescription']);
+                            $skillsNeeded[] = $skill;
                         }
                         $counter++;
-                        print "<div class='vacancy'>";
-                        print "<div class='container'>
+                        print "<div class='container vacancy'>
                                     <div class='row'>
-                                        <div class='col-4' >
-                                            <img class='job_logo' src='images/job-icon.jpg' alt='logo here'></img>
-                                        </div>
-                                        <div class='col-8' >
-                                        <p class='vacancyDetails'><b>Title: </b>{$row['vacancyTitle']}</p>
-                                        <p class='vacancyDetails'><b>Description: </b>{$row['vacancyDescription']}</p>
-                                        <p class='vacancyDetails'><b>Role: </b>{$row['role']}</p>
-                                        <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
-                                        <button onClick='showSkills({$counter})'>Show Skills</button>
-                                        <button onClick='showApplicants({$counter})'>Show Applicants</button>";
+                                        <div class='col-12' >
+                                        <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
+                                        <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
+                                        <p class='vacancyDetails text-left'><b>Role: </b>{$row['role']}</p>
+                                        <p class='vacancyDetails text-left'><b>Req. Experience: </b>{$row['requiredExperience']}</p>
+                                        <button class='showskills' onClick='showSkills({$counter})'>Show Skills</button>
+                                        <button class='showskills' onClick='showApplicants({$counter})'>Show Applicants</button>";
                                         
                                         //skills Modal
                                         print "<div id='myModal{$counter}' class='modal'>
@@ -114,18 +108,19 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Skills Required</th>
+                                                                <th>Skills Description</th>
                                                             </tr>
                                                         </thead>";
                                         
                                         if(!empty($skillsNeeded)) {
-                                            foreach ($skillsNeeded as $row) 
+                                            foreach ($skillsNeeded as $skill) 
                                             {   
                                                 echo '<tr>';
-                                                echo '<td>' . $row['skillTitle'] . '</td>';
-                                                echo '<td>' . $row['skillDesc'] . '</td>';
+                                                echo '<td>' . $skill['skillTitle'] . '</td>';
+                                                echo '<td>' . $skill['skillDesc'] . '</td>';
                                                 echo '</tr>';
                                             }
-                                        } else echo "<tr><td colspan='3'>No Specific Skills Required</td></tr>";
+                                        } else echo "<tr><td colspan='2'>No Specific Skills Required</td></tr>";
                                         print "</table></div></div>";
 
                                         //Applicants modal
@@ -147,19 +142,22 @@
                                                             WHERE b.companyID={$currentCompany} AND b.vacancyID={$row['vacancyID']}";
                                         
                                         $getApplicantsResult = $conn -> query($getApplicantsSQL);
-                                        while($getApplicantsRow = $getApplicantsResult -> fetch_assoc()) {
-                                            echo '<tr>';
-                                            echo "<td><a id='applicant{$getApplicantsRow['userID']}' class='applicant' href='profile.php?userID={$getApplicantsRow['userID']}'>{$getApplicantsRow['username']}</a></td>";
-                                            if($getApplicantsRow['status'] == 'Pending') {
-                                                echo "<td>
-                                                        <a id='decline{$getApplicantsRow['userID']}' class='status' href='organizationHome.php?deleteUser=true&userID={$getApplicantsRow['userID']}&vacancyID={$getApplicantsRow['vacancyID']}'>&#x2716;</a>
-                                                        <a id='accept{$getApplicantsRow['userID']}' class='status' href='organizationHome.php?acceptUser=true&userID={$getApplicantsRow['userID']}&vacancyID={$getApplicantsRow['vacancyID']}'>&#x2714;</a>
-                                                    </td>";
-                                            } else echo "<td><p>{$getApplicantsRow['status']}</p></td>";
-                                            echo '</tr>';
-                                        }
+                                        
+                                        if(mysqli_num_rows($getApplicantsResult) != 0) {
+                                            while($getApplicantsRow = $getApplicantsResult -> fetch_assoc()) {
+                                                echo '<tr>';
+                                                echo "<td><a id='applicant{$getApplicantsRow['userID']}' class='applicant' href='profile.php?userID={$getApplicantsRow['userID']}'>{$getApplicantsRow['username']}</a></td>";
+                                                if($getApplicantsRow['status'] == 'Pending') {
+                                                    echo "<td>
+                                                            <a id='decline{$getApplicantsRow['userID']}' class='status' href='organizationHome.php?deleteUser=true&userID={$getApplicantsRow['userID']}&vacancyID={$getApplicantsRow['vacancyID']}'>&#x2716;</a>
+                                                            <a id='accept{$getApplicantsRow['userID']}' class='status' href='organizationHome.php?acceptUser=true&userID={$getApplicantsRow['userID']}&vacancyID={$getApplicantsRow['vacancyID']}'>&#x2714;</a>
+                                                        </td>";
+                                                } else echo "<td><p>{$getApplicantsRow['status']}</p></td>";
+                                                echo '</tr>';
+                                            }
+                                        } else echo "<tr><td colspan='2'>No Applicants.</td></tr>";
                                         print "</table></div></div>";
-                                        print "</div></div></div></div>";
+                                        print "</div></div></div>";
                                         
                     }
                 } else {

@@ -1,103 +1,61 @@
-body {
-    background-color: rgb(191, 191, 191);
+
+@media (max-width: 400px) {
+    body { font-size: 50px; }
 }
 
-.container_logo {
-    padding-top: 2%;
-    text-align: center;
-    padding-bottom: 1%;
-}
-
-.header-template {
-    height: 5%;
-}
-
-.container {
-    text-align: center;
-}
-
-.header {
-    text-decoration: none;
-    font-family: verdana;
-    size: 20%;
+p {
     color: black;
-    font-size:1vw;
 }
 
 /* unvisited link */
-a:link {
+p:link {
     color: black;
 }
   
 /* visited link */
-a:visited {
+p:visited {
     color: black;
 }
   
 /* mouse over link */
-a:hover {
+p:hover {
     color: black;
 }
 
 /* selected link */
-a:active {
+p:active {
     color: black;
-}
-
-.page-header {
-    text-align: center;
 }
 
 .page-box {
     width: 75%;
-    background-color: rgb(208, 206, 206);
     text-align: center;
     margin-left: 12.5%;
     margin-right: 12.5%;
-    /* height: 75%; */
     padding-bottom: 1%;
     bottom: 10px;
     font-size:1.5vw;
 }
 
-.search {
-    text-align: center;
-}
-
-.select {
-    border-style: none;
-}
-
-.input {
-    border-style: none;
-}
-
-.logo {
-    cursor: pointer;
-}
-
-.search_icon {
-    cursor: pointer;
-}
-
 .vacancy {
-    background-color: rgb(191, 191, 191);
+    background-color: rgba(191, 191, 191,0.6);
     padding-top: 1%;
     width: 75%;
     line-height: 50%;
     margin-left: 12.5%;
-    border-radius: 8px;
     margin-bottom: 2%;
-    /* height: 40%; */
     text-align: center;
+    box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+    border-radius: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    padding-bottom: 3%;
+    word-wrap: break-word;
 }
 
-.job_logo {
-    width: 50%;
-    height: auto;
-    margin-top: 7%;
-    margin-bottom: 7%;
-    background-color: rgb(208, 206, 206);
+.vacancy p {
+    padding-top: 10px;
 }
 
 /* The Modal (background) */
@@ -120,7 +78,7 @@ a:active {
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 80%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
@@ -129,6 +87,8 @@ a:active {
     float: right;
     font-size: 28px;
     font-weight: bold;
+    text-align: right;
+    
 }
 
 .close:hover,
@@ -180,12 +140,59 @@ a:active {
     color: #009879;
 }
 
-.status {
-    padding-right: 5%;
-    padding-left: 5%;
-    text-decoration: none;
+.head.vacancyDetails.text-lg-center{
+    padding-top: 50rem;
+   
 }
 
-.applicant {
-    text-decoration: none;
+.vacancyDetails.text-left{
+    line-height: 1.5em;
+}
+
+.showskills{
+    height: 10%;
+    float: left;
+    background: #2f3640;
+    color: white;
+    border-radius: 8px;
+    margin-left: 2%;
+}
+.skillSelect {
+    background: #2f3640;
+    height: 40px;
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+select option:checked {
+    background: #33072d -webkit-linear-gradient(bottom, #ff9500 0%, #ff9500 100%);
+}
+
+.sort {
+    background: #2f3640;
+    height: 38px;
+    color: white;
+    border-radius: 8px;
+    margin-left: 2%;
+}
+
+@media (max-width: 1000px) {  
+    .job_logo {
+        position: relative;
+    left: 30px;
+    border: 3px solid #73AD21;
+    } 
+
+
+    .head.vacancyDetails.text-lg-center{
+        font-size: 125%;
+        padding-top: 50rem;
+    
+    }
+}
+
+.img-fluid {
+    float: right;
+    margin-right: 5%;
 }
