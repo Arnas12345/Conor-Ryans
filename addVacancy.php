@@ -4,7 +4,7 @@
     <head>
         <title>Loop : Home</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
+        <link rel="stylesheet" type="text/css" href="css/addVacancy.css?v=<?php echo time(); ?>">
     </head>
     <body>
         
@@ -13,22 +13,19 @@
             include ("companyTemplate.html"); 
         ?>
 
-        <h1 class="page-header">Add Vacancy</h1>
+        <h1 class="page-heading">Add Vacancy</h1>
         <hr>
         <div class = "description-container">
-            <div class = "description-heading">
-                <H1 style = "text-align: center;">Vacancy</H1>
-            </div>
             <div class = "bio-description">
                 <form method="post" action="addVacancy.php">
                     <h3>Vacancy Title:</h3>
-                    <input type='text' placeholder='Enter Vacancy Title' name='vacancyTitle' required></input>
+                    <input class="text-input" type='text' placeholder='Enter Vacancy Title' name='vacancyTitle' required></input>
                     <h3>Vacancy Description:</h3>
                     <textarea id='description' rows='5' cols='60' name='description' required></textarea><br>
                     <h3>Required Experience:</h3>
-                    <input type='text' placeholder='Enter Req. Experience' name='reqExperience' required></input>
+                    <input class="text-input" type='text' placeholder='Enter Req. Experience' name='reqExperience' required></input>
                     <h3>Vacancy Role:</h3>
-                    <input type='text' placeholder='Enter Vacancy Role' name='vacancyRole' required></input>
+                    <input class="text-input" type='text' placeholder='Enter Vacancy Role' name='vacancyRole' required></input>
                     <?php
                     include ("serverConfig.php");
                     $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
@@ -36,8 +33,10 @@
                         die("Connection failed:" .$conn -> connect_error);
                     }
                     //User can select all skills they want
+
                     print '<h3>Select Skills for Vacancy</h3>
-                    <select name="skills[]" multiple>';
+                    <p>Please Hold Ctrl to select multiple skills</p>
+                    <select class="skills" name="skills[]" multiple>';
                     $skillsSql = "select * from skills;";
                     $skillsResult = $conn -> query($skillsSql);
                     while($skillsRow = $skillsResult->fetch_assoc())
@@ -48,7 +47,7 @@
                     ?>
                     <br>
                     <br>
-                    <input type="submit" name="submit" value="Submit Vacancy"/>
+                    <input class="button" type="submit" name="submit" value="Submit Vacancy"/>
                 </form>
             </div>
         </div>

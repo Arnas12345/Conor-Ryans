@@ -2,7 +2,7 @@
     <head>
         <title>Loop : User Profie</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time() ?>">
+        <link rel="stylesheet" type="text/css" href="css/companyEditProfile.css?v=<?php echo time() ?>">
     </head>
     <body>
 
@@ -31,7 +31,7 @@
 
             $row = getCompanyData($companyID);
 
-            print "<h1 class='page-header'>{$row['companyName']}</h1>";
+            print "<h1 class='page-heading'>{$row['companyName']}</h1>";
             
         ?>
 
@@ -58,16 +58,13 @@
         
             <div class="editProfile">
                 <form action="editCompany.php">
-                    <input type="submit" value="Edit Organization" />
+                    <input class="edit" type="submit" value="Edit Organization" />
                 </form>
             </div>
         </div>
         <div class = "description-container">
-            <div class = "description-heading">
-                <H1 style = "text-align: center;">Description</H1>
-            </div>
             <div class = "bio-description">
-                <h3>Description:</h3>
+                <h3 class='text-left'>Description:</h3>
                 <?php
 
                     $companyID = $_SESSION["company"];
@@ -75,33 +72,33 @@
                     $row = getCompanyData($companyID);
 
                     if(isset($row['Description']) ){
-                        print "<p class='userDetails'>{$row['Description']}</p>";
+                        print "<p class='userDetails text-left'>{$row['Description']}</p>";
                         setcookie("companyDescription", $row['Description'], time() + 3600);
                     }
                     else{
-                        print "<p class='userDetails'>No Description Given.</p>";
+                        print "<p class='userDetails text-left'>No Description Given.</p>";
                     }
 
-                    print "<h3>Address:</h3>";
+                    print "<h3 class='text-left'>Address:</h3>";
                     if(isset($row['address']) ){
-                        print "<p class='userDetails'>{$row['address']}</p>";
+                        print "<p class='userDetails text-left'>{$row['address']}</p>";
                         setcookie("address", $row['address'], time() + 3600);
                     }
                     else{
-                        print "<p class='userDetails'>No Address Given.</p>";
+                        print "<p class='userDetails text-left'>No Address Given.</p>";
                     }
 
-                    print "<h3>Email:</h3>";
-                    print "<p class='userDetails'>{$row['email']}</p>";
+                    print "<h3 class='text-left'>Email:</h3>";
+                    print "<p class='userDetails text-left'>{$row['email']}</p>";
                     setcookie("email", $row['email'], time() + 3600);
 
-                    print "<h3>Contact Number:</h3>";
+                    print "<h3 class='text-left'>Contact Number:</h3>";
                     if(isset($row['ContactNo']) ){
-                        print "<p class='userDetails'>{$row['ContactNo']}</p>";
+                        print "<p class='userDetails text-left'>{$row['ContactNo']}</p>";
                         setcookie("contactNo", $row['ContactNo'], time() + 3600);
                     }
                     else {
-                        print "<p class='userDetails'>No Contact Number Given.</p>";
+                        print "<p class='userDetails text-left'>No Contact Number Given.</p>";
                     }
 
                 ?>
@@ -109,7 +106,7 @@
         </div>
         
         <div class="page-box">
-            <h1>All Job Listings</h1>
+            <h1 class="page-heading">All Job Listings</h1>
             <?php
                 include ("serverConfig.php");
                 $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);
@@ -141,19 +138,15 @@
                             $skillsNeeded[] = $skillsRow['skillTitle'];
                         }
                         
-                        print "<div class='vacancy'>";
-                        print "<div class='container'>
+                        print "<div class='container vacancy'>
                                     <div class='row'>
-                                        <div class='col-4' >
-                                            <img class='job_logo' src='images/job-icon.jpg' alt='logo here'></img>
-                                        </div>
-                                        <div class='col-8' >
-                                        <p class='vacancyDetails'><b>Title: </b>{$row['vacancyTitle']}</p>
-                                        <p class='vacancyDetails'><b>Description: </b>{$row['vacancyDescription']}</p>
-                                        <p class='vacancyDetails'><b>Role: </b>{$row['role']}</p>
-                                        <p class='vacancyDetails'><b>Req. Experience: </b>{$row['requiredExperience']}</p>";
+                                        <div class='col-12' >
+                                        <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
+                                        <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
+                                        <p class='vacancyDetails text-left'><b>Role: </b>{$row['role']}</p>
+                                        <p class='vacancyDetails text-left'><b>Req. Experience: </b>{$row['requiredExperience']}</p>";
                                         
-                                        print "</div></div></div></div>";
+                                        print "</div></div></div>";
                     }
                 } 
                 else {

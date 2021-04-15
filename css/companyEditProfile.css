@@ -1,0 +1,145 @@
+.profileImage{
+    text-align: center;
+}
+
+.profile-container{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 2%;
+}
+
+.description-container{
+    background-color: rgba(191, 191, 191,0.5);
+    padding-top: 1%;
+    width: 80%;
+    line-height: 50%;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    text-align: center;
+    box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+    border-radius: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    padding-bottom: 1%;
+}
+
+.editProfile {
+    padding-top: 1%;
+    text-align: center;
+}
+
+.changePicture {
+    padding-top: 1%;
+    text-align: left;
+}
+
+.edit {
+    background: #2f3640;
+    height: 38px;
+    color: white;
+    border-radius: 8px;
+}
+
+.file::-webkit-file-upload-button {
+    background: #2f3640;
+    height: 38px;
+    color: white;
+    border-radius: 8px;
+}
+
+#description {
+    min-width: 50%;
+    min-height: 20%;
+    color: white;
+    border-radius: 8px;
+    background: #2f3640;
+}
+
+.skills {
+    background: #2f3640;
+    height: 40px;
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+select option:checked {
+    background: #33072d -webkit-linear-gradient(bottom, #4c4b75 0%, #644b6e 100%);
+}
+
+.employer {
+    background: #2f3640;
+    height: 30px;
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.text-input {
+    background: #2f3640;
+    height: 30px;
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1%;
+}
+
+.text-input::placeholder {
+    color: white;
+}
+
+.calendar {
+    background: #2f3640;
+    height: 30px;
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1%;
+}
+
+.button {
+    background: #2f3640;
+    height: 38px;
+    color: white;
+    border-radius: 8px;
+}
+
+.graduated {
+    margin-top: 1%;
+    text-align: center;
+    margin-right: 1%;
+}
+
+.qualification {
+    display: flex;
+    justify-content: center;
+}
+
+.text-left {
+    margin-left: 1%;
+}
+
+.vacancy {
+    background-color: rgba(191, 191, 191,0.6);
+    padding-top: 1%;
+    width: 60%;
+    line-height: 50%;
+    margin-left: 20%;
+    margin-bottom: 2%;
+    text-align: center;
+    box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+    border-radius: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+}
+
+.vacancy p {
+    padding-top: 10px;
+}
+
+
+.vacancyDetails.text-left{
+    line-height: 1.5em;
+}

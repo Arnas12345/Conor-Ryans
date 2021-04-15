@@ -63,7 +63,7 @@
         $sql = "select * from companies where email=\"{$email}\";";
         $result = $conn -> query($sql);
         $row = $result->fetch_assoc();
-        $userID = $row["userID"];
+        $companyID = $row["companyID"];
         $sqlEmail = $row["email"];
         $sqlPass = $row["password"];
 
@@ -73,8 +73,7 @@
         
         if(emailMatches($email, $sqlEmail)) {
         // else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
-            $_SESSION['user'] = $userID;
-            $_SESSION['username'] = $row['username'];
+            $_SESSION['company'] = $companyID;
             $_SESSION['loggedin'] = true;
             header( "Location: organizationHome.php" );
         }

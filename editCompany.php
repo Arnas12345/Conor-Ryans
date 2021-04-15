@@ -31,14 +31,10 @@
             if(isset($_SESSION['user'])) include("headerTemplate.html");
             else include("companyTemplate.html");
             $companyID = $_SESSION["company"];
-
-            $row = getCompanyData($companyID);
-
-            print "<h1 class='page-header'>{$row['companyName']}</h1>";
                 
         ?>
 
-        <h1 class="page-header">Edit Profile</h1>
+        <h1 class="page-heading">Edit Profile</h1>
 
         <hr>
 
@@ -63,8 +59,8 @@
             </div>
             <div class="changeProfileImage">
                 <form method="post" action="editCompany.php" enctype="multipart/form-data">
-                    <input type="file" name="image">
-                    <input type="submit" name="submitImage" value="Upload">
+                    <input class="file" type="file" name="image">
+                    <input class="edit" type="submit" name="submitImage" value="Upload">
                 </form>
             </div>
         </div>
@@ -74,7 +70,6 @@
             </div>
             <div class = "bio-description">
                 <form method="post" action="editCompany.php">
-                    <h3>Company Description:</h3>
                     <?php
                     
                         include ("serverConfig.php");
@@ -111,13 +106,13 @@
                         print "<h3>Company Address:</h3>";
                         $address = '';
                         if(isset($_COOKIE['address'])) $address = $_COOKIE['address'];
-                        print "<textarea id='address' rows='5' cols='60' name='address'>{$address}</textarea><br>";
+                        print "<textarea id='description' rows='5' cols='60' name='address'>{$address}</textarea><br>";
                         
                         print "<h3>Company Contact Number:</h3>";
                         $contactNo = '';
                         if(isset($_COOKIE['contactNo'])) $contactNo = $_COOKIE['contactNo'];
                         
-                        print "<input type='text' placeholder='Enter Contact Number' name='ContactNo' value='$contactNo' pattern='[0-9]{10}'></input>";
+                        print "<input class='text-input' type='text' placeholder='Enter Contact Number' name='ContactNo' value='$contactNo' pattern='[0-9]{10}'></input>";
 
                         $conn -> close();
 
@@ -125,7 +120,7 @@
 
                     <br>
                     <br>
-                    <input type="submit" name="submit" value="Submit Edit"/>
+                    <input class="button" type="submit" name="submit" value="Submit Edit"/>
                 </form>
             </div>
         </div>
