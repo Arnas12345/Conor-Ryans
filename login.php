@@ -2,11 +2,12 @@
     <head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/login.css?v=<?php echo time(); ?>">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
 
         <script> 
-            function checkPassword() {
+            function showLoginError(variable) {
                 var alert = document.getElementById("alert");
-                var node = document.createTextNode("Incorrect email or password");
+                var node = document.createTextNode(variable);
                 alert.appendChild(node);
 
             }
@@ -68,29 +69,35 @@
         $sqlPass = $row["password"];
         $isAdmin = $row["Admin"];
 
+        $bannedSql = "SELECT * FROM banneduser 
+                      WHERE userID = {$userID};";
+        $bResult = $conn -> query($bannedSql);
+        $bRow = $bResult->fetch_assoc();
+
         function emailMatches ($inputEmail, $DBEmail) {
             return strcasecmp($inputEmail, $DBEmail) == 0;
         }
         
-        // if(emailMatches($email, $sqlEmail) && $isAdmin !== NULL && password_verify($password, $sqlPass) ) {
-        if(emailMatches($email, $sqlEmail) && $isAdmin !== NULL) {
+        if(mysqli_num_rows($bResult) !== 0 ) {
+            echo "<script> showLoginError('This user is banned') </script>";
+        }
+        // else if($isAdmin !== NULL && emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
+        else if($isAdmin !== NULL && emailMatches($email, $sqlEmail)) {
             $_SESSION['user'] = $userID;
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;
             $_SESSION['admin'] = true;
             header( "Location: admin.php" );
         }
+        // else if(emailMatches($email, $sqlEmail)  && password_verify($password, $sqlPass)) {
         else if(emailMatches($email, $sqlEmail)) {
-        // else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
             $_SESSION['user'] = $userID;
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;
             header( "Location: home.php" );
         }
         else {
-            
-            echo "<script> checkPassword() </script>";
-
+            echo "<script> showLoginError('Incorrect email or password') </script>";
         }
 
         $conn->close(); 
