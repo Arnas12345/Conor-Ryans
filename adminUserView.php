@@ -50,7 +50,7 @@
                     else {
                         print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='18%' style= 'min-width:160px; min-height:160px; border-radius:50%; object-fit: cover; overflow:hidden;' >";
                     }
-                    print "<button class='button' onClick=\"location.href='adminEditProfile.php?userID={$_GET['userID']}'\">Edit Profile</button>";
+                    print "<br><button class='button' onClick=\"location.href='adminEditProfile.php?userID={$_GET['userID']}'\">Edit Profile</button>";
                 ?>
             </div>
             
