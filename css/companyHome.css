@@ -51,6 +51,7 @@ p:active {
     border-left: 1px solid rgba(255, 255, 255, 0.5);
     overflow: hidden;
     padding-bottom: 3%;
+    word-wrap: break-word;
 }
 
 .vacancy p {
