@@ -68,8 +68,9 @@
         $sqlPass = $row["password"];
 
         $bannedSql = "SELECT * FROM bannedcompany 
-                      WHERE companyID = {$companyID}";
-        $bResult = $conn -> query($sql);
+                      WHERE companyID = {$companyID};";
+        $bResult = $conn -> query($bannedSql);
+        $bRow = $bResult->fetch_assoc();
 
         function emailMatches ($inputEmail, $DBEmail) {
             return strcasecmp($inputEmail, $DBEmail) == 0;
