@@ -58,7 +58,7 @@
         <script type="text/javascript">
             function deleteCompany(variable) {
                 if (confirm("Are you sure you want to unban this Company?") == true) {
-                    window.location.href= 'adminUnbanCompany.php?id=' + variable;
+                    window.location.href= 'adminDeleteCompany.php?id=' + variable;
                 };
             }
         </script>
@@ -126,10 +126,10 @@
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
                                 if($connectionsRow) {
-                                    print '<button type="button" class="btn btn-success" onClick="unbanUser({$row["userID"]})">Unban User</button>';
+                                    print "<br><button type='button' class='btn btn-success' onClick='unbanUser({$row['userID']})'>Unban User</button>";
                                 } else {
-                                    print '<button type="button" class="btn btn-warning button" onClick="BanUser({$row["userID"]})">Ban User</button>';
-                                    print '<button type="button" class="btn btn-danger" onclick="DeleteUser({$row["userID"]})">Delete User</button>';
+                                    print "<br><button type='button' class='btn btn-warning' onClick='BanUser({$row['userID']})'>Ban User</button>";
+                                    print "<br><button type='button' class='btn btn-danger' onClick='DeleteUser({$row['userID']})'>Delete User</button>";
                                 }
                                 
                                 print "</div>";
@@ -155,10 +155,10 @@
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
                                 if($connectionsRow) {
-                                    print '<button type="button" class="btn btn-success" onClick="unBanCompany({$row["companyID"]})">Unban Company</button>';
+                                    print "<br><button type='button' class='btn btn-success' onClick='unBanCompany({$row['companyID']})'>Unban Company</button>";
                                 } else {
-                                    print '<button type="button" class="btn btn-warning button" onClick="BanCompany({$row["companyID"]})">Ban Company</button>';
-                                    print '<button type="button" class="btn btn-danger" onclick="deleteCompany({$row["companyID"]})">Delete Company</button>';
+                                    print "<br><button type='button' class='btn btn-warning' onClick='BanCompany({$row['companyID']})'>Ban Company</button>";
+                                    print "<br><button type='button' class='btn btn-danger' onClick='deleteCompany({$row['companyID']})'>Delete Company</button>";
                                 }
                                 print "</div>";
                             }

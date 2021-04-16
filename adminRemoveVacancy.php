@@ -98,7 +98,7 @@
                                     <div class='col-2' ></div>
                                         <div class='col-8' >
                                             
-                                            <a class='head vacancyDetails text-lg-center' href='company.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
+                                            <a class='head vacancyDetails text-lg-center' href='adminCompany.php?companyID={$row['companyID']}'><b><p>{$row['companyName']}</p></b></a>
                                             <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
                                             <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
                                             <p class='vacancyDetails text-left'><b>Role: </b>{$row['role']}</p>
