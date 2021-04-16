@@ -1,9 +1,11 @@
 <html>
 
     <head> 
-        <title> 
-            DANGER
-        </title>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+
+        <title>Loop : DANGER</title>
     </head>
 
     <body style="text-align:center; width:960px; margin:auto;">
