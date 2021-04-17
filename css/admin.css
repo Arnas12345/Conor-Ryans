@@ -69,36 +69,35 @@ a:active {
     border-radius: 8px;
     height: 30px;
     overflow: hidden;
-    margin: 2%;
-    margin-bottom: 1%;
+
 }
 
 .select {
     background: #2f3640;
     color: white;
-    height: 30px;
+    height: 34px;
     border-radius: 8px;
+    margin-right:2%;
+
 }
 
 
 .input {
     background: #2f3640;
-    height: 30px;
     color: white;
     border-radius: 8px;
     overflow: hidden;
-    margin: 2%;
-    margin-bottom: 1%;
 }
 
 .submit {
     background: #2f3640;
-    height: 30px;
     color: white;
     border-radius: 8px;
-    margin: 2%;
+    margin-left:2%;
     
 }
+
+
 
 .input::placeholder {
     color: white;
@@ -135,6 +134,7 @@ a:active {
     padding: 2%;
     margin-top: 10%;
 }
+
 
 @media only screen and (max-width: 700px) {
 

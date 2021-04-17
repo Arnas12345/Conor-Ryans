@@ -71,7 +71,7 @@
             include ("serverConfig.php");
             include ("adminTemplate.html");
         ?>
-        <h1 class="page-heading">Admin Page</h1>
+        <h1 class="page-heading">User Options</h1>
         <hr>
         <div class="nav-links" style="margin-left:auto;">
             <button type="button" style="float: right; margin-right:5%;" class="btn btn-danger" onclick="deleteOldPictures();">Delete Unused Images</button>
@@ -128,8 +128,8 @@
                                 if($connectionsRow) {
                                     print "<br><button type='button' class='btn btn-success' onClick='unbanUser({$row['userID']})'>Unban User</button>";
                                 } else {
-                                    print "<br><button type='button' class='btn btn-warning' onClick='BanUser({$row['userID']})'>Ban User</button>";
-                                    print "<br><button type='button' class='btn btn-danger' onClick='DeleteUser({$row['userID']})'>Delete User</button>";
+                                    print "<br><button type='button' class='btn btn-warning' style ='margin-top:6%;' onClick='BanUser({$row['userID']})'>Ban User</button>";
+                                    print "<br><button type='button' class='btn btn-danger' style ='margin-top:2%;' onClick='DeleteUser({$row['userID']})'>Delete User</button>";
                                 }
                                 
                                 print "</div>";
@@ -157,8 +157,8 @@
                                 if($connectionsRow) {
                                     print "<br><button type='button' class='btn btn-success' onClick='unBanCompany({$row['companyID']})'>Unban Company</button>";
                                 } else {
-                                    print "<br><button type='button' class='btn btn-warning' onClick='BanCompany({$row['companyID']})'>Ban Company</button>";
-                                    print "<br><button type='button' class='btn btn-danger' onClick='deleteCompany({$row['companyID']})'>Delete Company</button>";
+                                    print "<br><button type='button' class='btn btn-warning' style ='margin-top:6%;' onClick='BanCompany({$row['companyID']})'>Ban Company</button>";
+                                    print "<br><button type='button' class='btn btn-danger' style ='margin-top:2%;' onClick='deleteCompany({$row['companyID']})'>Delete Company</button>";
                                 }
                                 print "</div>";
                             }

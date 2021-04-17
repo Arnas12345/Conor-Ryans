@@ -49,7 +49,7 @@
             include ("adminTemplate.html");
         ?>
 
-        <h1 class="page-heading">Job Feed</h1>
+        <h1 class="page-heading">Delete Vacancies</h1>
        
 
     </div>
