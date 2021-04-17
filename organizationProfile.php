@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Loop : Company Profie</title>
-        
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/companyEditProfile.css?v=<?php echo time() ?>">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -51,10 +51,10 @@
                     if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
 
                     if($profileImage === null) {
-                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="18%" style="min-width:160px; min-height:160px; border-radius:50%;" >';
+                        print '<img src = "images/blank-profile-picture.png" alt="profile image" >';
                     }
                     else {
-                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='18%' style='min-width:160px; min-height:160px; border-radius:50%; object-fit: cover; overflow:hidden;' >";
+                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' >";
                     }
 
                 ?>

@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time() ?>">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-        
+
     </head>
     <body>
         
@@ -49,10 +49,10 @@
                     if (isset($row['profileImage'])) $profileImage = $row['profileImage'];
 
                     if($profileImage === null) {
-                        print '<img src = "images/blank-profile-picture.png" alt="profile image" height="25%" width="18%" style="min-width:160px; min-height:160px; border-radius:50%;" >';
+                        print '<img src = "images/blank-profile-picture.png" alt="profile image" >';
                     }
                     else {
-                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' height='25%' width='18%' style='min-width:160px; min-height:160px; border-radius:50%; object-fit: cover; overflow:hidden;' >";
+                        print "<img src = 'profileImages/{$profileImage}' alt='profile image' >";
                     }
 
                 ?>

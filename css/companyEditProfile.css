@@ -2,6 +2,16 @@
     text-align: center;
 }
 
+.profileImage img {
+    width: 20vw;
+    height: 20vw;
+    max-width: 160px;
+    max-height: 160px;
+    overflow: hidden;
+    border-radius: 50%;
+    object-fit:cover;
+}
+
 .profile-container{
     margin-left: 10%;
     margin-right: 10%;
