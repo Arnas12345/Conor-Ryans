@@ -149,7 +149,7 @@
                         }
                         print '</select><br>
                         <hr>
-                        <input class="button" type="submit" name="submit" value="Submit Edit"/>
+                        <input class="button" type="submit" name="submit" value="Submit Edit"/> <hr>
                         </form>';
 
                         //Added qualifications
