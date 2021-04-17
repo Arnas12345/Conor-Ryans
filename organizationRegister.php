@@ -76,24 +76,24 @@
 
         if($_POST['pass'] === $_POST['passConfirm']) {
 
-            $username = $_POST['name'];
+            $companyName = $_POST['name'];
             $email = $_POST['email'];
             $hashedPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-            $sql = "INSERT INTO users (username, email, password)
-            VALUES ('{$username}', '{$email}', '{$hashedPass}')";
+            $sql = "INSERT INTO companies (companyName, email, password)
+            VALUES ('{$companyName}', '{$email}', '{$hashedPass}')";
             
             if ($conn->query($sql) === TRUE) {
-                            
-                $sql = "select * from users where email=\"{$email}\";";
+                $sql = "select * from companies where email=\"{$email}\";";
                 $result = $conn -> query($sql);
                 $row = $result->fetch_assoc();
-                $userID = $row["userID"];
+                $companyID = $row["companyID"];
+                $companyName = $row["companyName"];
 
-                $_SESSION['user'] = $userID;
-                $_SESSION['username'] = $username;
+                $_SESSION['company'] = $companyID;
+                $_SESSION['companyName'] = $companyName;
                 $_SESSION['loggedin'] = true;
-                header( "Location: home.php" );
+                header( "Location: organizationHome.php" );
 
             } 
             else {
