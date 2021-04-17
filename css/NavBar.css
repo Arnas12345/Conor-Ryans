@@ -162,6 +162,22 @@ body {
     }
 }
 
+p {
+    font-size: medium;
+}
+
+button {
+    font-size: medium;
+}
+
+div.modal-content {
+    font-size: medium;
+}
+
+div.custom-select {
+    font-size: medium;
+}
+
 
 .logout {
     float: right;
