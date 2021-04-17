@@ -2,9 +2,13 @@
 
 <html>
     <head>
-        <title>Loop : Home</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/profile_user.css?v=<?php echo time(); ?>">
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+
+        <title>Loop : Edit User</title>
 
     </head>
     <script type="text/javascript">
@@ -91,7 +95,7 @@
                             $profileImageName = time() . "_" . $_FILES["image"]["name"];
                             $target = "profileImages/" . $profileImageName;
 
-                            str_replace(" ", "", $target);
+                            $target = str_replace(" ", "", $target);
                             if(copy($_FILES["image"]["tmp_name"], $target)) {
                                 $userProfileImage ="UPDATE users 
                                                     SET profileImage='$profileImageName'
