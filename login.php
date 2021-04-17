@@ -91,7 +91,7 @@
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;
             $_SESSION['admin'] = true;
-            header( "Location: admin.php" );
+            header( "Location: adminMenu.html" );
         }
         // else if(emailMatches($email, $sqlEmail)  && password_verify($password, $sqlPass)) {
         else if(emailMatches($email, $sqlEmail)) {
