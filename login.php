@@ -85,16 +85,16 @@
         if(mysqli_num_rows($bResult) !== 0 ) {
             echo "<script> showLoginError('This user is banned') </script>";
         }
-        // else if($isAdmin !== NULL && emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
-        else if($isAdmin !== NULL && emailMatches($email, $sqlEmail)) {
+        else if($isAdmin !== NULL && emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
+        // else if($isAdmin !== NULL && emailMatches($email, $sqlEmail)) {
             $_SESSION['user'] = $userID;
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;
             $_SESSION['admin'] = true;
             header( "Location: adminMenu.html" );
         }
-        // else if(emailMatches($email, $sqlEmail)  && password_verify($password, $sqlPass)) {
-        else if(emailMatches($email, $sqlEmail)) {
+        else if(emailMatches($email, $sqlEmail)  && password_verify($password, $sqlPass)) {
+        // else if(emailMatches($email, $sqlEmail)) {
             $_SESSION['user'] = $userID;
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;

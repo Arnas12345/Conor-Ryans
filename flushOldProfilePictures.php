@@ -27,8 +27,8 @@
             
             $tmpfile = substr($file, strpos($file, "/")+1, strlen($file) );
             
-            $userQuery = "SELECT * FROM users WHERE profileImage='$tmpfile'";
-            $companyQuery = "SELECT * FROM companies WHERE profileImage='$tmpfile'";
+            $userQuery = "SELECT * FROM users WHERE profileImage='$tmpfile';";
+            $companyQuery = "SELECT * FROM companies WHERE profileImage='$tmpfile';";
 
             $uResult = mysqli_query($conn,$userQuery);
             $uNum_row = mysqli_num_rows($uResult);
