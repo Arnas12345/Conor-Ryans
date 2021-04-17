@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/UserConnections.css?v=<?php echo time(); ?>">
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
-        
+
         <meta content="width=device-width, initial-scale=1" name="viewport" />
 
     </head>
