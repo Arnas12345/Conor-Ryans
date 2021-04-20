@@ -80,7 +80,7 @@
             return strcasecmp($inputEmail, $DBEmail) == 0;
         }
         if(mysqli_num_rows($bResult) !== 0 ) {
-            echo "<script> showLoginError('This user is banned.') </script>";
+            echo "<script> showLoginError('This company is banned.') </script>";
         }       
         // else if(emailMatches($email, $sqlEmail) ) {
         else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {

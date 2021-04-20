@@ -14,48 +14,37 @@
                 window.location.href= 'adminUnbanUser.php?id=' + variable;
                 };
             }
-        </script>
-        <script type="text/javascript">
+
             function BanUser(variable) {
                 if (confirm("Are you sure you want to ban this User?") == true) {
                     window.location.href= 'adminBanUser.php?id=' + variable;
                 };
             }
-        </script>
 
-        <script type="text/javascript">
             function DeleteUser(variable) {
                 if (confirm("Are you sure you want to delete this User?") == true) {
                     window.location.href= 'adminDeleteUser.php?id=' + variable;
                 };
             }
-        </script>
 
-        <script type="text/javascript">
             function BanCompany(variable) {
                 if (confirm("Are you sure you want to ban this Company?") == true) {
                     window.location.href= 'adminBanCompany.php?id=' + variable;
                 };
             }
-        </script>
 
-        <script type="text/javascript">
             function deleteOldPictures() {
                 if (confirm("Are you sure you want to delete all Unused Profile Images?") == true) {
                     window.location.href= 'flushOldProfilePictures.php';
                 };
             }
-        </script>
 
-        <script type="text/javascript">
             function unBanCompany(variable) {
                 if (confirm("Are you sure you want to unban this Company?") == true) {
                     window.location.href= 'adminUnbanCompany.php?id=' + variable;
                 };
             }
-        </script>
 
-        <script type="text/javascript">
             function deleteCompany(variable) {
                 if (confirm("Are you sure you want to unban this Company?") == true) {
                     window.location.href= 'adminDeleteCompany.php?id=' + variable;
@@ -152,7 +141,7 @@
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
                                 if($connectionsRow) {
-                                    print "<br><button type='button' class='btn btn-success' onClick='unBanCompany({$row['companyID']})'>Unban Company</button>";
+                                    print "<br><button type='button' class='btn btn-success' style ='margin-top:6%;' onClick='unBanCompany({$row['companyID']})'>Unban Company</button>";
                                 } else {
                                     print "<br><button type='button' class='btn btn-warning' style ='margin-top:6%;' onClick='BanCompany({$row['companyID']})'>Ban Company</button>";
                                     print "<br><button type='button' class='btn btn-danger' style ='margin-top:2%;' onClick='deleteCompany({$row['companyID']})'>Delete Company</button>";
