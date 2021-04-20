@@ -126,7 +126,7 @@
                                 $result2 = $conn -> query($connectionsSQL);
                                 $connectionsRow = $result2->fetch_assoc();
                                 if($connectionsRow) {
-                                    print "<br><button type='button' class='btn btn-success' onClick='unbanUser({$row['userID']})'>Unban User</button>";
+                                    print "<br><button type='button' class='btn btn-success' style ='margin-top:6%;' onClick='unbanUser({$row['userID']})'>Unban User</button>";
                                 } else {
                                     print "<br><button type='button' class='btn btn-warning' style ='margin-top:6%;' onClick='BanUser({$row['userID']})'>Ban User</button>";
                                     print "<br><button type='button' class='btn btn-danger' style ='margin-top:2%;' onClick='DeleteUser({$row['userID']})'>Delete User</button>";

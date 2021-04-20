@@ -331,9 +331,9 @@
                             }   
                         }
                     }
-                    print "<h2 style='color: black'>Other Jobs</h2>";
                     $allVacancies = array_unique($allVacancies);
                     if (!empty($allVacancies)) {
+                        print "<h2 style='color: black'>Other Jobs</h2>";
                         $vacancies = array_unique($vacancies);
                         foreach($allVacancies as $vacancy) {
                             $vacancySQL = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID
