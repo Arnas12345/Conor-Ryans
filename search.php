@@ -143,7 +143,7 @@
                                     }
                                     else {
                                         //print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' onClick='makeConnection({$row['userID']})'></img><br>";
-                                        print "<br><a class='pending'> Pending </a><br>";
+                                        print "<br><p class='pending'> Pending </p><br>";
                                     }
                                 } 
                                 else {

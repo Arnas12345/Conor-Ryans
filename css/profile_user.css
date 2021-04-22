@@ -34,6 +34,11 @@
     padding-bottom: 1%;
 }
 
+.description-textarea {
+    line-height: 16px;
+    padding: 2%;
+}
+
 .editProfile {
     padding-top: 1%;
     text-align: center;
