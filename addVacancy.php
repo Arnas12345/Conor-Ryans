@@ -25,11 +25,7 @@
                     <h3>Vacancy Title:</h3>
                     <input class="text-input" type='text' placeholder='Enter Vacancy Title' name='vacancyTitle' required></input>
                     <h3>Vacancy Description:</h3>
-<<<<<<< HEAD
-                    <textarea class="description" id='description' rows='5' cols='60' name='description' required></textarea><br>
-=======
                     <textarea id='description' name='description' required></textarea><br>
->>>>>>> 1cca36958bcf0d8771f23e3b9ff1bb860283adb1
                     <h3>Required Experience:</h3>
                     <input class="text-input" type='text' placeholder='Enter Req. Experience' name='reqExperience' required></input>
                     <h3>Vacancy Role:</h3>
