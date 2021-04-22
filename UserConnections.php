@@ -26,6 +26,12 @@
             }
         }
 
+        function deleteConnection(variable) {
+            if (confirm("Are you sure you want to delete this connection?") == true) {
+                window.location.href= 'deleteConnection.php?id=' + variable;
+            };
+        }
+
         function refreshPage() {
             window.location.href = "UserConnections.php";
         }
@@ -78,16 +84,14 @@
                     print "<div class='friend-req-details'>";
                     if($connectionsRow) {
                         if($connectionsRow['status'] !== "Pending") {
-                            print "<button class='btn-unconnect' href='deleteConnection({$row['userID']})'> Unconnect </button><br>";
+                            print "<button class='btn-unconnect' onClick='deleteConnection({$row['userID']})'> Disconnect </button><br>";
                         }
                         else {
-                            //print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' onClick='makeConnection({$row['userID']})'></img><br>";
                             print "<br><a class='pending'> Pending </a><br>";
                         }
                     } 
                     else {
                         print "<button class='btn-friend-req' onClick='makeConnection({$row['userID']})'> Connect </button><br>";
-                        // print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$row['userID']})'></img><br>";
                     }
 
                     print "</div> </div>";

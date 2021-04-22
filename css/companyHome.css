@@ -149,7 +149,7 @@ p:active {
 }
 
 .vacancyDetails.text-left{
-    line-height: 1.5em;
+    line-height: 1em;
 }
 
 .showskills{
@@ -159,6 +159,7 @@ p:active {
     color: white;
     border-radius: 8px;
     margin-left: 2%;
+    margin-bottom: 1%;
 }
 .skillSelect {
     background: #2f3640;

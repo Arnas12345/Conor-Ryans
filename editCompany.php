@@ -32,8 +32,7 @@
                 return $result->fetch_assoc();
             }
 
-            if(isset($_SESSION['user'])) include("headerTemplate.html");
-            else include("companyTemplate.html");
+            include("companyTemplate.html");
             $companyID = $_SESSION["company"];
                 
         ?>
@@ -104,20 +103,24 @@
                         //Sets the description if one exists
                         $description = '';
                         if(isset($_COOKIE['companyDescription'])) $description = $_COOKIE['companyDescription'];
+<<<<<<< HEAD
                         print "<textarea id='description' class='description-textarea'
                                 rows='5' cols='60' name='description'>{$description}</textarea><br>";
+=======
+                        print "<textarea id='description' name='description'>{$description}</textarea><br>";
+>>>>>>> 1cca36958bcf0d8771f23e3b9ff1bb860283adb1
 
                         //Sets the address if one exists
                         print "<h3>Company Address:</h3>";
                         $address = '';
                         if(isset($_COOKIE['address'])) $address = $_COOKIE['address'];
-                        print "<textarea id='description' rows='5' cols='60' name='address'>{$address}</textarea><br>";
+                        print "<textarea id='description' name='address'>{$address}</textarea><br>";
                         
                         print "<h3>Company Contact Number:</h3>";
                         $contactNo = '';
                         if(isset($_COOKIE['contactNo'])) $contactNo = $_COOKIE['contactNo'];
                         
-                        print "<input class='text-input' type='text' placeholder='Enter Contact Number' name='ContactNo' value='$contactNo' pattern='[0-9]{10}'></input>";
+                        print "<input class='text-input' type='text' placeholder='Enter Contact Number' name='ContactNo' value='$contactNo' pattern='[0-9]{10}' title='Please enter a phone number 10 numbers long between 0 - 9'></input>";
 
                         $conn -> close();
 

@@ -28,9 +28,7 @@
                 return $result->fetch_assoc();
             }
 
-            
-            if(isset($_SESSION['user'])) include("headerTemplate.html");
-            else include("companyTemplate.html");
+            include("companyTemplate.html");
             $companyID = $_SESSION["company"];
 
             $row = getCompanyData($companyID);
@@ -142,19 +140,17 @@
                             $skillsNeeded[] = $skillsRow['skillTitle'];
                         }
                         
-                        print "<div class='container vacancy'>
-                                    <div class='row'>
-                                        <div class='col-12' >
+                        print "<div class='vacancy'>
                                         <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
                                         <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
                                         <p class='vacancyDetails text-left'><b>Role: </b>{$row['role']}</p>
                                         <p class='vacancyDetails text-left'><b>Req. Experience: </b>{$row['requiredExperience']}</p>";
                                         
-                                        print "</div></div></div>";
+                                        print "</div>";
                     }
                 } 
                 else {
-                    print "<h1>No Vacanies Found.</h1>";
+                    print "<h1 style='text-align: center'>No Vacanies Found.</h1>";
                 }
                 
                 $conn->close();

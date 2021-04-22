@@ -138,7 +138,7 @@
                 }
             } 
             else {
-                print "<h1>No Vacanies Found.</h1>";
+                print "<h1 style='text-align: center'>No Vacanies Found.</h1>";
             }
             
             $conn->close();

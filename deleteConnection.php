@@ -18,14 +18,14 @@
 
             if ($conn->query($connectionsSQL) === TRUE && $conn->query($secondSQL) === TRUE) {
                 echo "Sucessful";
-                header( "Location: home.php" );
+                header( "Location: UserConnections.php" );
 
             } 
             else {
                 echo "Error: " . $connectionsSQL . "<br>" . $conn->error;
             }
 
-            header( "Location: home.php" );
+            header( "Location: UserConnections.php" );
             $conn->close();
         ?>
     </body>

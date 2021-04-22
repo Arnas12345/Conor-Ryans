@@ -11,8 +11,7 @@
             function makeConnection(variable) {
                 window.location.href= 'addConnection.php?id=' + variable;
             }
-        </script>
-        <script type="text/javascript">
+
             function deleteConnection(variable) {
                 if (confirm("Are you sure you want to delete this connection?") == true) {
                     window.location.href= 'deleteConnection.php?id=' + variable;
@@ -109,7 +108,7 @@
                     if ($_POST["selectVal"] == "name") {
                         $name = $_POST["value"];
                         printSearchFor("Name", $name);
-                        $sql = "select * from users where username LIKE \"{$name}%\" AND userID !={$_SESSION['user']};";
+                        $sql = "select * from users where username LIKE \"{$name}%\" AND userID !={$_SESSION['user']} AND Admin IS NULL;";
                         $result = $conn -> query($sql);
 
                         if(mysqli_num_rows($result) != 0) {
@@ -139,16 +138,14 @@
                                 print "<div class='friend-req-details'>";
                                 if($connectionsRow) {
                                     if($connectionsRow['status'] !== "Pending") {
-                                        print "<button class='btn-unconnect' onClick='deleteConnection({$row['userID']})'> Unconnect </button><br>";
+                                        print "<button class='btn-unconnect' onClick='deleteConnection({$row['userID']})'> Disconnect </button><br>";
                                     }
                                     else {
-                                        //print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' onClick='makeConnection({$row['userID']})'></img><br>";
-                                        print "<br><p class='pending'> Pending </p><br>";
+                                        print "<br><a class='pending'> Pending </a><br>";
                                     }
                                 } 
                                 else {
                                     print "<button class='btn-friend-req' onClick='makeConnection({$row['userID']})'> Connect </button><br>";
-                                    // print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$row['userID']})'></img><br>";
                                 }
 
                                 print "</div> </div>";
@@ -196,13 +193,13 @@
                     if ($_POST["selectVal"] == "skill") {
                         $skill = $_POST["skill"];
                         printSearchFor("skills", $skill);
-                        $SQL = "select a.userID, a.email, a.username
+                        $SQL = "select a.userID, a.email, a.username, a.Admin
                                 from users a
                                 INNER JOIN userskills b
                                 ON a.userID = b.userID
                                 INNER JOIN skills c
                                 ON b.skillID = c.skillID
-                                WHERE a.userID != {$_SESSION['user']} AND c.skillTitle LIKE \"{$skill}%\";";
+                                WHERE a.userID != {$_SESSION['user']} AND c.skillTitle LIKE \"{$skill}%\"  AND a.Admin IS NULL;";
                         $skillResult = $conn -> query($SQL);
 
                         if(mysqli_num_rows($skillResult) != 0) {
@@ -230,16 +227,14 @@
                                     print "<div class='friend-req-details'>";
                                 if($connectionsRow) {
                                     if($connectionsRow['status'] !== "Pending") {
-                                        print "<button class='btn-unconnect' onClick='deleteConnection({$skillRow['userID']})'> Unconnect </button><br>";
+                                        print "<button class='btn-unconnect' onClick='deleteConnection({$skillRow['userID']})'> Disconnect </button><br>";
                                     }
                                     else {
-                                        //print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' onClick='makeConnection({$row['userID']})'></img><br>";
                                         print "<br><a class='pending'> Pending </a><br>";
                                     }
                                 } 
                                 else {
                                     print "<button class='btn-friend-req' onClick='makeConnection({$skillRow['userID']})'> Connect </button><br>";
-                                    // print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$row['userID']})'></img><br>";
                                 }
 
                                 print "</div> </div>";
@@ -254,11 +249,11 @@
                     if ($_POST["selectVal"] == "currentlyEmployed") {
                         $currentlyEmployed = $_POST["company"];
                         printSearchFor("Currently Employed", $currentlyEmployed);
-                        $SQL = "select a.userID, a.email, a.username
+                        $SQL = "select a.userID, a.email, a.username, a.Admin
                                 from users a
                                 INNER JOIN companies b
                                 ON a.companyID = b.companyID
-                                WHERE a.userID != {$_SESSION['user']} AND b.companyName LIKE \"{$currentlyEmployed}%\";";
+                                WHERE a.userID != {$_SESSION['user']} AND b.companyName LIKE \"{$currentlyEmployed}%\" AND a.Admin IS NULL;";
                         $currentlyEmployedResult = $conn -> query($SQL);
                         if(mysqli_num_rows($currentlyEmployedResult) != 0) {
                                 while($currentlyEmployedRow = $currentlyEmployedResult->fetch_assoc()) {
@@ -285,16 +280,14 @@
                                     print "<div class='friend-req-details'>";
                                     if($connectionsRow) {
                                         if($connectionsRow['status'] !== "Pending") {
-                                            print "<button class='btn-unconnect' onClick='deleteConnection({$currentlyEmployedRow['userID']})'> Unconnect </button><br>";
+                                            print "<button class='btn-unconnect' onClick='deleteConnection({$currentlyEmployedRow['userID']})'> Disconnect </button><br>";
                                         }
                                         else {
-                                            //print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' onClick='makeConnection({$row['userID']})'></img><br>";
                                             print "<br><a class='pending'> Pending </a><br>";
                                         }
                                     } 
                                     else {
                                         print "<button class='btn-friend-req' onClick='makeConnection({$currentlyEmployedRow['userID']})'> Connect </button><br>";
-                                        // print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$row['userID']})'></img><br>";
                                     }
     
                                     print "</div> </div>";
@@ -308,13 +301,13 @@
                     if ($_POST["selectVal"] == "previousHistory") {
                         $previousHistory = $_POST["value"];
                         printSearchFor("Previous History", $previousHistory);
-                        $SQL = "select a.userID, a.email, a.username
+                        $SQL = "select a.userID, a.email, a.username, a.Admin
                                 from users a
                                 INNER JOIN jobhistory b
                                 ON a.userID = b.userID
                                 INNER JOIN companies c
                                 On b.companyID = c.companyID
-                                WHERE a.userID != {$_SESSION['user']} AND c.companyName LIKE \"{$previousHistory}%\";";
+                                WHERE a.userID != {$_SESSION['user']} AND c.companyName LIKE \"{$previousHistory}%\" AND a.Admin IS NULL;";
                         $previousHistoryResult = $conn -> query($SQL);
                         if(mysqli_num_rows($previousHistoryResult) != 0) {
                                 while($previousHistoryRow = $previousHistoryResult->fetch_assoc()) {
@@ -341,16 +334,14 @@
                                     print "<div class='friend-req-details'>";
                                     if($connectionsRow) {
                                         if($connectionsRow['status'] !== "Pending") {
-                                            print "<button class='btn-unconnect' onclick='deleteConnection({$previousHistoryRow['userID']})'> Unconnect </button><br>";
+                                            print "<button class='btn-unconnect' onclick='deleteConnection({$previousHistoryRow['userID']})'> Disconnect </button><br>";
                                         }
                                         else {
-                                            //print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' onClick='makeConnection({$row['userID']})'></img><br>";
                                             print "<br><a class='pending'> Pending </a><br>";
                                         }
                                     } 
                                     else {
                                         print "<button class='btn-friend-req' onClick='makeConnection({$previousHistoryRow['userID']})'> Connect </button><br>";
-                                        // print "<img class='connectionImage' src='images/unconnectedv2.png' alt='logo here' height='20%' weight='20%' onClick='makeConnection({$row['userID']})'></img><br>";
                                     }
     
                                     print "</div> </div>";
