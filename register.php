@@ -31,7 +31,7 @@
                 <div class="login">
                     <h2 style="text-align: left;">Register</h2>
                     <form method="post" action="">
-                        <input class="input" type="text" name="name" pattern="[a-zA-z\s]{2,100}" title="Must be between 2 and 100 chars" placeholder="Full Name" required><br>
+                        <input class="input" type="text" name="name" pattern="[a-zA-Z'\s]{2,100}" title="Must be between 2 and 100 chars" placeholder="Full Name" required><br>
                         <input class="input" type="email" name="email" placeholder="Email" required><br>
                         <input class="input" id="password" type="password" name="pass" placeholder="Password" onchange='check_pass();'
                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,16}" title="Must be between 6 and 16 chars and include at least one uppercase and one number" required><br>
