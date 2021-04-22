@@ -103,7 +103,12 @@
                         //Sets the description if one exists
                         $description = '';
                         if(isset($_COOKIE['companyDescription'])) $description = $_COOKIE['companyDescription'];
+<<<<<<< HEAD
+                        print "<textarea id='description' class='description-textarea'
+                                rows='5' cols='60' name='description'>{$description}</textarea><br>";
+=======
                         print "<textarea id='description' name='description'>{$description}</textarea><br>";
+>>>>>>> 1cca36958bcf0d8771f23e3b9ff1bb860283adb1
 
                         //Sets the address if one exists
                         print "<h3>Company Address:</h3>";

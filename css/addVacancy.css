@@ -41,6 +41,12 @@ select option:checked {
     border-radius: 8px;
     overflow: hidden;
     margin-bottom: 1%;
+    
+}
+
+.description {
+    padding: 2%;
+    line-height: 16px;
 }
 
 .text-input::placeholder {

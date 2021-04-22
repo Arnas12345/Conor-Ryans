@@ -110,7 +110,7 @@
                         //Sets the description if one exists
                         $description = '';
                         if(isset($_SESSION['description'])) $description = $_SESSION['description'];
-                        print "<textarea id='description' 
+                        print "<textarea id='description' class='description-textarea' 
                                     name='description' pattern='[A-Za-z0-9]{6,255}' 
                                     title='Please input between 6 and 255 characters. Letters and numbers only.'>{$description}</textarea>
                                 <br>";

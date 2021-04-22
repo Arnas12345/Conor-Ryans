@@ -34,6 +34,11 @@
     padding-bottom: 1%;
 }
 
+.description-textarea {
+    line-height: 16px;
+    padding: 2%;
+}
+
 .editProfile {
     padding-top: 1%;
     text-align: center;
@@ -72,7 +77,7 @@
     height: 40px;
     color: white;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 select option:checked {
@@ -139,4 +144,18 @@ select option:checked {
 
 .text-left {
     line-height: 1em;
+}
+
+@media only screen and (max-width: 900px) {
+
+    .description-textarea {
+        width: 100%;
+        margin-left: 5%;
+    }
+
+    .bio-description {
+        width: 90%;
+        
+    }
+
 }
