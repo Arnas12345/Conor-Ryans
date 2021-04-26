@@ -43,7 +43,7 @@ p:active {
     border-radius: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-left: 1px solid rgba(255, 255, 255, 0.5);
-    overflow: hidden;
+    overflow: auto;
     word-wrap: break-word;
 }
 
@@ -147,6 +147,8 @@ p:active {
 
 .showskills{
     height: 10%;
+    max-height: 30px;
+    margin-top: 2%;
     float: left;
     background: #2f3640;
     color: white;
@@ -173,7 +175,7 @@ select option:checked {
     margin-left: 2%;
 }
 
-@media (max-width: 1000px) {  
+@media (max-width: 1100px) {  
     .job_logo {
         position: relative;
     left: 30px;
@@ -194,4 +196,5 @@ select option:checked {
 .img-fluid {
     float: right;
     margin-right: 5%;
+    cursor: pointer;
 }

@@ -79,7 +79,7 @@
                 if (isset($_GET['sortBySkills'])) {
                     //Gets the vacancies that match the skill
                     if(!empty($_POST['skill'])) {
-                        print "<h2 style='color: black'>Sorting by {$_POST['skill']}";
+                        print "<h2 style='color: black'>Sorting by {$_POST['skill']}</h2><hr>";
                         $sql = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID, d.skillTitle, d.skillDescription
                         from vacancies a
                         INNER JOIN companies b
@@ -190,7 +190,7 @@
                     $userSkillResults = $conn -> query($userSkills);
                     //If the user has skills
                     if(mysqli_num_rows($userSkillResults) != 0) {
-                        print "<h2 style='color: black'>Automatically Suggested Jobs</h2>";
+                        print "<h2 style='color: black'>Automatically Suggested Jobs</h2><hr>";
                         while($userSkillRow = $userSkillResults->fetch_assoc()) {
                             $skills[] = $userSkillRow['skillTitle'];
                             $vacanciesSQL = "select a.vacancyID
@@ -333,7 +333,7 @@
                     }
                     $allVacancies = array_unique($allVacancies);
                     if (!empty($allVacancies)) {
-                        print "<h2 style='color: black'>Other Jobs</h2>";
+                        print "<h2 style='color: black'>Other Jobs</h2><hr>";
                         $vacancies = array_unique($vacancies);
                         foreach($allVacancies as $vacancy) {
                             $vacancySQL = "select a.vacancyTitle, a.vacancyDescription, a.requiredExperience, a.role, a.timeAdded, b.companyName, a.vacancyID, b.companyID

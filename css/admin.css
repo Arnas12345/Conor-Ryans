@@ -30,7 +30,7 @@ a:active {
     margin-left: 0%;
     margin-bottom: 2%;
     text-align: center;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .userImage {
@@ -57,7 +57,7 @@ a:active {
     border-radius: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-left: 1px solid rgba(255, 255, 255, 0.5);
-    overflow: hidden;
+    overflow: auto;
 }
 
 .search {
@@ -86,7 +86,8 @@ a:active {
     background: #2f3640;
     color: white;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: auto;
+    min-width: 125px;
 }
 
 .submit {
@@ -136,7 +137,7 @@ a:active {
 }
 
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 1100px) {
 
     .user {
         width: 70%;
@@ -150,4 +151,8 @@ a:active {
         margin: 0;
     }
 
+}
+
+.userDetails {
+    line-height: 1.0em;
 }

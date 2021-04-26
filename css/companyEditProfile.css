@@ -151,5 +151,9 @@ select option:checked {
 
 
 .vacancyDetails.text-left{
-    line-height: 1.5em;
+    line-height: 1.0em;
+}
+
+.userDetails {
+    line-height: 1.0em;
 }

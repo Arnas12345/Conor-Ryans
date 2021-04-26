@@ -193,7 +193,7 @@
                     if ($_POST["selectVal"] == "skill") {
                         $skill = $_POST["skill"];
                         printSearchFor("skills", $skill);
-                        $SQL = "select a.userID, a.email, a.username, a.Admin
+                        $SQL = "select a.userID, a.email, a.username, a.Admin, a.profileImage
                                 from users a
                                 INNER JOIN userskills b
                                 ON a.userID = b.userID
@@ -249,7 +249,7 @@
                     if ($_POST["selectVal"] == "currentlyEmployed") {
                         $currentlyEmployed = $_POST["company"];
                         printSearchFor("Currently Employed", $currentlyEmployed);
-                        $SQL = "select a.userID, a.email, a.username, a.Admin
+                        $SQL = "select a.userID, a.email, a.username, a.Admin, a.profileImage
                                 from users a
                                 INNER JOIN companies b
                                 ON a.companyID = b.companyID
@@ -301,7 +301,7 @@
                     if ($_POST["selectVal"] == "previousHistory") {
                         $previousHistory = $_POST["value"];
                         printSearchFor("Previous History", $previousHistory);
-                        $SQL = "select a.userID, a.email, a.username, a.Admin
+                        $SQL = "select a.userID, a.email, a.username, a.Admin, a.profileImage
                                 from users a
                                 INNER JOIN jobhistory b
                                 ON a.userID = b.userID

@@ -1,5 +1,5 @@
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
     body { font-size: 50px; }
 }
 
@@ -48,7 +48,7 @@ p:active {
     border-radius: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-left: 1px solid rgba(255, 255, 255, 0.5);
-    overflow: hidden;
+    overflow: auto;
     padding-bottom: 3%;
     word-wrap: break-word;
 }
@@ -154,6 +154,8 @@ p:active {
 
 .showskills{
     height: 10%;
+    max-height: 30px;
+    margin-top: 2%;
     float: left;
     background: #2f3640;
     color: white;
@@ -166,7 +168,7 @@ p:active {
     height: 40px;
     color: white;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 select option:checked {
@@ -181,7 +183,7 @@ select option:checked {
     margin-left: 2%;
 }
 
-@media (max-width: 1000px) {  
+@media (max-width: 1100px) {  
     .job_logo {
         position: relative;
     left: 30px;

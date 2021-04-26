@@ -67,6 +67,7 @@
     if(isset($_POST['submit'])) {
 
         session_start();
+        session_unset();
 
         include ("serverConfig.php");
         $conn = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_DATABASE);

@@ -62,9 +62,7 @@
         ?>
         <h1 class="page-heading">User Options</h1>
         <hr>
-        <div class="nav-links" style="margin-left:auto;">
-            <button type="button" style="float: right; margin-right:5%;" class="btn btn-danger" onclick="deleteOldPictures();">Delete Unused Images</button>
-        </div> 
+        
         <form class="search" method="post" action="admin.php">
             <select class="select" name="selectVal">
                 <option value="name">Name</option>

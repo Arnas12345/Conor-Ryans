@@ -95,7 +95,6 @@
             </div>
         </div>
         
-        <div class="page-box">
             <h1 class="page-heading">All Job Listings</h1>
             <?php
                 include ("serverConfig.php");
@@ -129,14 +128,12 @@
                             $skillsNeeded[] = $skillsRow['skillTitle'];
                         }
                         
-                        print "<div class='container vacancy'>
-                                    <div class='row'>
-                                        <div class='col-12' >
+                        print "<div class='vacancy'>
                                         <p class='vacancyDetails text-left'><b>Title: </b>{$row['vacancyTitle']}</p>
                                         <p class='vacancyDetails text-left'><b>Description: </b>{$row['vacancyDescription']}</p>
                                         <p class='vacancyDetails text-left'><b>Role: </b>{$row['role']}</p>
                                         <p class='vacancyDetails text-left'><b>Req. Experience: </b>{$row['requiredExperience']}</p>";                   
-                                        print "</div></div></div>";
+                                        print "</div>";
                     }
                 } 
                 else {
@@ -146,6 +143,5 @@
                 $conn->close();
 
             ?>
-        </div>
     </body>
 </html>

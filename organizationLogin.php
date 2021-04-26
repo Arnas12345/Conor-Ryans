@@ -34,7 +34,7 @@
                         </form>
                             <div class="buttons">
                                 <div class="register">
-                                    <h5><u>New Here?</u></h5>
+                                    <h5>New Here?</h5>
                                     <button class="button" onClick="location.href='organizationRegister.php'">Register</button>
                                 </div>
                             </div>
@@ -58,6 +58,7 @@
         }
 
         session_start();
+        session_unset();
 
         $email = $_POST['email'];
         $password = $_POST['pass'];
@@ -81,8 +82,7 @@
         }
         if(mysqli_num_rows($bResult) !== 0 ) {
             echo "<script> showLoginError('This company is banned.') </script>";
-        }       
-        // else if(emailMatches($email, $sqlEmail) ) {
+        }
         else if(emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
             $_SESSION['company'] = $companyID;
             $_SESSION['loggedin'] = true;

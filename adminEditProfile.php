@@ -80,7 +80,7 @@
             <div class = "bio-description">
                 <?php 
                     $userID = $_GET["userID"];
-                    print "<form method='post' action='adminEditProfile.php?userID={$userID}'";?>
+                    print "<form method='post' action='adminEditProfile.php?userID={$userID}'>";?>
                     <h3>Enter Bio:</h3>
                     <?php
 

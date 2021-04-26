@@ -82,3 +82,9 @@
     color: white;
     border-radius: 8px;
 }
+
+.userDetails {
+    line-height: 1.0em;
+    overflow: hidden;
+    word-wrap: break-word;
+}

@@ -35,7 +35,7 @@
                         </form>
                             <div class="buttons">
                                 <div class="register">
-                                    <h5><u>New Here?</u></h5>
+                                    <h5>New Here?</h5>
                                     <button class="button" onClick="location.href='register.php'">Register</button>
                                 </div>
                             </div>
@@ -59,6 +59,7 @@
         }
 
         session_start();
+        session_unset();
 
         $email = $_POST['email'];
         $password = $_POST['pass'];
@@ -86,7 +87,6 @@
             echo "<script> showLoginError('This user is banned') </script>";
         }
         else if($isAdmin !== NULL && emailMatches($email, $sqlEmail) && password_verify($password, $sqlPass)) {
-        // else if($isAdmin !== NULL && emailMatches($email, $sqlEmail)) {
             $_SESSION['user'] = $userID;
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;
@@ -94,7 +94,6 @@
             header( "Location: adminMenu.html" );
         }
         else if(emailMatches($email, $sqlEmail)  && password_verify($password, $sqlPass)) {
-        // else if(emailMatches($email, $sqlEmail)) {
             $_SESSION['user'] = $userID;
             $_SESSION['username'] = $row['username'];
             $_SESSION['loggedin'] = true;

@@ -10,7 +10,7 @@
     border-radius: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-left: 1px solid rgba(255, 255, 255, 0.5);
-    overflow: hidden;
+    overflow: auto;
     padding-bottom: 1%;
 }
 
@@ -27,7 +27,7 @@
     height: 40px;
     color: white;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 select option:checked {
@@ -39,7 +39,7 @@ select option:checked {
     height: 30px;
     color: white;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: auto;
     margin-bottom: 1%;
     
 }
@@ -47,6 +47,11 @@ select option:checked {
 .description {
     padding: 2%;
     line-height: 16px;
+}
+
+.description-textarea {
+    line-height: 16px;
+    padding: 1%;
 }
 
 .text-input::placeholder {
@@ -58,4 +63,18 @@ select option:checked {
     height: 38px;
     color: white;
     border-radius: 8px;
+}
+
+@media only screen and (max-width: 1100px) {
+
+    .description-textarea {
+        width: 100%;
+        margin-left: 5%;
+    }
+
+    .bio-description {
+        width: 90%;
+        
+    }
+
 }
